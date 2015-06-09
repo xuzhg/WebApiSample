@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.Results;
 using System.Web.OData;
 using System.Web.OData.Extensions;
 using Microsoft.OData.Edm;
@@ -12,6 +13,79 @@ namespace UntypeSample.Controllers
     {
         [EnableQuery]
         public IHttpActionResult Get()
+        {
+            return Ok(GetCustomers());
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetName(int key)
+        {
+            EdmEntityObjectCollection customers = GetCustomers();
+            EdmEntityObject customer = customers.FirstOrDefault(e =>
+            {
+                object customerId;
+                if (e.TryGetPropertyValue("CustomerId", out customerId))
+                {
+                    return (int) customerId == key;
+                }
+
+                return false;
+            }) as EdmEntityObject;
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            object name;
+            customer.TryGetPropertyValue("Name", out name);
+            if (name == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(name, name.GetType());
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetColor(int key)
+        {
+            EdmEntityObjectCollection customers = GetCustomers();
+            EdmEntityObject customer = customers.FirstOrDefault(e =>
+            {
+                object customerId;
+                if (e.TryGetPropertyValue("CustomerId", out customerId))
+                {
+                    return (int)customerId == key;
+                }
+
+                return false;
+            }) as EdmEntityObject;
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            object color;
+            customer.TryGetPropertyValue("Color", out color);
+            if (color == null)
+            {
+                return NotFound();
+            }
+
+            // return Ok(color, color.GetType());
+
+            EdmEnumObject enumColor = color as EdmEnumObject;
+            if (enumColor == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(enumColor);
+        }
+
+        private EdmEntityObjectCollection GetCustomers()
         {
             IEdmModel edmModel = Request.ODataProperties().Model;
 
@@ -36,6 +110,7 @@ namespace UntypeSample.Controllers
             // an entity object
             EdmEntityObject customer = new EdmEntityObject(customerType);
             customer.TrySetPropertyValue("CustomerId", 1); // Declared property
+            customer.TrySetPropertyValue("Name", "Mike"); // Declared property
             customer.TrySetPropertyValue("Color", color); // an enum dynamic property
             customer.TrySetPropertyValue("Address1", address1); // a complex dynamic property
             customer.TrySetPropertyValue("Address2", address2); // another complex dynamic property
@@ -48,7 +123,14 @@ namespace UntypeSample.Controllers
 
             collection.Add(customer);
 
-            return Ok(collection);
+            return collection;
         }
+
+        private IHttpActionResult Ok(object content, Type type)
+        {
+            var resultType = typeof(OkNegotiatedContentResult<>).MakeGenericType(type);
+            return Activator.CreateInstance(resultType, content, this) as IHttpActionResult;
+        }
+
     }
 }

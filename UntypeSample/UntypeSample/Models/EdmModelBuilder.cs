@@ -29,6 +29,7 @@ namespace UntypeSample.Models
             // open entity type customer
             EdmEntityType customer = new EdmEntityType("NS", "Customer", null, false, true);
             customer.AddKeys(customer.AddStructuralProperty("CustomerId", EdmPrimitiveTypeKind.Int32));
+            customer.AddStructuralProperty("Name", EdmPrimitiveTypeKind.String, false);
             customer.AddStructuralProperty("Color", new EdmEnumTypeReference(color, isNullable: true));
             model.AddElement(customer);
 

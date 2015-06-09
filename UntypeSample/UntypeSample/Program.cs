@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData.Extensions;
+using System.Web.OData.Formatter;
 using Microsoft.OData.Edm;
 using UntypeSample.Models;
 
@@ -21,6 +22,11 @@ namespace UntypeSample
 
             RequestQuery(client, "Customers");
 
+            RequestQuery(client, "Customers(1)/Name");
+
+            RequestQuery(client, "Customers(1)/Name/$value");
+
+            RequestQuery(client, "Customers(1)/Color"); // doesn't work
         }
 
         private async static void RequestQuery(HttpClient client, string requestUri)
