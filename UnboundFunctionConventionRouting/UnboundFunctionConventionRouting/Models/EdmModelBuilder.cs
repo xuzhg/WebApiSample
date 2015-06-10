@@ -42,6 +42,11 @@ namespace UnboundFunctionConventionRouting.Models
             function.Parameter<string>("p2");
             function.Parameter<Address>("location");
 
+            function = builder.Function("RetrieveCustomersByFilter").ReturnsCollectionFromEntitySet<Customer>("Customers");
+            function.Parameter<string>("name");
+            function.Parameter<string>("lastName");
+            function.Parameter<CustomerType>("customerType");
+
             return builder.GetEdmModel();
         }
     }

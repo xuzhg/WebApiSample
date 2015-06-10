@@ -70,6 +70,7 @@
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerType.cs" />
     <Compile Include="Models\EdmModelBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

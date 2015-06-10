@@ -25,6 +25,10 @@ namespace UnboundFunctionConventionRouting
             Query(client, "Customers");
 
             Query(client, "UnboundFunction(p1=8,p2='abc11',location=@p)?@p={\"City\":\"Shanghai\"}");
+
+            Query(client, "RetrieveCustomersByFilter(name='John',lastName='Alex',customerType=UnboundNS.CustomerType'Vip')");
+
+            Query(client, "RetrieveCustomersByFilter(name='John',lastName='Alex',customerType=UnboundNS.CustomerType'Vip')?$filter=Id lt 3");
         }
 
         private static async void Query(HttpClient client, string uri)

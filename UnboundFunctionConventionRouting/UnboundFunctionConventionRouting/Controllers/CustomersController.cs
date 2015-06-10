@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Routing;
+using UnboundFunctionConventionRouting.Models;
 using UnboundNS;
 
 namespace UnboundFunctionConventionRouting.Controllers
@@ -15,7 +16,7 @@ namespace UnboundFunctionConventionRouting.Controllers
         [EnableQuery]
         public IHttpActionResult Get()
         {
-            return Ok(new[] { new Customer { Id = 1, Name = "John"}});
+            return Ok(new[] { new Customer { Id = 1, Name = "John", LastName = "Alex", CustomerType = CustomerType.Vip} });
         }
 
         [HttpGet]
