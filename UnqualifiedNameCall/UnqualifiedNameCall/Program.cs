@@ -21,6 +21,8 @@ namespace UnqualifiedNameCall
 
             QueryMetadata(client);
 
+            QueryPerson(client);
+
             CallFunction(client);
 
             Console.WriteLine("---OK---");
@@ -31,6 +33,21 @@ namespace UnqualifiedNameCall
             string requestUri = "http://localhost/odata/$metadata";
 
             HttpResponseMessage response = client.GetAsync(requestUri).Result;
+
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+        }
+
+        private static void QueryPerson(HttpClient client)
+        {
+            string requestUri = "http://localhost/odata/People";
+
+            HttpResponseMessage response = client.GetAsync(requestUri).Result;
+
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+
+            requestUri = "http://localhost/odata/People?$select=Name";
+
+            response = client.GetAsync(requestUri).Result;
 
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
         }
