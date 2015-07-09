@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Customer-Order Scenario</title>
+</head>
+<body>
+<div>
+    <h2>All Customers</h2>
+    <p id="contexturi"></p>
+    <ol id="customers"></ol>
+</div>
+
+<div>
+    <h2>Post new Customer</h2>
+    <label>Name:</label><input type="text" id="customerName" size="5"></input>
+    <input type="button" value="Post" onclick=" PostCustomer(); "/>
+</div>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+
+<script>
+    var uri = 'odata/Customers?$expand=Orders';
+    // var uri = 'odata/Customers';
+
+    $(document).ready(function() {
+        $.getJSON(uri)
+            .done(function (data) {
+                $('#contexturi').text("@odata.context:" + data["@odata.context"]);
+                $.each(data["value"], function (key, item) {
+
+                    var itemName = "Name:  " + item.Name + ",  Salary: " + item.Salary;
+
+                    var orderCount = 0;
+                    if (item.Orders != null) {
+                        $.each(item.Orders, function (a, b) {
+                            //itemName = itemName + " order #" + a + ", $" + b.Price;
+                            orderCount++;
+                        });
+                    }
+                    itemName = itemName + ",  Order Count: " + orderCount;
+
+                    $('<li>', { text: itemName }).appendTo($('#customers'));
+                });
+            });
+    });
+
+    function PostCustomer() {
+        var name = $('#customerName').val();
+        var data = { Id: 9, Name: name };
+        var data = JSON.stringify(data);
+
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json; charset=utf-8',
+            datatype: 'json',
+            url: 'odata/Customers',
+            data: data,
+            beforeSend: function (XMLHttpRequest) {
+                XMLHttpRequest.setRequestHeader("Accept", "application/json");
+            },
+            success: function (data, textStatus, XmlHttpRequest) {
+                window.location.reload();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+</script>
+</body>
+</html>

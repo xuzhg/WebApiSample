@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Web;
 
 namespace ODataActionSample
@@ -11,6 +12,8 @@ namespace ODataActionSample
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public double Salary { get; set; }
 
         public IList<Order> Orders { get; set; }
     }

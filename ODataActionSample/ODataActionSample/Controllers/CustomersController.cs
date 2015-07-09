@@ -10,18 +10,26 @@ namespace ODataActionSample.Controllers
 {
     public class CustomersController : ODataController
     {
-        private static IList<Customer> _customers = Enumerable.Range(1, 5).Select(e =>
-            new Customer
-            {
-                Id = e,
-                Name = "Customer #" + e,
-                Orders = Enumerable.Range(1, e).Select(f =>
-                    new Order
-                    {
-                        OrderId = e + f,
-                        Price = 2.3*e + f,
-                    }).ToList()
-            }).ToList();
+        private static readonly IList<Customer> _customers;
+
+        static CustomersController()
+        {
+            string[] names = {"John", "Mike", "Sam", "Mark", "Tony"};
+            _customers = Enumerable.Range(1, 5).Select(e =>
+                new Customer
+                {
+                    Id = e,
+                    Name = names[e-1],
+                    Salary = 5.7 * e,
+                    Orders = Enumerable.Range(1, e).Select(f =>
+                        new Order
+                        {
+                            OrderId = e + f,
+                            Price = 2.3*e + f,
+                        }).ToList()
+                }).ToList();
+        }
+
 
         [EnableQuery]
         public IHttpActionResult Get()
