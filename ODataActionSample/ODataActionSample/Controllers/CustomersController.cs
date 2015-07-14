@@ -45,5 +45,50 @@ namespace ODataActionSample.Controllers
             _customers.Add(customer);
             return Created(customer);
         }
+
+        [HttpPost]
+        public bool IsEmailAvailable(ODataActionParameters parameters)
+        {
+            object value;
+            if (parameters.TryGetValue("email", out value))
+            {
+                string email = value as string;
+                if (email != null)
+                {
+                    // just for test
+                    if (email == "saxu@microsoft.com")
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        [HttpPost]
+        public IHttpActionResult IsEmailAvailable(int key, ODataActionParameters parameters)
+        {
+            // Just for test
+            if (key != 3)
+            {
+                return NotFound();
+            }
+
+            object value;
+            if (parameters.TryGetValue("email", out value))
+            {
+                string email = value as string;
+                if (email != null)
+                {
+                    if (email == "saxu@microsoft.com")
+                    {
+                        return Ok("Your input email is :" + email);
+                    }
+                }
+            }
+
+            return Ok(false);
+        }
     }
 }
