@@ -15,6 +15,8 @@ namespace ODataActionSample
 
         public double Salary { get; set; }
 
+        public IDictionary<string, object> Properties { get; set; }
+
         public IList<Order> Orders { get; set; }
     }
 
@@ -25,4 +27,10 @@ namespace ODataActionSample
         public double Price { get; set; }
     }
 
+    public class Address
+    {
+        public string City { get; set; }
+
+        public IDictionary<string, object> Properties { get; set; }
+    }
 }

@@ -29,6 +29,9 @@ namespace ODataActionSample
             builder.EntitySet<Customer>("Customers").EntityType.Action("IsEmailAvailable").Returns<bool>()
                 .Parameter<string>("email");
 
+            // add the complex type
+            builder.ComplexType<Address>();
+
             builder.Namespace = "Extra";
             return builder.GetEdmModel();
         }

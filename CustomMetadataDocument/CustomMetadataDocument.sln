@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomMetadataDocument", "CustomMetadataDocument\CustomMetadataDocument.csproj", "{CFEB0A17-6E3C-4709-9ACF-6DA557A16524}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CFEB0A17-6E3C-4709-9ACF-6DA557A16524}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFEB0A17-6E3C-4709-9ACF-6DA557A16524}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFEB0A17-6E3C-4709-9ACF-6DA557A16524}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFEB0A17-6E3C-4709-9ACF-6DA557A16524}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
