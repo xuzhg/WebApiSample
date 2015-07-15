@@ -28,7 +28,7 @@
                 $('#contexturi').text("@odata.context:" + data["@odata.context"]);
                 $.each(data["value"], function (key, item) {
 
-                    var itemName = "Name:  " + item.Name + ",  Salary: " + item.Salary;
+                    var itemName = "Name:  " + item.Name + ",  Salary: " + item.Salary + ", Age: " + item.Age;
 
                     var orderCount = 0;
                     if (item.Orders != null) {

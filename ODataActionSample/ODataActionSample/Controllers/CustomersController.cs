@@ -21,6 +21,11 @@ namespace ODataActionSample.Controllers
                     Id = e,
                     Name = names[e-1],
                     Salary = 5.7 * e,
+                    Properties = new Dictionary<string, object>
+                    {
+                        {"Email", "abs@microsoft.com"},
+                        {"Age", e + 20}
+                    },
                     Orders = Enumerable.Range(1, e).Select(f =>
                         new Order
                         {
@@ -28,8 +33,29 @@ namespace ODataActionSample.Controllers
                             Price = 2.3*e + f,
                         }).ToList()
                 }).ToList();
-        }
 
+            Address address = new Address
+            {
+                City = "Redmond",
+                Properties = new Dictionary<string, object>
+                {
+                    {"Street", "Microsoft Road"} // dynamic property
+                }
+            };
+
+            _customers[1].Properties.Add("Address", address);
+
+            address = new Address
+            {
+                City = "Shanghai",
+                Properties = new Dictionary<string, object>
+                {
+                    {"Postcode", 201101} // dynamic property
+                }
+            };
+
+            _customers[3].Properties.Add("Address", address);
+        }
 
         [EnableQuery]
         public IHttpActionResult Get()
