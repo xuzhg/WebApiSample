@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.OData.Core;
+using Microsoft.OData.Core.UriParser;
 using ODataClientSample.Extra;
 using ODataClientSample.ODataActionSample;
 
@@ -41,6 +43,24 @@ namespace ODataClientSample
             newCustomer.Age = 37;
             newCustomer.Birthday = new DateTimeOffset(2015, 7, 15, 1, 2, 3, 4, TimeSpan.Zero);
             newCustomer.Address = address;
+
+            newCustomer.Properties = new Dictionary<string, object>
+            {
+                {"IntProp", 9},
+                {"DateTimeOffsetProp", new DateTimeOffset(2015, 7, 16, 1, 2, 3, 4, TimeSpan.Zero)}
+            };
+
+            container.Configurations.RequestPipeline.OnEntryStarting(args =>
+            {
+                foreach (var property in newCustomer.Properties)
+                {
+                    args.Entry.AddProperties(new ODataProperty
+                    {
+                        Name = property.Key,
+                        Value = property.Value // for enum, complex type, should to create ODataEnumValue and ODataComplexValue.
+                    });
+                }
+            });
 
             Console.WriteLine("!!! Start to insert a customer.");
 
@@ -87,6 +107,18 @@ namespace ODataClientSample
                     Console.WriteLine("\tBirthday:" + customer.Birthday);
                 }
             }
+        }
+    }
+
+    public static class EntensionMethods
+    {
+        public static void AddProperties(this ODataEntry entry, params ODataProperty[] properties)
+        {
+            var odataProps = new List<ODataProperty>(entry.Properties);
+
+            odataProps.AddRange(properties);
+
+            entry.Properties = odataProps;
         }
     }
 }

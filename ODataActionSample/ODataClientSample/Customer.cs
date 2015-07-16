@@ -8,7 +8,9 @@ namespace ODataClientSample.ODataActionSample
 {
     public partial class Customer
     {
-        // Dynamic property "Email"
+        public IDictionary<string, object> Properties { get; set; }
+
+            // Dynamic property "Email"
         [global::Microsoft.OData.Client.OriginalNameAttribute("Email")]
         public string Email
         {
