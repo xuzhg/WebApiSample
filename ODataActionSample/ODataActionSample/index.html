@@ -2,6 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Customer-Order Scenario</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+        }
+    </style>
 </head>
 <body>
 <div>
@@ -9,7 +18,17 @@
     <p id="contexturi"></p>
     <ol id="customers"></ol>
 </div>
-
+<div>
+    <table id="customerTbl" style="width:100%">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Salary</th>
+            <th>Orders Count</th>
+            <th>Dynamic Property</th>
+        </tr>
+    </table>
+</div>
 <div>
     <h2>Post new Customer</h2>
     <label>Name:</label><input type="text" id="customerName" size="5"></input>
@@ -28,6 +47,45 @@
                 $('#contexturi').text("@odata.context:" + data["@odata.context"]);
                 $.each(data["value"], function (key, item) {
 
+                    var id = '<td>' + item.Id + '</td>';
+                    var name = '<td>' + item.Name + '</td>';
+                    var salary = '<td>' + item.Salary + '</td>';
+                    var orders = '<td></td>';
+                    var dynamics = '<td>';
+
+                    $.each(item, function (subkey, subItem) {
+                        if (subkey !== 'Id' && subkey != 'Name' && subkey != 'Salary' && subkey != 'Orders') {
+
+                            var str = "";
+                            if (typeof(subItem) == "object") {
+                                str += "{";
+                                $.each(subItem, function(subsubKey, subsubItem) {
+                                    str += subsubKey;
+                                    str += ":";
+                                    str += subsubItem;
+                                    str += ",";
+                                });
+
+                                str += "}";
+                            } else {
+                                str += subkey;
+                                str += ":";
+                                str += subItem;
+                                str += ",";
+                            }
+                            dynamics += str;
+                        }
+                        else if (subkey == 'Orders') {
+                            if (subItem != undefined && subItem.length != undefined) {
+                                orders = '<td>' + subItem.length + '</td>';
+                            }
+                        }
+                    });
+                    dynamics += '</td>';
+                    var row = '<tr>' + id + name + salary + orders + dynamics + '</tr>';
+                    $("#customerTbl").append(row);
+
+                    /*
                     var itemName = "Name:  " + item.Name + ",  Salary: " + item.Salary + ", Age: " + item.Age;
 
                     var orderCount = 0;
@@ -40,9 +98,36 @@
                     itemName = itemName + ",  Order Count: " + orderCount;
 
                     $('<li>', { text: itemName }).appendTo($('#customers'));
+                    */
                 });
             });
     });
+
+    function QueryObject(str, data) {
+
+        if (data != undefined) {
+
+            // array
+            if (data.length != undefined) {
+                str += "[";
+                $.each(data, function(key, item) {
+                    str += QueryObject(str, item);
+                });
+                str += "]";
+            } else {
+                str += "{";
+                $.each(data, function(key, item) {
+                    str += key;
+                    str += ":";
+                    str += item;
+                    str += ",";
+                });
+                str += "}";
+            }
+        }
+
+        return str;
+    }
 
     function PostCustomer() {
         var name = $('#customerName').val();

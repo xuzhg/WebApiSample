@@ -26,7 +26,7 @@ namespace ODataActionSample.Controllers
                         {"Email", "abs@microsoft.com"},
                         {"Age", e + 20}
                     },
-                    Orders = Enumerable.Range(1, e).Select(f =>
+                    Orders = Enumerable.Range(1, 6-e).Select(f =>
                         new Order
                         {
                             OrderId = e + f,
@@ -65,11 +65,41 @@ namespace ODataActionSample.Controllers
 
         [HttpPost]
         public IHttpActionResult Post(Customer customer)
-        {
+        {/*
             int key = _customers.Count();
-            customer.Id = key + 1;
+
+            if (_customers.Any(c => c.Id == customer.Id))
+            {
+                customer.Id = key + 1;
+            }*/
+
             _customers.Add(customer);
             return Created(customer);
+        }
+
+        public IHttpActionResult Patch(int key, Delta<Customer> patch)
+        {
+            Customer customer = _customers.FirstOrDefault(c => c.Id == key);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            patch.Patch(customer);
+            return Updated(customer);
+        }
+
+        public IHttpActionResult Put(int key, Customer changedCustomer)
+        {
+            Customer customer = _customers.FirstOrDefault(c => c.Id == key);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            _customers.Remove(customer);
+            _customers.Add(changedCustomer);
+            return Updated(changedCustomer); // Updated(customer);
         }
 
         [HttpPost]
