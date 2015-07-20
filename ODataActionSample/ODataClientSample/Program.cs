@@ -110,7 +110,7 @@ namespace ODataClientSample
         }
     }
 
-    public static class EntensionMethods
+    public static class ExtensionMethods
     {
         public static void AddProperties(this ODataEntry entry, params ODataProperty[] properties)
         {
