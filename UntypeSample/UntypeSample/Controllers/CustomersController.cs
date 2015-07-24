@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Results;
 using System.Web.OData;
@@ -45,6 +47,29 @@ namespace UntypeSample.Controllers
             }
 
             return Ok(name, name.GetType());
+        }
+
+        public IHttpActionResult Patch(int key, IEdmEntityObject entity)
+        {
+            object value;
+            if (entity.TryGetPropertyValue("Name", out value))
+            {
+                string name = value as string;
+                if (name != null)
+                {
+                    if (name == "Sam")
+                    {
+                        return Ok(name);
+                    }
+                }
+            }
+
+            return BadRequest("Not My input.");
+        }
+
+        public HttpResponseMessage Put(int key, IEdmEntityObject entity)
+        {
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
         [HttpGet]
