@@ -41,7 +41,7 @@ namespace SelfHostServer.Models
                         Country = e % 2 == 0 ? "US" : "CN",
                         City = new[] {"Shanghai", "Redmond", "Beijing", "New York", "Suzhou"}[e - 1],
                     },
-                    Category = Categories[2]
+                    Category = Categories[e - 1]
                 }).ToList();
 
             int n = 0;

@@ -27,5 +27,13 @@ namespace SelfHostServer.Controllers
 
             return Ok(category);
         }
+
+        public IHttpActionResult Post(Category category)
+        {
+            int max = DataSource.Categories.Max(e => e.CategoryId);
+            category.CategoryId = max + 1;
+            DataSource.Categories.Add(category);
+            return Created(category);
+        }
     }
 }

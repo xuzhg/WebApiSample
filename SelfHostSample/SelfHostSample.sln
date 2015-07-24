@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfHostWebApiClientApp", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OWinSelfHostServer", "OWinSelfHostServer\OWinSelfHostServer.csproj", "{B6FB1918-286E-4FE1-B2E4-535F4CC71B32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleODataClientApp", "SimpleODataClientApp\SimpleODataClientApp.csproj", "{D29F884A-D631-4F7A-8869-2D1473781A06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B6FB1918-286E-4FE1-B2E4-535F4CC71B32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6FB1918-286E-4FE1-B2E4-535F4CC71B32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6FB1918-286E-4FE1-B2E4-535F4CC71B32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D29F884A-D631-4F7A-8869-2D1473781A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D29F884A-D631-4F7A-8869-2D1473781A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D29F884A-D631-4F7A-8869-2D1473781A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D29F884A-D631-4F7A-8869-2D1473781A06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
