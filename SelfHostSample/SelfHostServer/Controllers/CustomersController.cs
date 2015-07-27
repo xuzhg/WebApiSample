@@ -33,6 +33,7 @@ namespace SelfHostServer.Controllers
             return Ok(customer);
         }
 
+        [EnableQuery]
         public IHttpActionResult Post(Customer customer)
         {
             int max = DataSource.Customers.Max(e => e.CustomerId);
