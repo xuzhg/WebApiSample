@@ -96,5 +96,31 @@ namespace SelfHostServer.Controllers
 
             return BadRequest();
         }
+
+        [HttpGet]
+        [EnableQuery]
+        public SingleResult<Customer> RefreshCustomer([FromODataUri] int key)
+        {
+            Customer customer = DataSource.Customers.FirstOrDefault(e => e.CustomerId == key);
+            if (customer == null)
+            {
+                return new SingleResult<Customer>(Enumerable.Empty<Customer>().AsQueryable());
+            }
+
+            return new SingleResult<Customer>(new[] {customer}.AsQueryable());
+        }
+
+        [HttpGet]
+        [EnableQuery]
+        public IHttpActionResult RefreshCustomer2([FromODataUri] int key)
+        {
+            Customer customer = DataSource.Customers.FirstOrDefault(e => e.CustomerId == key);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(customer);
+        }
     }
 }

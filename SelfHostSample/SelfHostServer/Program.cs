@@ -33,6 +33,17 @@ namespace SelfHostServer
             builder.EntitySet<Customer>("Customers");
             builder.EntitySet<Category>("Categories");
             builder.EntitySet<Order>("Orders");
+
+            builder.EntityType<Customer>()
+                .Function("RefreshCustomer")
+                .ReturnsFromEntitySet<Customer>("Customers")
+                .IsComposable = true;
+
+            builder.EntityType<Customer>()
+                .Function("RefreshCustomer2")
+                .ReturnsFromEntitySet<Customer>("Customers")
+                .IsComposable = true;
+
             return builder.GetEdmModel();
         }
     }

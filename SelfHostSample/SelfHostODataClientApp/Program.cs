@@ -12,7 +12,7 @@ namespace SelfHostODataClientApp
     {
         static void Main(string[] args)
         {
-            Container container = new Container(new Uri("http://localhost:12345/odata/"));
+            Container container = new Container(new Uri("http://localhost.fiddler:12345/odata/"));
 
             var customers = container.Customers.ToList();
 
@@ -20,6 +20,19 @@ namespace SelfHostODataClientApp
             {
                 Console.WriteLine(FormatCustomer(customer));
             }
+
+            // call function
+            Console.WriteLine("Call function: ");
+            var result = container.Customers.ByKey(1).RefreshCustomer().Expand("Category");
+            var customer1 = result.GetValueAsync().Result;
+            // var customer1 = result.GetValue();
+            Console.WriteLine(FormatCustomer(customer1));
+
+            result = container.Customers.ByKey(2).RefreshCustomer2().Expand("Category");
+            customer1 = result.GetValueAsync().Result;
+            Console.WriteLine(FormatCustomer(customer1));
+
+            Console.ReadKey();
         }
 
         private static string FormatCustomer(Customer customer)

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 7/22/2015 2:31:33 PM
+// Generation date: 7/27/2015 11:01:20 AM
 namespace SelfHostODataClientApp.SelfHostServer.Models
 {
     /// <summary>
@@ -842,6 +842,14 @@ namespace SelfHostODataClientApp.Default
       </EnumType>
     </Schema>
     <Schema Namespace=""Default"" xmlns=""http://docs.oasis-open.org/odata/ns/edm"">
+      <Function Name=""RefreshCustomer"" IsBound=""true"" IsComposable=""true"">
+        <Parameter Name=""bindingParameter"" Type=""SelfHostServer.Models.Customer"" />
+        <ReturnType Type=""SelfHostServer.Models.Customer"" />
+      </Function>
+      <Function Name=""RefreshCustomer2"" IsBound=""true"" IsComposable=""true"">
+        <Parameter Name=""bindingParameter"" Type=""SelfHostServer.Models.Customer"" />
+        <ReturnType Type=""SelfHostServer.Models.Customer"" />
+      </Function>
       <EntityContainer Name=""Container"">
         <EntitySet Name=""Customers"" EntityType=""SelfHostServer.Models.Customer"">
           <NavigationPropertyBinding Path=""Category"" Target=""Categories"" />
@@ -876,6 +884,38 @@ namespace SelfHostODataClientApp.Default
             {
                 return global::System.Xml.XmlReader.Create(new global::System.IO.StringReader(edmxToParse));
             }
+        }
+    }
+    /// <summary>
+    /// Class containing all extension methods
+    /// </summary>
+    public static class ExtensionMethods
+    {
+        /// <summary>
+        /// There are no comments for RefreshCustomer in the schema.
+        /// </summary>
+        [global::Microsoft.OData.Client.OriginalNameAttribute("RefreshCustomer")]
+        public static global::SelfHostODataClientApp.SelfHostServer.Models.CustomerSingle RefreshCustomer(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::SelfHostODataClientApp.SelfHostServer.Models.Customer> source)
+        {
+            if (!source.IsComposable)
+            {
+                throw new global::System.NotSupportedException("The previous function is not composable.");
+            }
+
+            return new global::SelfHostODataClientApp.SelfHostServer.Models.CustomerSingle(source.CreateFunctionQuerySingle<global::SelfHostODataClientApp.SelfHostServer.Models.Customer>("Default.RefreshCustomer", true));
+        }
+        /// <summary>
+        /// There are no comments for RefreshCustomer2 in the schema.
+        /// </summary>
+        [global::Microsoft.OData.Client.OriginalNameAttribute("RefreshCustomer2")]
+        public static global::SelfHostODataClientApp.SelfHostServer.Models.CustomerSingle RefreshCustomer2(this global::Microsoft.OData.Client.DataServiceQuerySingle<global::SelfHostODataClientApp.SelfHostServer.Models.Customer> source)
+        {
+            if (!source.IsComposable)
+            {
+                throw new global::System.NotSupportedException("The previous function is not composable.");
+            }
+
+            return new global::SelfHostODataClientApp.SelfHostServer.Models.CustomerSingle(source.CreateFunctionQuerySingle<global::SelfHostODataClientApp.SelfHostServer.Models.Customer>("Default.RefreshCustomer2", true));
         }
     }
 }

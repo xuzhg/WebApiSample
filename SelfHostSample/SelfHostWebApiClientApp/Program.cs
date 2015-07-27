@@ -19,9 +19,11 @@ namespace SelfHostWebApiClientApp
             /*
             QueryCustomers();
 
-            QuerySingleCustomer();*/
+            QuerySingleCustomer();
 
-            PostCustomer();
+            PostCustomer();*/
+
+            CallFunctionCustomer();
         }
 
         static void QueryCustomers()
@@ -70,6 +72,18 @@ namespace SelfHostWebApiClientApp
             request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
             HttpResponseMessage resp = _client.SendAsync(request).Result;
+
+            resp.EnsureSuccessStatusCode();
+
+            string result = resp.Content.ReadAsStringAsync().Result;
+            Console.WriteLine(result);
+        }
+
+        static void CallFunctionCustomer()
+        {
+            Console.WriteLine();
+
+            HttpResponseMessage resp = _client.GetAsync(_baseUri + "Customers(1)/Default.RefreshCustomer?$expand=Category").Result;
 
             resp.EnsureSuccessStatusCode();
 
