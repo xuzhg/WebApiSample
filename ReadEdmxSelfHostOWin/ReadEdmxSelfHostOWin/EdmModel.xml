@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+  <edmx:DataServices>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="PIStore.DataModels">
+      <EntityType Name="Protocol">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Title" Type="Edm.String"/>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="BusinessGroupId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="UserFriendlyId" Type="Edm.String"/>
+        <Property Name="StartTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="StartedBy" Type="Edm.String"/>
+        <Property Name="StartOperationId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="EndTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="EndedBy" Type="Edm.String"/>
+        <Property Name="EndOperationId" Type="Edm.Guid"/>
+        <NavigationProperty Name="Implementations" Type="Collection(PIStore.DataModels.Implementation)" ContainsTarget="true"/>
+        <NavigationProperty Name="Fields" Type="Collection(PIStore.DataModels.Field)" ContainsTarget="true"/>
+      </EntityType>
+      <EntityType Name="Implementation">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="ProtocolId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="BusinessGroupId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="UserFriendlyId" Type="Edm.String"/>
+        <Property Name="StartTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="StartedBy" Type="Edm.String"/>
+        <Property Name="StartOperationId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="EndTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="EndedBy" Type="Edm.String"/>
+        <Property Name="EndOperationId" Type="Edm.Guid"/>
+        <NavigationProperty Name="Products" Type="Collection(PIStore.DataModels.ImplementationProductRelationship)" ContainsTarget="true"/>
+        <NavigationProperty Name="Fields" Type="Collection(PIStore.DataModels.Field)" ContainsTarget="true"/>
+      </EntityType>
+      <EntityType Name="Product">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="BusinessGroupId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="UserFriendlyId" Type="Edm.String"/>
+        <Property Name="StartTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="StartedBy" Type="Edm.String"/>
+        <Property Name="StartOperationId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="EndTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="EndedBy" Type="Edm.String"/>
+        <Property Name="EndOperationId" Type="Edm.Guid"/>
+        <NavigationProperty Name="Fields" Type="Collection(PIStore.DataModels.Field)" ContainsTarget="true"/>
+      </EntityType>
+      <EntityType Name="BusinessGroup">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="StartTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="StartedBy" Type="Edm.String"/>
+        <Property Name="StartOperationId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="EndTime" Type="Edm.DateTimeOffset"/>
+        <Property Name="EndedBy" Type="Edm.String"/>
+        <Property Name="EndOperationId" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="ImplementationProductRelationship">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="ProductId" Type="Edm.Guid"/>
+        <Property Name="RelationshipType" Type="PIStore.DataModels.ImplementationProductRelationshipType" Nullable="false"/>
+        <Property Name="Notes" Type="Edm.String"/>
+        <NavigationProperty Name="Product" Type="PIStore.DataModels.Product">
+          <ReferentialConstraint ReferencedProperty="Id" Property="ProductId"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="Field">
+        <Key>
+          <PropertyRef Name="Id"/>
+        </Key>
+        <Property Name="Id" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="FieldDefinitionId" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="Name" Type="Edm.String"/>
+        <Property Name="Value" Type="Edm.String"/>
+      </EntityType>
+      <EnumType Name="ImplementationProductRelationshipType">
+        <Member Name="Added" Value="0"/>
+        <Member Name="Changed" Value="1"/>
+        <Member Name="Removed" Value="2"/>
+        <Member Name="Unchanged" Value="3"/>
+        <Member Name="Other" Value="4"/>
+      </EnumType>
+    </Schema>
+    <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Default">
+      <EntityContainer Name="Container">
+        <EntitySet Name="Protocols" EntityType="PIStore.DataModels.Protocol"/>
+        <EntitySet Name="Implementations" EntityType="PIStore.DataModels.Implementation"/>
+        <EntitySet Name="Products" EntityType="PIStore.DataModels.Product"/>
+        <EntitySet Name="BusinessGroups" EntityType="PIStore.DataModels.BusinessGroup"/>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
