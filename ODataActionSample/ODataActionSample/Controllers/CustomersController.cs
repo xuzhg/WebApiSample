@@ -102,6 +102,9 @@ namespace ODataActionSample.Controllers
             return Updated(changedCustomer); // Updated(customer);
         }
 
+
+        // be caution: if you want to the action, please modify the Web.config
+        // just make path="*"
         [HttpPost]
         public bool IsEmailAvailable(ODataActionParameters parameters)
         {
