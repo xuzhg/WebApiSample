@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generation date: 7/27/2015 11:01:20 AM
+// Generation date: 7/29/2015 9:36:54 AM
 namespace SelfHostODataClientApp.SelfHostServer.Models
 {
     /// <summary>
