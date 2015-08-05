@@ -11,5 +11,7 @@ namespace SelfHostServer.Models
         public int OrderId { get; set; }
 
         public string OrderName { get; set; }
+
+        public IDictionary<string, object> Properties { get; set; }
     }
 }

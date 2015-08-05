@@ -16,7 +16,7 @@ namespace SimpleODataClientApp
             Console.WriteLine("[2]. Query Single Entity");
             Console.WriteLine("[3]. Query Single Entity with navigation property");
             Console.WriteLine("[4]. Add a link");
-           // Console.WriteLine("[5]. Delete a link");
+            Console.WriteLine("[5]. Post an order");
             Console.WriteLine("[9]. Quit");
             Console.WriteLine("**********************************");
         }

@@ -27,5 +27,13 @@ namespace SelfHostServer.Controllers
 
             return Ok(order);
         }
+
+        public IHttpActionResult Post(Order order)
+        {
+            int orderId = DataSource.Orders.Max(e => e.OrderId);
+            order.OrderId = orderId + 1;
+            DataSource.Orders.Add(order);
+            return Created(order);
+        }
     }
 }

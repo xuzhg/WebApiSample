@@ -38,7 +38,9 @@ namespace SimpleODataClientApp
                         Thread.Sleep(5000);
                         break;
 
-                    case 5: // delete a link
+                    case 5: // post an order
+                        PostAnOrder();
+                        Thread.Sleep(5000);
                         break;
 
                     case 6:
@@ -176,7 +178,17 @@ namespace SimpleODataClientApp
                 case "Orders":
                     var order = /*await*/ client.For<Order>().Key(key).FindEntryAsync().Result;
 
-                    Console.WriteLine("{0}: {1}", order.OrderId, order.OrderName);
+                    Console.Write("{0}: {1}", order.OrderId, order.OrderName);
+
+                    if (order.Properties != null)
+                    {
+                        // It seems can't query the dynamic properties from "Properties" dictionary
+                        foreach (var prop in order.Properties)
+                        {
+                            Console.Write(",{0}:{1}", prop.Key, prop.Value);
+                        }
+                    }
+                    Console.WriteLine();
                     break;
                 case "Categories":
                     var category = /*await*/ client.For<Category>().Key(key).FindEntryAsync().Result;
@@ -244,6 +256,36 @@ namespace SimpleODataClientApp
             await client.For<Customer>().Key(customer).LinkEntryAsync(x => x.Category, category);
 
             Console.WriteLine("\nAdded a new customer, new Category, link with customer and category.\n");
+        }
+
+        private static async void PostAnOrder()
+        {
+            var client = new ODataClient(_baseUri);
+
+            // With dynamic properties
+            var order =
+                await
+                    client.For("Orders")
+                        .Set(new {OrderId = 9, OrderName = "New Order", MyProperty = "Dynamic Property", GuidProperty = Guid.NewGuid()})
+                        .InsertEntryAsync();
+
+            Console.WriteLine("Post order result (un-typed) : ");
+            PrintItems("order", "", order);
+
+            var result = await client.For<Order>().Set(new {OrderId = 9, OrderName = "New Order", Birthday = DateTimeOffset.Now})
+                .InsertEntryAsync();
+
+            Console.WriteLine("\nPost order result (typed): ");
+            Console.Write("\n{0}: {1}", result.OrderId, result.OrderName);
+            if (result.Properties != null)
+            {
+                // It seems can't query the dynamic properties from "Properties" dictionary
+                foreach (var prop in result.Properties)
+                {
+                    Console.Write(",{0}:{1}", prop.Key, prop.Value);
+                }
+            }
+            Console.WriteLine();
         }
 
         private static void PrintItems(string name, string indent, IDictionary<string, object> dics)
