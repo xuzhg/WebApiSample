@@ -52,7 +52,37 @@ namespace OpenTypeSample
                     {"Authors", new[] {"Leonard G. Lobel", "Eric D. Boyd"}},
                     {"OtherCategories", new[] {Category.Book, Category.Magazine}}
                 }
-            }
+            },
+
+            new Book
+            {
+                ISBN = "201-0-699",
+                Title = "Sam Book1",
+                Press = new Press
+                {
+                    Name = "Microsoft Press",
+                    Category = Category.Book
+                },
+                DynamicProperties = new Dictionary<string, object>
+                {
+                    {"Sold", 9}
+                }
+            },
+
+            new Book
+            {
+                ISBN = "102-9-799",
+                Title = "Sam Book2",
+                Press = new Press
+                {
+                    Name = "Microsoft Press",
+                    Category = Category.Book
+                },
+                DynamicProperties = new Dictionary<string, object>
+                {
+                    {"Sold", 19}
+                }
+            },
         };
 
         [EnableQuery]
@@ -125,6 +155,5 @@ namespace OpenTypeSample
             var resultType = typeof(OkNegotiatedContentResult<>).MakeGenericType(type);
             return Activator.CreateInstance(resultType, content, this) as IHttpActionResult;
         }
-
     }
 }
