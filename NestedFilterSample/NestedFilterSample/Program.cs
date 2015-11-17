@@ -27,6 +27,11 @@ namespace NestedFilterSample
             Query(client, "Groups?$select=Id,Name&$filter=IsHidden eq false&IsShared ne false&$expand=Queries($select=Id,Name,IsPinned;$filter=IsPinned eq true)");
 
             Query(client, "Groups?$select=Id,Name&$filter=IsHidden eq false&IsShared ne false&$expand=Queries($select=Id,Name,IsPinned;$filter=IsPinned ne true)");
+
+            // $count
+            Query(client, "Groups?$expand=Queries&$count=true");
+
+            Query(client, "Groups?$expand=Queries($count=true)"); // not work before 5.8
         }
 
         private static void Query(HttpClient client, string uri)
