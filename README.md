@@ -1,5 +1,5 @@
 ====================
-Web Api Samples        |Build Status|
+Web Api Samples        
 ====================
 
 This repository is my personal repsository in which many OData Web API samples are created/updated to test many scenarios related to OData, OData Web API. 
@@ -13,5 +13,3 @@ Beside, you can send me email (saxu@microsoft.com) for any questions related ODa
 Thanks.
 Sam. 
 
-
-.. |Build Status| image:: https://secure.travis-ci.org/overviewer/Minecraft-Overviewer.png?branch=master
