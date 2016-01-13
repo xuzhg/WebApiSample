@@ -10,3 +10,6 @@ Beside, you can send me email (saxu@microsoft.com) for any questions related ODa
 
 Thanks.
 Sam. 
+
+
+.. |Build Status| image:: https://secure.travis-ci.org/overviewer/Minecraft-Overviewer.png?branch=master
