@@ -1,4 +1,6 @@
-# Web Api Samples  |Build Status|
+====================
+Web Api Samples        |Build Status|
+====================
 
 This repository is my personal repsository in which many OData Web API samples are created/updated to test many scenarios related to OData, OData Web API. 
 
