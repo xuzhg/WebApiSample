@@ -9,38 +9,30 @@ using System.Web.Http;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 using Microsoft.OData.Edm;
+using Newtonsoft.Json.Linq;
 
 namespace NestedFilterSample
 {
-    class Program
+    public class RegionTest
     {
-        private const string BaseUri = "http://localhost/odata/";
+        private const string BaseUri = "http://localhost/odata1/";
 
-        static void Main(string[] args)
-        { 
+        public static void RunTest()
+        {
+            Console.WriteLine("===============Region test ==============");
             HttpClient client = GetClient();
 
-            Query(client, "Groups?$expand=Queries");
+            Query(client, "Regions?$expand=Facilities($expand=Departments)");
 
-            Query(client, "Groups?$select=Id,Name&$filter=IsHidden eq false&IsShared ne false&$expand=Queries($select=Id,Name,IsPinned)");
+            Query(client, "Regions?$expand=Facilities($filter=Active eq true;$expand=Departments)");
 
-            Query(client, "Groups?$select=Id,Name&$filter=IsHidden eq false&IsShared ne false&$expand=Queries($select=Id,Name,IsPinned;$filter=IsPinned eq true)");
-
-            Query(client, "Groups?$select=Id,Name&$filter=IsHidden eq false&IsShared ne false&$expand=Queries($select=Id,Name,IsPinned;$filter=IsPinned ne true)");
-
-            // $count
-            Query(client, "Groups?$expand=Queries&$count=true");
-
-            Query(client, "Groups?$expand=Queries($count=true)"); // not work before 5.8
-
-            // Test nested $filter in nested $expand
-            RegionTest.RunTest();
+            Query(client, "Regions?$expand=Facilities($filter=Active eq true;$expand=Departments($filter=Active eq true))");
         }
 
         private static void Query(HttpClient client, string uri)
         {
             string requestUri = BaseUri + uri;
-            Console.WriteLine("\n[Query]: "+requestUri);
+            Console.WriteLine("\n[Query]: " + requestUri);
             HttpResponseMessage response = client.GetAsync(requestUri).Result;
 
             if (response.StatusCode != HttpStatusCode.OK)
@@ -54,22 +46,23 @@ namespace NestedFilterSample
 
             if (response.Content != null)
             {
-                Console.WriteLine(response.Content.ReadAsStringAsync().Result);
+                Console.WriteLine(JObject.Parse(response.Content.ReadAsStringAsync().Result));
             }
         }
 
         private static HttpClient GetClient()
         {
             var config = new HttpConfiguration();
-            config.MapODataServiceRoute("odata", "odata", GetEdmModel());
+            config.MapODataServiceRoute("odata1", "odata1", GetEdmModel());
             return new HttpClient(new HttpServer(config));
         }
 
         private static IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Group>("Groups");
-            builder.EntitySet<Query>("Queries");
+            builder.EntitySet<Region>("Regions");
+            builder.EntitySet<Facility>("Facilities");
+            builder.EntitySet<Department>("Departments");
             return builder.GetEdmModel();
         }
     }
