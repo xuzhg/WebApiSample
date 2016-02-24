@@ -1,8 +1,27 @@
 ﻿
 ====================
-Customize the feed and entry serializer to skip the null object.
+Customize feed and entry serializer to skip the null object
 ====================
 
+<h3>0</h3>
+
+In this sample, I create an in-memory customer-order model.
+
+```txt
+Customers
+   |- Customer #1
+   |- Customer #2
+   |- Customer #3
+   |- Customer #4
+   |- Customer #5
+   |- null
+   |- Customer #9
+          |- Order #116
+		  |- null
+		  |- Order #117
+```
+Where, the sixth customer is null, and the second order in customer #9 is null.
+   
 <h3>1</h3>
 
 if you send request for:
