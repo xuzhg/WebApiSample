@@ -77,12 +77,11 @@ namespace WebApiODataSample
             int order2 = Post(client, "Orders", "{\"Title\":\"Magazine\"}");
 
             // Post the $ref
+            string dollarId = "{ \"@odata.id\" : \"" + baseUri + "Orders(" + order1 + ")\"}";
+            Post(client, "Customers(" + id + ")/Orders/$ref", dollarId);
 
-            string dolladId = "{ \"@odata.id\" : \"" + baseUri + "Orders(" + order1 + ")\"}";
-            Post(client, "Customers(" + id + ")/Orders/$ref", dolladId);
-
-            dolladId = "{ \"@odata.id\" : \"" + baseUri + "Orders(" + order2 + ")\"}";
-            Post(client, "Customers(" + id + ")/Orders/$ref", dolladId);
+            dollarId = "{ \"@odata.id\" : \"" + baseUri + "Orders(" + order2 + ")\"}";
+            Post(client, "Customers(" + id + ")/Orders/$ref", dollarId);
 
             Query(client, "Customers(" + id + ")?$expand=Orders");
         }
