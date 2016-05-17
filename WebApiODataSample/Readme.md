@@ -25,7 +25,9 @@ The request payload should contain the single **@odata.id** or a collection. for
 <h4>NOTE</h4>
 
 The link payload should be one of the below content:
+
 1.Absolute URIs, or
+
 2.relative URIs, but **@odata.context** annotation must be on the payload.
 
 
