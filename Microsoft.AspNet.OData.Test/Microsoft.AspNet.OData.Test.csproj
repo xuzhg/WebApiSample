@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Function\FunctionTest.cs" />
     <Compile Include="Isof\IsOfTest.cs" />
     <Compile Include="NamespacePrefix\NamesapcePrefixTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
