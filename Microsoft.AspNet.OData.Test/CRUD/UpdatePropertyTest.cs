@@ -14,6 +14,7 @@ using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 using System.Web.OData.Routing;
 using Microsoft.OData.Edm;
+using Microsoft.OData.Edm.Library;
 using Xunit;
 
 namespace Microsoft.AspNet.OData.Test.CRUD
@@ -29,6 +30,18 @@ namespace Microsoft.AspNet.OData.Test.CRUD
             _configuration.MapODataServiceRoute("odata", "odata", GetEdmModel());
             HttpServer server = new HttpServer(_configuration);
             _client = new HttpClient(server);
+        }
+
+        [Fact]
+        public void CanQueryEntity()
+        {
+            string requestUri = "http://localhost/odata/Customers(1)";
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Get"), requestUri);
+            HttpResponseMessage response = _client.SendAsync(request).Result;
+
+            response.EnsureSuccessStatusCode();
+            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
         }
 
         [Fact]
@@ -80,10 +93,59 @@ namespace Microsoft.AspNet.OData.Test.CRUD
             response.EnsureSuccessStatusCode();
         }
 
+        // To patch a collection property is not reasonable.
         [Fact]
-        public void CanUpdateCollectionProperty()
+        public void CanUpdateCollectionOfPrimitiveProperty()
         {
+            string requestUri = "http://localhost/odata/Customers(1)/Dates";
+            const string payload = "{\"value\":[" +
+              "\"2011-08-11\"," +
+              "\"2016-03-12\"," +
+              "\"2019-09-01\"" +
+            "]}";
 
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Put"), requestUri);
+            request.Content = new StringContent(payload);
+            request.Content.Headers.ContentType = MediaTypeWithQualityHeaderValue.Parse("application/json");
+            HttpResponseMessage response = _client.SendAsync(request).Result;
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        [Fact]
+        [Category("Bug: https://github.com/OData/odata.net/issues/580")]
+        public void CanUpdateCollectionOfEnumProperty()
+        {
+            string requestUri = "http://localhost/odata/Customers(1)/Colors";
+            const string payload = "{\"@odata.type\":\"Collection(Microsoft.AspNet.OData.Test.CRUD.Color)\",\"value\":[" +
+              "\"Blue\"," +
+              "\"Red\"," +
+              "\"Green\"" +
+            "]}";
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Put"), requestUri);
+            request.Content = new StringContent(payload);
+            request.Content.Headers.ContentType = MediaTypeWithQualityHeaderValue.Parse("application/json");
+            HttpResponseMessage response = _client.SendAsync(request).Result;
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        [Fact]
+        public void CanUpdateCollectionOfComplexProperty()
+        {
+            string requestUri = "http://localhost/odata/Customers(1)/Addresses";
+
+            string ComplexValue1 = "{\"Street\":\"NE 24th St.\",\"City\":\"Redmond\"}";
+            string ComplexValue2 = "{\"Street\":\"LianHua Rd.\",\"City\":\"Shanghai\"}";
+            string payload = "{\"value\":[" + ComplexValue1 + "," + ComplexValue2 + "]}";
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Put"), requestUri);
+            request.Content = new StringContent(payload);
+            request.Content.Headers.ContentType = MediaTypeWithQualityHeaderValue.Parse("application/json");
+            HttpResponseMessage response = _client.SendAsync(request).Result;
+
+            response.EnsureSuccessStatusCode();
         }
 
         private static IEdmModel GetEdmModel()
@@ -95,6 +157,22 @@ namespace Microsoft.AspNet.OData.Test.CRUD
 
         public class CustomersController : ODataController
         {
+            public IHttpActionResult GetFavoriteColor(int key)
+            {
+                return Ok(Color.Blue);
+            }
+
+            public IHttpActionResult Get(int key)
+            {
+                return Ok(new Customer
+                {
+                    Id = 1,
+                    Name = "name",
+                    Dates = new List<Date> { new Date(1999, 9, 1), new Date(2016, 5, 24) },
+                    FavoriteColor = Color.Blue
+                });
+            }
+
             [HttpPatch]
             public IHttpActionResult PatchToName(int key, [FromBody] string name)
             {
@@ -127,19 +205,47 @@ namespace Microsoft.AspNet.OData.Test.CRUD
                 return Ok();
             }
 
-            public IHttpActionResult GetFavoriteColor(int key)
+            // It's not reasonable to patch a collection. So, only "Put" is supported to update the collection.
+            public IHttpActionResult PutToDates(int key, [FromBody]IEnumerable<Date> dates)
             {
-                return Ok(Color.Blue);
+                Assert.Equal(
+                    new[]
+                    {
+                        new Date(2011, 8, 11),
+                        new Date(2016, 3, 12),
+                        new Date(2019, 9, 1)
+                    }, dates);
+
+                return Ok();
             }
 
-            public IHttpActionResult Get(int key)
+            public IHttpActionResult PutToColors(int key, [FromBody]IEnumerable<Color> colors)
             {
-                return Ok(new Customer
-                {
-                    Id = 1,
-                    Name = "name",
-                    FavoriteColor = Color.Blue
-                });
+                Assert.Equal(
+                    new[]
+                    {
+                        Color.Blue,
+                        Color.Red,
+                        Color.Green
+                    }, colors);
+
+                return Ok();
+            }
+
+            public IHttpActionResult PutToAddresses(int key, [FromBody]IEnumerable<Address> addresses)
+            {
+                var enumerable = addresses as IList<Address> ?? addresses.ToList();
+                Assert.Equal(2, enumerable.Count);
+
+                Address address = enumerable.First();
+                Assert.Equal("NE 24th St.", address.Street);
+                Assert.Equal("Redmond", address.City);
+
+                address = enumerable.Last();
+                Assert.Equal("LianHua Rd.", address.Street);
+                Assert.Equal("Shanghai", address.City);
+
+                return Ok();
             }
         }
 
@@ -151,6 +257,12 @@ namespace Microsoft.AspNet.OData.Test.CRUD
             public Color FavoriteColor { get; set; }
 
             public Address Location { get; set; }
+
+            public IList<Date> Dates { get; set; }
+
+            public IList<Color> Colors { get; set; }
+
+            public IList<Address> Addresses { get; set; }
         }
 
         public class Address
