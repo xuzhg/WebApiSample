@@ -79,10 +79,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="CRUD\UpdatePropertyTest.cs" />
     <Compile Include="ETag\ETagTest.cs" />
     <Compile Include="ETag\MyETagHandler.cs" />
+    <Compile Include="Function\CustomFunctionResolve\CustomControllerRoutingConvention.cs" />
+    <Compile Include="Function\CustomFunctionResolve\CustomFunctionParameterResolveTest.cs" />
     <Compile Include="Function\FunctionTest.cs" />
     <Compile Include="Isof\IsOfTest.cs" />
     <Compile Include="NamespacePrefix\NamesapcePrefixTest.cs" />
