@@ -79,6 +79,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CRUD\ContainmentTest.cs" />
     <Compile Include="CRUD\UpdatePropertyTest.cs" />
     <Compile Include="ETag\ETagTest.cs" />
     <Compile Include="ETag\MyETagHandler.cs" />
