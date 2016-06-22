@@ -79,6 +79,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositeKey\AnyController.cs" />
+    <Compile Include="CompositeKey\CompositeEdmModel.cs" />
+    <Compile Include="CompositeKey\CompositeKeyRoutingConvention.cs" />
+    <Compile Include="CompositeKey\CompositeKeyTest.cs" />
+    <Compile Include="CompositeKey\DriverReleaseLifecycleDescriptionsController.cs" />
     <Compile Include="CRUD\ContainmentTest.cs" />
     <Compile Include="CRUD\UpdatePropertyTest.cs" />
     <Compile Include="ETag\ETagTest.cs" />
