@@ -7,14 +7,29 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AspNet.OData.Test
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Cover|Any CPU = Cover|Any CPU
+		Cover|x64 = Cover|x64
+		Cover|x86 = Cover|x86
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Cover|Any CPU.ActiveCfg = Release|Any CPU
+		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Cover|Any CPU.Build.0 = Release|Any CPU
+		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Cover|x64.ActiveCfg = Release|Any CPU
+		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Cover|x86.ActiveCfg = Release|Any CPU
 		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Release|x64.ActiveCfg = Release|Any CPU
+		{93AD45A8-9259-4DCA-BF2C-993466CDE6D5}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
