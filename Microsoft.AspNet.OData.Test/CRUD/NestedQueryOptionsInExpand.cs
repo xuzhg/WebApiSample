@@ -164,21 +164,10 @@ namespace Microsoft.AspNet.OData.Test.CRUD
         {
             string requestUri = "http://localhost/odata/Measures(1)?$expand=Metadata($expand=PackageTypes($select=Name;$filter=Name eq 'Sam'))";
 
-            string result = @"{
-  ""@odata.context"":""http://localhost/odata/$metadata#Measures(Metadata(PackageTypes(Name)))/$entity"",""Id"":1,""Metadata"":{
-    ""MeasureId"":11,""PackageTypes"":[
-      {
-        ""@odata.type"":""#Microsoft.AspNet.OData.Test.CRUD.PackageType"",""Name"":""Sam""
-      }
-    ]
-  }
-}";
-
             HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Get"), requestUri);
             HttpResponseMessage response = _client.SendAsync(request).Result;
 
             Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
-            Console.WriteLine(response.Content.ReadAsStringAsync().Result);
         }
 
         private static IEdmModel GetEdmModel()

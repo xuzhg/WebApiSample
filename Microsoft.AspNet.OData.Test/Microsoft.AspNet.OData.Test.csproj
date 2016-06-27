@@ -79,6 +79,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\ActionTest.cs" />
     <Compile Include="CompositeKey\AnyController.cs" />
     <Compile Include="CompositeKey\CompositeEdmModel.cs" />
     <Compile Include="CompositeKey\CompositeKeyRoutingConvention.cs" />
