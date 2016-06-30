@@ -87,6 +87,7 @@
     <Compile Include="CompositeKey\DriverReleaseLifecycleDescriptionsController.cs" />
     <Compile Include="CRUD\ContainmentTest.cs" />
     <Compile Include="CRUD\NestedQueryOptionsInExpand.cs" />
+    <Compile Include="CRUD\UpdateEntityTest.cs" />
     <Compile Include="CRUD\UpdatePropertyTest.cs" />
     <Compile Include="ETag\ETagTest.cs" />
     <Compile Include="ETag\MyETagHandler.cs" />
