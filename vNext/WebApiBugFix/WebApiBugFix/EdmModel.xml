@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="Garnet.Data.Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="ContainerEntity">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Created" Type="Edm.DateTimeOffset" Nullable="false" />
+        <NavigationProperty Name="Properties" Type="Collection(Garnet.Data.Entities.PropertyEntity)" />
+        <NavigationProperty Name="Items" Type="Collection(Garnet.Data.Entities.ItemEntity)" />
+        <NavigationProperty Name="Relationships" Type="Collection(Garnet.Data.Entities.ContainerRelationshipEntity)" />
+      </EntityType>
+      <EntityType Name="ItemEntity">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="ContainerId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Created" Type="Edm.DateTimeOffset" Nullable="false" />
+        <NavigationProperty Name="Container" Type="Garnet.Data.Entities.ContainerEntity" />
+        <NavigationProperty Name="Values" Type="Collection(Garnet.Data.Entities.PropertyValueEntity)" />
+      </EntityType>
+      <EntityType Name="PropertyEntity">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="Type" Type="Garnet.Data.Enums.TypeOfValue" Nullable="false" />
+        <Property Name="ContainerId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Created" Type="Edm.DateTimeOffset" Nullable="false" />
+        <NavigationProperty Name="Container" Type="Garnet.Data.Entities.ContainerEntity" />
+        <NavigationProperty Name="ForeignRelationships" Type="Collection(Garnet.Data.Entities.ContainerRelationshipEntity)" />
+        <NavigationProperty Name="PrimaryRelationships" Type="Collection(Garnet.Data.Entities.ContainerRelationshipEntity)" />
+      </EntityType>
+      <EntityType Name="PropertyValueEntity">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="IntValueId" Type="Edm.Int32" />
+        <Property Name="StringValueId" Type="Edm.Int32" />
+        <Property Name="BoolValueId" Type="Edm.Int32" />
+        <Property Name="DoubleValueId" Type="Edm.Int32" />
+        <Property Name="PropertyId" Type="Edm.Int32" />
+        <Property Name="ItemId" Type="Edm.Int32" />
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Created" Type="Edm.DateTimeOffset" Nullable="false" />
+        <NavigationProperty Name="IntValue" Type="Garnet.Data.Entities.Values.IntValueEntity" />
+        <NavigationProperty Name="StringValue" Type="Garnet.Data.Entities.Values.StringValueEntity" />
+        <NavigationProperty Name="BoolValue" Type="Garnet.Data.Entities.Values.BoolValueEntity" />
+        <NavigationProperty Name="DoubleValue" Type="Garnet.Data.Entities.Values.DoubleValueEntity" />
+        <NavigationProperty Name="Property" Type="Garnet.Data.Entities.PropertyEntity" />
+        <NavigationProperty Name="Item" Type="Garnet.Data.Entities.ItemEntity" />
+      </EntityType>
+      <EntityType Name="ContainerRelationshipEntity">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="PrimaryId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="ForeignId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Created" Type="Edm.DateTimeOffset" Nullable="false" />
+        <NavigationProperty Name="Primary" Type="Garnet.Data.Entities.PropertyEntity" />
+        <NavigationProperty Name="Foreign" Type="Garnet.Data.Entities.PropertyEntity" />
+      </EntityType>
+    </Schema>
+    <Schema Namespace="Garnet.Data.Entities.Values" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="BoolValueEntity">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="DataValue" Type="Edm.Boolean" />
+        <Property Name="PropertyValueId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Created" Type="Edm.DateTimeOffset" Nullable="false" />
+        <NavigationProperty Name="PropertyValue" Type="Garnet.Data.Entities.PropertyValueEntity" />
+      </EntityType>
+      <EntityType Name="DoubleValueEntity">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="DataValue" Type="Edm.Double" />
+        <Property Name="PropertyValueId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Created" Type="Edm.DateTimeOffset" Nullable="false" />
+        <NavigationProperty Name="PropertyValue" Type="Garnet.Data.Entities.PropertyValueEntity" />
+      </EntityType>
+      <EntityType Name="IntValueEntity">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="DataValue" Type="Edm.Int32" />
+        <Property Name="PropertyValueId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Created" Type="Edm.DateTimeOffset" Nullable="false" />
+        <NavigationProperty Name="PropertyValue" Type="Garnet.Data.Entities.PropertyValueEntity" />
+      </EntityType>
+      <EntityType Name="StringValueEntity">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="DataValue" Type="Edm.String" />
+        <Property Name="PropertyValueId" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Created" Type="Edm.DateTimeOffset" Nullable="false" />
+        <NavigationProperty Name="PropertyValue" Type="Garnet.Data.Entities.PropertyValueEntity" />
+      </EntityType>
+    </Schema>
+    <Schema Namespace="Garnet.Data.Enums" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EnumType Name="TypeOfValue">
+        <Member Name="Int" Value="0" />
+        <Member Name="String" Value="1" />
+        <Member Name="Double" Value="2" />
+        <Member Name="Bool" Value="3" />
+        <Member Name="Null" Value="4" />
+      </EnumType>
+    </Schema>
+    <Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="Container">
+        <EntitySet Name="Containers" EntityType="Garnet.Data.Entities.ContainerEntity">
+          <NavigationPropertyBinding Path="Properties" Target="Properties" />
+          <NavigationPropertyBinding Path="Items" Target="Items" />
+          <NavigationPropertyBinding Path="Relationships" Target="ContainerRelationships" />
+        </EntitySet>
+        <EntitySet Name="Items" EntityType="Garnet.Data.Entities.ItemEntity">
+          <NavigationPropertyBinding Path="Container" Target="Containers" />
+          <NavigationPropertyBinding Path="Values" Target="PropertyValues" />
+        </EntitySet>
+        <EntitySet Name="Properties" EntityType="Garnet.Data.Entities.PropertyEntity">
+          <NavigationPropertyBinding Path="Container" Target="Containers" />
+          <NavigationPropertyBinding Path="ForeignRelationships" Target="ContainerRelationships" />
+          <NavigationPropertyBinding Path="PrimaryRelationships" Target="ContainerRelationships" />
+        </EntitySet>
+        <EntitySet Name="PropertyValues" EntityType="Garnet.Data.Entities.PropertyValueEntity">
+          <NavigationPropertyBinding Path="IntValue" Target="IntValues" />
+          <NavigationPropertyBinding Path="StringValue" Target="StringValues" />
+          <NavigationPropertyBinding Path="BoolValue" Target="BoolBalues" />
+          <NavigationPropertyBinding Path="DoubleValue" Target="DoubleValues" />
+          <NavigationPropertyBinding Path="Property" Target="Properties" />
+          <NavigationPropertyBinding Path="Item" Target="Items" />
+        </EntitySet>
+        <EntitySet Name="ContainerRelationships" EntityType="Garnet.Data.Entities.ContainerRelationshipEntity">
+          <NavigationPropertyBinding Path="Primary" Target="Properties" />
+          <NavigationPropertyBinding Path="Foreign" Target="Properties" />
+        </EntitySet>
+        <EntitySet Name="BoolBalues" EntityType="Garnet.Data.Entities.Values.BoolValueEntity">
+          <NavigationPropertyBinding Path="PropertyValue" Target="PropertyValues" />
+        </EntitySet>
+        <EntitySet Name="DoubleValues" EntityType="Garnet.Data.Entities.Values.DoubleValueEntity">
+          <NavigationPropertyBinding Path="PropertyValue" Target="PropertyValues" />
+        </EntitySet>
+        <EntitySet Name="IntValues" EntityType="Garnet.Data.Entities.Values.IntValueEntity">
+          <NavigationPropertyBinding Path="PropertyValue" Target="PropertyValues" />
+        </EntitySet>
+        <EntitySet Name="StringValues" EntityType="Garnet.Data.Entities.Values.StringValueEntity">
+          <NavigationPropertyBinding Path="PropertyValue" Target="PropertyValues" />
+        </EntitySet>
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>
