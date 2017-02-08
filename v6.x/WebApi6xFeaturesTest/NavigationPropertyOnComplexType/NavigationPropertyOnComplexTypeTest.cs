@@ -130,6 +130,7 @@ namespace WebApi6xFeaturesTest.NavigationPropertyOnComplexType
                 "<edmx:Edmx Version=\"4.0\" xmlns:edmx=\"http://docs.oasis-open.org/odata/ns/edmx\">" +
                   "<edmx:DataServices><Schema Namespace=\"ModelLibrary\" xmlns=\"http://docs.oasis-open.org/odata/ns/edm\">" +
                     "<ComplexType Name=\"Address\">" +
+                      "<Property Name=\"Street\" Type=\"Edm.String\" />" +
                       "<NavigationProperty Name=\"CityInfo\" Type=\"ModelLibrary.City\" />" +
                       "<NavigationProperty Name=\"Cities\" Type=\"Collection(ModelLibrary.City)\" />" +
                     "</ComplexType>" +
