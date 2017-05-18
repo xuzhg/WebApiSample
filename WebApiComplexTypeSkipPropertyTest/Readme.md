@@ -25,7 +25,8 @@
         <Property Name="Country" Type="Edm.String" />
       </ComplexType>
     </Schema>
-    <Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+
+<Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
       <EntityContainer Name="Container">
         <EntitySet Name="Customers" EntityType="WebApiComplexTypeSkipPropertyTest.Customer" />
       </EntityContainer>
@@ -74,7 +75,7 @@ Where, "Country" is serialized in the payload.
     </Schema>
   </edmx:DataServices>
 </edmx:Edmx>
-```xml
+```
 
 ```json
 {
