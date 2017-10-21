@@ -101,6 +101,7 @@
     <Compile Include="Dynamic\DynamicDollaValueTest.cs" />
     <Compile Include="Dynamic\ODataDynamicValueMediaTypeMapping.cs" />
     <Compile Include="NavigationPropertyOnComplexType\NavigationPropertyOnComplexTypeTest.cs" />
+    <Compile Include="Operations\SameFunctionActionTests.cs" />
     <Compile Include="QueryComplex\QueryComplexTypeTest.cs" />
     <Compile Include="TypeExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
