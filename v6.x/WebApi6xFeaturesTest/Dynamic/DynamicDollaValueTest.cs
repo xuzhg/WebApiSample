@@ -172,6 +172,34 @@ namespace WebApi6xFeaturesTest.Dynamic
 
     public class PeopleController : ODataController
     {
+        [EnableQuery]
+        [HttpGet]
+        public IHttpActionResult Get()
+        {
+            Person person1 = new Person
+            {
+                Id = 1,
+                DynamicProperties = new Dictionary<string, object>()
+            };
+
+            person1.DynamicProperties.Add("foo", "foo1");
+            person1.DynamicProperties.Add("bar", "bar1");
+
+            Person person2 = new Person
+            {
+                Id = 2,
+                DynamicProperties = new Dictionary<string, object>()
+            };
+
+            person2.DynamicProperties.Add("foo", "foo2");
+            person2.DynamicProperties.Add("bar", "bar2");
+
+            IList<Person> persons = new List<Person> { person1, person2 };
+
+            return this.Ok(persons);
+        }
+
+        [EnableQuery]
         [HttpGet]
         public IHttpActionResult Get([FromODataUri]int key)
         {
