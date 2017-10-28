@@ -26,6 +26,26 @@ namespace WebApi6xFeaturesTest.QueryComplexTypeTest
         }
 
         [Fact]
+        public void CanSerializeNullCollectionAsEmtptyCollection()
+        {
+            ODataModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<Customer>("Customers");
+            HttpClient client = GetClient(builder.GetEdmModel());
+
+            string requestUri = "http://localhost/odata/Customers(2)";
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Get"), requestUri);
+            HttpResponseMessage response = client.SendAsync(request).Result;
+
+            string result =
+                @"{""@odata.context"":""http://localhost/odata/$metadata#Customers/$entity"",""Id"":2,""Location"":null,""Locations"":[]}";
+
+            response.EnsureSuccessStatusCode();
+            _output.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Assert.Equal(result, response.Content.ReadAsStringAsync().Result);
+        }
+
+        [Fact]
         public void CanReturnTheArrayOfComplexType()
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
@@ -97,6 +117,12 @@ namespace WebApi6xFeaturesTest.QueryComplexTypeTest
                     Cities = new List<City>()
                 }).ToArray()
             };
+
+            if (key == 2)
+            {
+                c.Location = null;
+                c.Locations = null;
+            }
 
             return Ok(c);
         }
