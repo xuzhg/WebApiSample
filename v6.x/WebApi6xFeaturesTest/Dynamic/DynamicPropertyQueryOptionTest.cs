@@ -59,10 +59,27 @@ namespace WebApi6xFeaturesTest.Dynamic
             Assert.Equal("2", obj["value"][0]["Id"]);
         }
 
+        [Fact]
+        public void SelectDynamicProperties()
+        {
+            HttpClient client = GetClient(GetEdmModel());
+
+            string requestUri = @"http://localhost/odata/People?$select=foo";
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Get"), requestUri);
+            HttpResponseMessage response = client.SendAsync(request).Result;
+
+            response.EnsureSuccessStatusCode();
+            string payload = response.Content.ReadAsStringAsync().Result;
+            _output.WriteLine(payload);
+
+            Assert.Equal("{\"@odata.context\":\"http://localhost/odata/$metadata#People(foo)\",\"value\":[{\"foo\":\"foo1\"},{\"foo\":\"foo2\"}]}", payload);
+        }
+
         private static HttpClient GetClient(IEdmModel model)
         {
             var config = new[] { typeof(MetadataController), typeof(PeopleController) }.GetHttpConfiguration();
-            config.Count().Filter().OrderBy();
+            config.Count().Filter().OrderBy().Select();
             config.MapODataServiceRoute("odata", "odata", model);
             HttpServer server = new HttpServer(config);
             return new HttpClient(server);
