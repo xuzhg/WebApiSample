@@ -81,6 +81,43 @@ namespace WebApi6xFeaturesTest.Dynamic
         }
 
         [Fact]
+        public void QueryEntitySet()
+        {
+            HttpClient client = GetClient(GetEdmModel());
+
+            string requestUri = "http://localhost/odata/People?$filter=Items/any(d:d le 5)";
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Get"), requestUri);
+            HttpResponseMessage response = client.SendAsync(request).Result;
+
+            string result =
+                @"{""@odata.context"":""http://localhost/odata/$metadata#People/$entity"",""Id"":0,""foo"":""foo_value"",""bar"":""bar_value""}";
+
+            response.EnsureSuccessStatusCode();
+            _output.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Assert.Equal(result, response.Content.ReadAsStringAsync().Result);
+        }
+
+        [Fact]
+        public void QueryEntitySet2()
+        {
+            HttpClient client = GetClient(GetEdmModel());
+
+         //   string requestUri = "http://localhost/odata/People?$filter=StringItems/any(d:d eq 'efg')";
+            string requestUri = "http://localhost/odata/People?$filter=StringItems/any(d:startswith(d, 'e'))";
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Get"), requestUri);
+            HttpResponseMessage response = client.SendAsync(request).Result;
+
+            string result =
+                @"{""@odata.context"":""http://localhost/odata/$metadata#People/$entity"",""Id"":0,""foo"":""foo_value"",""bar"":""bar_value""}";
+
+            response.EnsureSuccessStatusCode();
+            _output.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Assert.Equal(result, response.Content.ReadAsStringAsync().Result);
+        }
+
+        [Fact]
         public void QueryDynamicProperties()
         {
             HttpClient client = GetClient(GetEdmModel());
@@ -143,7 +180,7 @@ namespace WebApi6xFeaturesTest.Dynamic
         private static HttpClient GetClient(IEdmModel model)
         {
             var config = new[] { typeof(MetadataController), typeof(PeopleController) }.GetHttpConfiguration();
-
+            config.Filter();
             var routings = ODataRoutingConventions.CreateDefault();
             routings.Insert(0, new DynamicDollarValueRoutingConvention());
 
@@ -179,6 +216,9 @@ namespace WebApi6xFeaturesTest.Dynamic
             Person person1 = new Person
             {
                 Id = 1,
+                StringItems = new List<string> { "abc" , "xyz" },
+
+                Items = new List<int> { 9, 10 },
                 DynamicProperties = new Dictionary<string, object>()
             };
 
@@ -188,6 +228,8 @@ namespace WebApi6xFeaturesTest.Dynamic
             Person person2 = new Person
             {
                 Id = 2,
+                StringItems = new List<string> { "efg", "hig" },
+                Items = new List<int> { 1, 2 },
                 DynamicProperties = new Dictionary<string, object>()
             };
 

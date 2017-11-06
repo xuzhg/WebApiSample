@@ -10,6 +10,10 @@ namespace ModelLibrary
     {
         public int Id { get; set; }
 
+        public IList<int> Items { get; set; }
+
+        public IList<string> StringItems { get; set; }
+
         public IDictionary<string, object> DynamicProperties { get; set; }
     }
 }
