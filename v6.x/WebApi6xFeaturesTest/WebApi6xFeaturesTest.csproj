@@ -97,6 +97,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Complex\ComplexTypeTest.cs" />
     <Compile Include="Dynamic\DynamicDollarValueRoutingConvention.cs" />
     <Compile Include="Dynamic\DynamicPropertyQueryOptionTest.cs" />
     <Compile Include="Dynamic\DynamicDollaValueTest.cs" />
