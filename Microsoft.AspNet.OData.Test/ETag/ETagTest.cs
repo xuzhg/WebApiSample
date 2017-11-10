@@ -14,11 +14,34 @@ using System.Web.OData.Formatter;
 using Microsoft.OData.Edm;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using System.Web.OData.Routing;
 
 namespace Microsoft.AspNet.OData.Test.ETag
 {
     public class ETagTest
     {
+        [Fact]
+        public void CanCallUnboundFunctionReturnsETags()
+        {
+            IEdmModel model = GetEdmModel();
+            HttpConfiguration configuration = new[] { typeof(CustomersController) }.GetHttpConfiguration();
+            configuration.MapODataServiceRoute("odata", "odata", model);
+            HttpServer server = new HttpServer(configuration);
+            HttpClient client = new HttpClient(server);
+
+            string requestUri = "http://localhost/odata/UnboundFunction()";
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Get"), requestUri);
+            HttpResponseMessage response = client.SendAsync(request).Result;
+
+            response.EnsureSuccessStatusCode();
+
+            JObject result = JObject.Parse(response.Content.ReadAsStringAsync().Result);
+            Console.WriteLine(result);
+            Assert.Equal("W/\"dHJ1ZQ==,OTk=\"", result["value"][0]["@odata.etag"]);
+            Assert.Equal("W/\"ZmFsc2U=,MTI=\"", result["value"][1]["@odata.etag"]);
+        }
+
         [Fact]
         public void CanQueryEntityWithDefaultETagHandler()
         {
@@ -85,6 +108,9 @@ namespace Microsoft.AspNet.OData.Test.ETag
         {
             var builder = new ODataConventionModelBuilder();
             builder.EntitySet<Customer>("Customers");
+
+            builder.Function("UnboundFunction").ReturnsFromEntitySet<Customer>("Customers");
+
             return builder.GetEdmModel();
         }
 
@@ -94,6 +120,14 @@ namespace Microsoft.AspNet.OData.Test.ETag
             public IHttpActionResult Get(int key)
             {
                 return Ok(_customers.Single(c => c.Id == key));
+            }
+
+            [EnableQuery]
+            [HttpGet]
+            [ODataRoute("UnboundFunction()")]
+            public IHttpActionResult UnboundFunction()
+            {
+                return Ok(_customers);
             }
 
             private static IList<Customer> _customers;
