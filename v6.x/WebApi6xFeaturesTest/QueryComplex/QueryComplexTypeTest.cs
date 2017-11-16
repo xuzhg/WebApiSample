@@ -13,6 +13,7 @@ using Microsoft.OData.Edm;
 using ModelLibrary;
 using Xunit;
 using Xunit.Abstractions;
+using System.Net.Http.Headers;
 
 namespace WebApi6xFeaturesTest.QueryComplexTypeTest
 {
@@ -63,6 +64,41 @@ namespace WebApi6xFeaturesTest.QueryComplexTypeTest
             response.EnsureSuccessStatusCode();
             _output.WriteLine(response.Content.ReadAsStringAsync().Result);
             Assert.Equal(result, response.Content.ReadAsStringAsync().Result);
+        }
+
+        public static Uri MyLink(ResourceContext<Customer> context)
+        {
+            return new Uri("http://selflink");
+        }
+
+        [Fact]
+        public void CreatedUsingTheCustomerNavigationSourceLinkBuilder()
+        {
+            ODataModelBuilder builder = new ODataConventionModelBuilder();
+            var customers = builder.EntitySet<Customer>("Customers");
+            customers.HasIdLink(
+                MyLink,
+                false);
+            customers.HasEditLink(MyLink, false);
+            IEdmModel model = builder.GetEdmModel();
+
+            HttpClient client = GetClient(model);
+
+            string requestUri = "http://localhost/odata/Customers";
+
+            string message = "{ 'Id' : 44,  'Location' : "+
+                "{ '@odata.type' : '#ModelLibrary.Address', 'Street': '156th'} " +
+                  "}";
+
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, requestUri);
+            request.Content = new StringContent(message);
+            request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+
+            HttpResponseMessage response = client.SendAsync(request).Result;
+
+            response.EnsureSuccessStatusCode();
+            _output.WriteLine(response.Content.ReadAsStringAsync().Result);
+            Assert.Equal(new Uri("http://selflink"), response.Headers.Location);
         }
 
         [Fact(Skip = "Can't work, need to continue to test")]
@@ -125,6 +161,13 @@ namespace WebApi6xFeaturesTest.QueryComplexTypeTest
             }
 
             return Ok(c);
+        }
+
+        [HttpPost]
+        [EnableQuery]
+        public IHttpActionResult Post(Customer customer)
+        {
+            return Created(customer);
         }
 
         [EnableQuery]
