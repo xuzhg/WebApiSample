@@ -102,6 +102,7 @@
     <Compile Include="Dynamic\DynamicPropertyQueryOptionTest.cs" />
     <Compile Include="Dynamic\DynamicDollaValueTest.cs" />
     <Compile Include="Dynamic\ODataDynamicValueMediaTypeMapping.cs" />
+    <Compile Include="Metadata\MetadataTest.cs" />
     <Compile Include="NavigationPropertyOnComplexType\NavigationPropertyOnComplexTypeTest.cs" />
     <Compile Include="Operations\SameFunctionActionTests.cs" />
     <Compile Include="QueryComplex\QueryComplexTypeTest.cs" />
