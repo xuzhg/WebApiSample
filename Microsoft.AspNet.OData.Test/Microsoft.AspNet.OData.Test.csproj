@@ -95,6 +95,9 @@
     <Compile Include="Function\CustomFunctionResolve\CustomControllerRoutingConvention.cs" />
     <Compile Include="Function\CustomFunctionResolve\CustomFunctionParameterResolveTest.cs" />
     <Compile Include="Function\FunctionTest.cs" />
+    <Compile Include="GeneralPropertyAccess\LotOfPropertiesEntitiesController.cs" />
+    <Compile Include="GeneralPropertyAccess\GeneralPropertyAccessTest.cs" />
+    <Compile Include="GeneralPropertyAccess\GeneralPropertyRoutingConvention.cs" />
     <Compile Include="Isof\IsOfTest.cs" />
     <Compile Include="NamespacePrefix\NamesapcePrefixTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
