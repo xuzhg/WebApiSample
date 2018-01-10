@@ -95,6 +95,8 @@
     <Compile Include="Function\CustomFunctionResolve\CustomControllerRoutingConvention.cs" />
     <Compile Include="Function\CustomFunctionResolve\CustomFunctionParameterResolveTest.cs" />
     <Compile Include="Function\FunctionTest.cs" />
+    <Compile Include="GeneralPropertyAccess\NavPropertyRoutingConvention.cs" />
+    <Compile Include="GeneralPropertyAccess\NavigationPropertyAccessTest.cs" />
     <Compile Include="GeneralPropertyAccess\LotOfPropertiesEntitiesController.cs" />
     <Compile Include="GeneralPropertyAccess\GeneralPropertyAccessTest.cs" />
     <Compile Include="GeneralPropertyAccess\GeneralPropertyRoutingConvention.cs" />
