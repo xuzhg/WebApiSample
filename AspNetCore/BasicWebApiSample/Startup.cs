@@ -23,6 +23,7 @@ namespace BasicWebApiSample
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           // services.AddODataQueryFilter();
             services.AddDbContext<CustomerOrderContext>(opt => opt.UseInMemoryDatabase("CustomerOrdersList"));
             services.AddOData();
             services.AddMvc();
@@ -43,6 +44,8 @@ namespace BasicWebApiSample
                 builder.Filter().Expand().Select().Count().OrderBy().MaxTop(null);
 
                 builder.MapODataServiceRoute("odata", "odata", model);
+
+                builder.MapODataServiceRoute("odata1", "inmem", model);
             });
         }
 

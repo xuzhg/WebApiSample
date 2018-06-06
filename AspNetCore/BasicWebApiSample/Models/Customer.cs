@@ -15,6 +15,8 @@ namespace BasicWebApiSample.Models
 
         public Color FavoriateColor { get; set; }
 
+        public Order Order { get; set; }
+
         public IList<Order> Orders { get; set; }
     }
 }
