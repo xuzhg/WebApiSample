@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BasicWebApiSample.Models;
 using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OData.Edm;
 
 namespace BasicWebApiSample.Controllers
 {
@@ -55,6 +57,8 @@ namespace BasicWebApiSample.Controllers
             {
                 Id = 1,
                 Name = "Customer A",
+                Birthday = new DateTime(1990, 1, 1),
+                EffectiveDate = new Date(2001, 8, 8),
                 FavoriateColor = Color.Red,
                 HomeAddress = new Address
                 {
@@ -77,6 +81,8 @@ namespace BasicWebApiSample.Controllers
             {
                 Id = 2,
                 Name = "Customer B",
+                Birthday = new DateTime(2009, 11,9),
+                EffectiveDate = new Date(2011, 10, 18),
                 FavoriateColor = Color.Red,
                 HomeAddress = new Address
                 {
