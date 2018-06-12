@@ -45,10 +45,29 @@ namespace BasicEFCoreTest.Models
                 }
             };
 
+            Customer customerC = new Customer
+            {
+                FirstName = "Jichan",
+                LastName = "Zhang",
+                UserName = null,
+                Age = 29,
+                FavoriateColor = Color.Blue,
+                HomeAddress = new Address
+                {
+                    City = "Hollewye",
+                    Street = "Main St NE"
+                },
+                Order = new Order
+                {
+                    Price = 104m
+                }
+            };
+
             return new List<Customer>
             {
                 customerA,
-                customerB
+                customerB,
+                customerC
             };
         }
     }

@@ -380,3 +380,32 @@ dbug: Microsoft.EntityFrameworkCore.Infrastructure[10407]
 info: Microsoft.AspNetCore.Hosting.Internal.WebHost[2]
       Request finished in 1016.1331ms 200 application/json; odata.metadata=minimal; odata.streaming=true; charset=utf-8
 ```
+
+## Filter on certain property
+
+If you issue a request as:
+```C#
+http://localhost:5000/odata/Customers?$filter=contains(UserName, 'Pe')
+```
+
+you will get the payload as:
+
+```json
+{
+    "@odata.context": "http://localhost:5000/odata/$metadata#Customers",
+    "value": [
+        {
+            "Id": 2,
+            "FirstName": "Jonier",
+            "LastName": "Alice",
+            "UserName": "Peter",
+            "Age": 19,
+            "FavoriateColor": "Red",
+            "HomeAddress": {
+                "City": "Bellevue",
+                "Street": "Main St NE"
+            }
+        }
+    ]
+}
+```
