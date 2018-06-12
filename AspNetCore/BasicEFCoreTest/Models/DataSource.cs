@@ -11,7 +11,9 @@ namespace BasicEFCoreTest.Models
         {
             Customer customerA = new Customer
             {
-                Name = "Sam",
+                FirstName = "ZG",
+                LastName = "Xu",
+                UserName = "Sam",
                 Age = 18,
                 FavoriateColor = Color.Red,
                 HomeAddress = new Address
@@ -27,7 +29,9 @@ namespace BasicEFCoreTest.Models
 
             Customer customerB = new Customer
             {
-                Name = "Peter",
+                FirstName = "Jonier",
+                LastName = "Alice",
+                UserName = "Peter",
                 Age = 19,
                 FavoriateColor = Color.Red,
                 HomeAddress = new Address
