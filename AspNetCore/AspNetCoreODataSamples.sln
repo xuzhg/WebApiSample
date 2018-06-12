@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicWebApiSample", "BasicW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasicEFCoreTest", "BasicEFCoreTest\BasicEFCoreTest.csproj", "{C7F9B631-1198-4E37-9D14-A97B016AF05E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicWebApiFxSample", "BasicWebApiFxSample\BasicWebApiFxSample.csproj", "{ECCD2E92-D0EB-46AC-9D12-041BF8529103}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C7F9B631-1198-4E37-9D14-A97B016AF05E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7F9B631-1198-4E37-9D14-A97B016AF05E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7F9B631-1198-4E37-9D14-A97B016AF05E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECCD2E92-D0EB-46AC-9D12-041BF8529103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECCD2E92-D0EB-46AC-9D12-041BF8529103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECCD2E92-D0EB-46AC-9D12-041BF8529103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECCD2E92-D0EB-46AC-9D12-041BF8529103}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
