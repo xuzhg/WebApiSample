@@ -34,7 +34,19 @@ namespace BasicEFCoreTest.Controllers
         [EnableQuery]
         public IActionResult Get()
         {
-            return Ok(_db.Customers);
+            var query = _db.Customers.Select(x => new Customer
+            {
+                Age = x.Age,
+                FavoriateColor = x.FavoriateColor,
+                FirstName = x.FirstName,
+                HomeAddress = x.HomeAddress,
+                Id = x.Id,
+                LastName = x.LastName,
+                Order = x.Order,
+                UserName = x.UserName
+            });
+
+            return Ok(query);
         }
     }
 }
