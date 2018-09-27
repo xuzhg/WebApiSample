@@ -58,7 +58,7 @@ namespace AnnotationEnumType.Models
             IEdmEntityType entityType = model.SchemaElements.OfType<IEdmEntityType>().First(c => c.Name == "Customer");
             IEdmProperty property = entityType.Properties().First(c => c.Name == "Name");
 
-            EdmVocabularyAnnotation annotation = new EdmVocabularyAnnotation(property, term, new EdmEnumMemberExpression(enumType.Members.First()));
+            EdmVocabularyAnnotation annotation = new EdmVocabularyAnnotation(property, term, new EdmEnumMemberExpression(enumType.Members.First(c => c.Name == "ReadOnly")));
             annotation.SetSerializationLocation(model, EdmVocabularyAnnotationSerializationLocation.Inline);
             ((EdmModel)model).SetVocabularyAnnotation(annotation);
         }
