@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataLibNetCore2", "ODataLibNetCore2\ODataLibNetCore2.csproj", "{A6E62EF1-5339-4E65-AD34-242FC0023A42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyODataLibForNetCore2", "MyODataLibForNetCore2\MyODataLibForNetCore2.csproj", "{7134AAE9-216C-4C60-AF4D-34E84A75827F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6E62EF1-5339-4E65-AD34-242FC0023A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6E62EF1-5339-4E65-AD34-242FC0023A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6E62EF1-5339-4E65-AD34-242FC0023A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6E62EF1-5339-4E65-AD34-242FC0023A42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7134AAE9-216C-4C60-AF4D-34E84A75827F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7134AAE9-216C-4C60-AF4D-34E84A75827F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7134AAE9-216C-4C60-AF4D-34E84A75827F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7134AAE9-216C-4C60-AF4D-34E84A75827F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE9B5A39-A8D3-4142-87BD-0A1BE71DAAE8}
+	EndGlobalSection
+EndGlobal
