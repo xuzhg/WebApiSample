@@ -11,9 +11,11 @@ namespace OptionalParameterSample.Controllers
     {
         // GET api/values
         [HttpGet]
-        public IActionResult getAssignedAppTiles(int key, string param, bool? includeOfficeFirstParty)
+        public IActionResult getAssignedAppTiles(int key, /*string param,*/ bool? includeOfficeFirstParty)
         {
-            return Ok($"User Key = {key}, param = {param}, includeOfficeFirstParty = {includeOfficeFirstParty}");
+            return Ok($"User Key = {key}, includeOfficeFirstParty = {includeOfficeFirstParty}");
+
+            // return Ok($"User Key = {key}, param = {param}, includeOfficeFirstParty = {includeOfficeFirstParty}");
         }
     }
 }

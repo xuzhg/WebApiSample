@@ -52,7 +52,7 @@ namespace OptionalParameterSample
             builder.EntitySet<User>("Users");
             var function = builder.EntityType<User>().Function("getAssignedAppTiles");
             function.Returns<AppTile>();
-            function.Parameter<string>("param");
+         //   function.Parameter<string>("param");
             function.Parameter<bool?>("includeOfficeFirstParty").HasDefaultValue("false");
             return builder.GetEdmModel();
         }
