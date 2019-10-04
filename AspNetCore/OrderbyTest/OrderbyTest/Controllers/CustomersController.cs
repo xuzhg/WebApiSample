@@ -13,6 +13,7 @@ namespace OrderbyTest.Controllers
             {
                 Id = 1,
                 Name = "abc",
+                Value = new MyComplexType<int>{ key = "abcKey1", value = 123 },
                 Locations = new List<Address>
                 {
                     new Address { Street = "148th AVE"},
@@ -29,6 +30,7 @@ namespace OrderbyTest.Controllers
                 Id = 2,
                 Name = "efj",
                 Token = "token5",
+                Value = new MyComplexType<int>{ key = "abcKey1", value = 123 },
                 Locations = new List<Address>
                 {
                     new Address { Street = "8th AVE"},
@@ -45,6 +47,7 @@ namespace OrderbyTest.Controllers
                 Id = 3,
                 Name = "aaa",
                 Token = "token3",
+                Value = new MyComplexType<int>{ key = "abcKey1", value = 123 },
                 Locations = new List<Address>
                 {
                     new Address { Street = "5th AVE"},

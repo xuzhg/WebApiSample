@@ -11,6 +11,8 @@ namespace OrderbyTest.Models
 
         public string Name { get; set; }
 
+        public MyComplexType<int> Value { get; set; }
+
         public IList<Address> Locations { get; set; }
 
         public IList<Order> Orders { get; set; }

@@ -14,7 +14,15 @@ namespace OrderbyTest.Models
             var builder = new ODataConventionModelBuilder();
             builder.EntitySet<Customer>("Customers");
             builder.EntitySet<Order>("Orders");
+            builder.ComplexType<MyComplexType<int>>();
             return builder.GetEdmModel();
         }
+
+    }
+
+    public class MyComplexType<T>
+    {
+        public string key { get; set; }
+        public T value { get; set; }
     }
 }
