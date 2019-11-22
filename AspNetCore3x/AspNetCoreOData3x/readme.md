@@ -2,7 +2,7 @@
 
 ## Introduction
 
-It's a very simple ASPNET Core OData Web Application. It targets to ASP.NET Core 3.0!!
+It's a very simple ASP.NET Core OData Web Application. It targets to ASP.NET Core 3.0!!
 
 ## OData package
 
