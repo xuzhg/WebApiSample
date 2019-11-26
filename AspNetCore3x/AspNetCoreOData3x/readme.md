@@ -14,7 +14,7 @@ You can use feed https://www.myget.org/F/webapinetcore/api/v3/index.json at visu
 
 ## Functionalities
 
-Only the following functiionalities are added:
+Only the following functionalities are added in the sample project:
 
 1. Query ~/Customers
 2. Query ~/Customers({id})
