@@ -17,6 +17,11 @@ namespace FirstAspNetCoreOData3xSample.Models
                 var builder = new ODataConventionModelBuilder();
                 builder.EntitySet<Customer>("Customers");
                 builder.EntitySet<Order>("Orders");
+
+                // 
+                builder.EntitySet<Product>("Products");
+                builder.EntitySet<Product>("Catogery");
+
                 _edmModel = builder.GetEdmModel();
             }
 

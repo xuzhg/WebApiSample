@@ -19,7 +19,7 @@
     },
     "FirstAspNetCoreOData3xSample": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "odata/Customers",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {

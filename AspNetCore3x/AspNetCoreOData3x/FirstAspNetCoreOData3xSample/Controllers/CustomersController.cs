@@ -25,18 +25,24 @@ namespace FirstAspNetCoreOData3xSample.Controllers
                     new Customer
                     {
                         Name = "Jonier",
+                        ByteValue = 8,
+                        Data = new byte[] { 1, 2, 3 },
                         HomeAddress = new Address { City = "Redmond", Street = "156 AVE NE"},
                         Order = new Order { Title = "104m" }
                     },
                     new Customer
                     {
                         Name = "Sam",
+                        ByteValue = 18,
+                        Data = new byte[] { 4, 5, 6 },
                         HomeAddress = new Address { City = "Bellevue", Street = "Main St NE"},
                         Order = new Order { Title = "Zhang" }
                     },
                     new Customer
                     {
                         Name = "Peter",
+                        ByteValue = 28,
+                        Data = new byte[] { 7, 8, 9 },
                         HomeAddress = new Address {  City = "Hollewye", Street = "Main St NE"},
                         Order = new Order { Title = "Jichan" }
                     },

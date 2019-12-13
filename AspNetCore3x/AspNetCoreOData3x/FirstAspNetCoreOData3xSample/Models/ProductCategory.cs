@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // Licensed under the MIT License.  See License.txt in the project root for license information.
 
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
-
 namespace FirstAspNetCoreOData3xSample.Models
 {
-    public class Customer
+    public class Product
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
+
+        public string[] EMails { get; set; }
 
         public byte ByteValue { get; set; }
 
@@ -18,21 +17,13 @@ namespace FirstAspNetCoreOData3xSample.Models
 
         public Address HomeAddress { get; set; }
 
-        public Order Order { get; set; }
+        public Category Category { get; set; }
     }
 
-    public class Order
+    public class Category
     {
         public int Id { get; set; }
 
         public string Title { get; set; }
-    }
-
-    [Owned, ComplexType]
-    public class Address
-    {
-        public string City { get; set; }
-
-        public string Street { get; set; }
     }
 }
