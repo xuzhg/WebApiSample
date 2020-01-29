@@ -2,9 +2,9 @@
 
 ## Introduction
 
-It's a very simple ASP.NET Core OData Web Application. It targets to ASP.NET Core 3.0!!
+It's a very simple ASP.NET Core OData Web Application. It targets to ASP.NET Core 3.1!!
 
-It support Endpoint routing introduced in ASP.NET Core.
+**It supports Endpoint routing introduced in ASP.NET Core.**
 
 ## OData package
 
