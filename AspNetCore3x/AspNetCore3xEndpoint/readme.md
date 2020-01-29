@@ -17,12 +17,14 @@ You can use feed https://www.myget.org/F/webapinetcore/api/v3/index.json at visu
 **Important:**
 
 This Nightly is related to the Pull Request at: https://github.com/OData/WebApi/pull/2035
+
 It's open for all of you to review, feedback.
+
 I am also happy to see your any contributions to my pull request and make the endpoint routing available ASAP.
 
 ## Functionalities
 
-I add four routes:
+I add four routes in my sample:
 
 ```C#
 app.UseEndpoints(endpoints =>
@@ -38,13 +40,14 @@ app.UseEndpoints(endpoints =>
 ```
 
 So, you can query likes:
-`http://localhost:5000/Customers?$select=HomeAddress`
-`http://localhost:5000/odata/Customers?$select=HomeAddress`
-`http://localhost:5000/my/2/Customers?$select=HomeAddress`
-`http://localhost:5000/ms/Customers?$select=HomeAddress`
+
+* `http://localhost:5000/Customers?$select=HomeAddress`
+* `http://localhost:5000/odata/Customers?$select=HomeAddress`
+* `http://localhost:5000/my/2/Customers?$select=HomeAddress`
+* `http://localhost:5000/ms/Customers?$select=HomeAddress`
 
    
-All of these queries output the same result as (a little difference between the context Uri):
+All of these queries output the same result as (a little bit difference between the context Uris):
 ```json
 {
     "@odata.context": "http://localhost:5000/ms/$metadata#Customers(HomeAddress)",
@@ -74,10 +77,10 @@ All of these queries output the same result as (a little difference between the 
 
 ## Discussion
 
-1. I name it API as `MapODataRoute`, nor `MapODataServiceRoute`, is it ok?
+1. I name the API as `MapODataRoute`, nor `MapODataServiceRoute`, is it ok?
 
 2. $batch request is weird in current implementation. I'd love to refactor it, but not in this Nightly.
 
-3. There are some working around in this Nightly. I'd invite you to review and contribute for my PR.
+3. There are some working arounds in this Nightly. I'd invite you to review and contribute for my PR if you are interested in.
 
-4. 
+4. Welcome any feedbacks. You can leave comments in the PR, or send me email at saxu@microsoft.com
