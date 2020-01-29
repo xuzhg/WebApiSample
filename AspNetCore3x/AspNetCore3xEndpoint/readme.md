@@ -1,4 +1,4 @@
-# ASP.NET Core OData running on ASP.NET Core 3.0, Endpoint routing
+# ASP.NET Core OData Endpoint routing on ASP.NET Core 3.0, 
 
 ## Introduction
 
