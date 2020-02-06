@@ -84,3 +84,13 @@ All of these queries output the same result as (a little bit difference between 
 3. There are some working arounds in this Nightly. I'd invite you to review and contribute for my PR if you are interested in.
 
 4. Welcome any feedbacks. You can leave comments in the PR, or send me email at saxu@microsoft.com
+
+
+# Updated at 2/5/2020:
+
+Now, i added swagger api into the sample project, you can see the swagger api through:
+`http://localhost:5000/swagger`
+
+You can get a page like:
+
+![Swagger API](./images/swagger.png "Swagger pages")
