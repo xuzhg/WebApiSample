@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <assembly>
+    <name>CustomersController</name>
+  </assembly>
+  <members>
+    <member name="M:AspNetCore3xEndpointSample.Controllers.CustomersController.Get(`0)">
+      <summary>
+        Retrieve all customers
+      </summary>
+    </member>
+    <member name="M:AspNetCore3xEndpointSample.Controllers.CustomersController.Get(System.Int32)">
+      <summary>
+        Retrieve a resources
+      </summary>
+    </member>
+  </members>
+</doc>
