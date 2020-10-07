@@ -14,23 +14,27 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-            Test(true);
+            Test(ODataVersion.V4, true);
 
-            Test(false);
+            Test(ODataVersion.V4, false);
+
+            Test(ODataVersion.V401, true);
+
+            Test(ODataVersion.V401, false);
 
             Console.WriteLine("Hello World!");
         }
 
-        private static void Test(bool response)
+        private static void Test(ODataVersion version, bool response)
         {
-            Console.WriteLine($"\nIn ==> " + (response ? "response\n" : "request\n"));
+            Console.WriteLine($"\nIn ==> " + (response ? "response" : "request") + $"            OData Version {version}\n");
             var writerSettings = new ODataMessageWriterSettings();
 
             IEdmModel model = GetEdmModel(out IEdmEntitySet customers, out IEdmEntityType customer);
 
             ODataDeltaResourceSet feed = GetResourceSet(response);
 
-            string payload = Write(model, response, writerSettings, omWriter =>
+            string payload = Write(model, version, response, writerSettings, omWriter =>
             {
                 var writer = omWriter.CreateODataDeltaResourceSetWriter(customers, customer);
                 writer.WriteStart(feed);
@@ -134,7 +138,7 @@ namespace ConsoleApp1
             return feed;
         }
 
-        private static string Write(IEdmModel edmModel, bool response, ODataMessageWriterSettings writerSettings, Action<ODataMessageWriter> writerAction,
+        private static string Write(IEdmModel edmModel, ODataVersion version, bool response, ODataMessageWriterSettings writerSettings, Action<ODataMessageWriter> writerAction,
             out string contentType)
         {
             var message = new InMemoryMessage() { Stream = new MemoryStream() };
@@ -143,6 +147,7 @@ namespace ConsoleApp1
             writerSettings.BaseUri = new Uri(BaseUri);
             writerSettings.ODataUri.ServiceRoot = new Uri(BaseUri);
             writerSettings.SetContentType(ODataFormat.Json);
+            writerSettings.Version = version;
 
             if (response)
             {
