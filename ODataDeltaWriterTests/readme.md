@@ -1,11 +1,14 @@
+# Introduce
+
 This project test the basic OData Delta writer in request and response:
 
 Build and run, you can get:
 
+
+
+## In ==> response
+
 ```json
-
-In ==> response
-
 {
   "@odata.context": "http://www.example.com/$metadata#Customers/$delta",
   "@odata.count": 5,
@@ -32,9 +35,11 @@ In ==> response
     }
   ]
 }
+```
 
-In ==> request
+## In ==> request
 
+```json
 {
   "@odata.context": "http://www.example.com/$metadata#Customers/$delta",
   "value": [
@@ -59,5 +64,5 @@ In ==> request
     }
   ]
 }
-Hello World!
 ```
+Hello World!
