@@ -94,7 +94,17 @@ namespace ConsoleApp1
 
         private static void WriteDeletedResource(ODataWriter omWriter)
         {
-            ODataDeletedResource changedCustomer = new ODataDeletedResource(new Uri("Customers(7)", UriKind.Relative), DeltaDeletedEntryReason.Changed)
+            //ODataDeletedResource changedCustomer = new ODataDeletedResource(new Uri("Customers(7)", UriKind.Relative), DeltaDeletedEntryReason.Changed)
+            //{
+            //    TypeName = "NS.Customer",
+            //    Properties = new[]
+            //    {
+            //        new ODataProperty {Name = "CustomerId", Value = 7 },
+            //        new ODataProperty {Name = "Name", Value = "Peter"}
+            //    },
+            //};
+
+            ODataDeletedResource changedCustomer = new ODataDeletedResource()
             {
                 TypeName = "NS.Customer",
                 Properties = new[]
@@ -102,6 +112,8 @@ namespace ConsoleApp1
                     new ODataProperty {Name = "CustomerId", Value = 7 },
                     new ODataProperty {Name = "Name", Value = "Peter"}
                 },
+                Id = new Uri("Customers(7)", UriKind.Relative),
+                Reason = DeltaDeletedEntryReason.Changed
             };
 
             omWriter.WriteStart(changedCustomer);
