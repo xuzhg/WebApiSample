@@ -14,15 +14,51 @@ namespace ODataQueryLinqExpressionBuilder
     {
         static IList<Customer> _customers = new List<Customer>
         {
-            new Customer { Id = 1, Name = "Peter", Age= 36, Location = new Address { City = "Redmond", Street = "156TH AVE"} },
-            new Customer { Id = 2, Name = "Sam", Age= 34, Location = new Address { City = "Shanghai", Street = "Zixin Rd"}},
-            new Customer { Id = 3, Name = "John", Age= 12, Location = new Address { City = "Beijing", Street = "Yunan Rd"}},
-            new Customer { Id = 4, Name = "Kerry", Age= 24, Location = new Address { City = "Seattle", Street = "145TH NE ST"}},
-            new Customer { Id = 5, Name = "Alex", Age= 78, Location = new Address { City = "Sammamish", Street = "225TH AVE"}}
+            new Customer { Id = 1, Name = "Peter", Age= 36,
+                Location = new Address { City = "Redmond", Street = "156TH AVE"},
+                Properties = new Dictionary<string, object> { { "MyData", 5.4} } },
+            new Customer { Id = 2, Name = "Sam", Age= 34, Location = new Address { City = "Shanghai", Street = "Zixin Rd"},
+                Properties = new Dictionary<string, object> { { "MyData", 5.1} } },
+            new Customer
+            {
+                Id = 3,
+                Name = "John",
+                Age = 12,
+                Location = new Address { City = "Beijing", Street = "Yunan Rd" },
+                Properties = new Dictionary<string, object> { { "MyData", 4.1 } }
+            },
+             new Customer
+            {
+                Id = 4,
+                Name = "Kerry",
+                Age = 24,
+                Location = new Address { City = "Seattle", Street = "145TH NE ST" },
+                Properties = new Dictionary<string, object> { { "MyData", 6.1 } }
+            },
+             new Customer { Id = 5, Name = "Alex", Age = 78, Location = new Address { City = "Sammamish", Street = "225TH AVE" },
+
+                Properties = new Dictionary<string, object> { { "MyData", 7.1 } } }
         };
+
 
         static void Main(string[] args)
         {
+            ////foreach (var item in _customers.Where(a => a.Name == "Sam"))
+            ////{
+            ////    Console.WriteLine(item.Name);
+            ////}
+
+            ////_customers.Where((a, b) =>
+            ////{
+            ////    if (a.Name == "Sam")
+            ////    {
+            ////        Console.WriteLine($"{a.Name} at location {b}");
+            ////        return true;
+            ////    }
+
+            ////    return false;
+            ////});
+
             // Build the model
             IEdmModel model = GetEdmModel();
 
@@ -33,6 +69,7 @@ namespace ODataQueryLinqExpressionBuilder
                 Console.WriteLine("Sample Data:");
                 Print(ConsoleColor.Green, _customers, true);
 
+                // Or use dynamic property as : MyData gt 5.0
                 Console.WriteLine("\nPlease input $filter (For example: Location/City eq 'Shanghai' or Q/q for quit):");
                 string cmd = Console.ReadLine();
                 if (cmd == "q" || cmd == "Q")
@@ -169,6 +206,7 @@ namespace ODataQueryLinqExpressionBuilder
 
         public string Street { get; set; }
     }
+
     public class Customer
     {
         public int Id { get; set; }
@@ -178,5 +216,7 @@ namespace ODataQueryLinqExpressionBuilder
         public int Age { get; set; }
 
         public Address Location { get; set; }
+
+        public IDictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
     }
 }

@@ -1,11 +1,14 @@
 ﻿using Microsoft.OData.Edm;
 using Microsoft.OData.UriParser;
+using OneOf.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using ZSpitz.Util;
 
 namespace ODataQueryLinqExpressionBuilder
 {
@@ -88,6 +91,9 @@ namespace ODataQueryLinqExpressionBuilder
                 case QueryNodeKind.SingleValuePropertyAccess:
                     return BindPropertyAccessQueryNode(node as SingleValuePropertyAccessNode);
 
+                case QueryNodeKind.SingleValueOpenPropertyAccess:
+                    return BindOpenPropertyAccessQueryNode(node as SingleValueOpenPropertyAccessNode);
+
                 default:
                     throw new NotSupportedException();
             }
@@ -112,6 +118,27 @@ namespace ODataQueryLinqExpressionBuilder
             return Expression.Property(source, propertyAccessNode.Property.Name);
         }
 
+        private Expression BindOpenPropertyAccessQueryNode(SingleValueOpenPropertyAccessNode propertyAccessNode)
+        {
+            Expression source = BindExpression(propertyAccessNode.Source);
+
+            // Source ==> $it
+
+            string DictionaryStringObjectIndexerName = typeof(Dictionary<string, object>).GetDefaultMembers()[0].Name;
+
+           // IDictionary<string, Expression> properties = propertyAccessNode.Properties;
+
+            source = Expression.Property(source, "Properties");
+
+            // $it.Properties
+
+
+            return Expression.Property(source, DictionaryStringObjectIndexerName, Expression.Constant(propertyAccessNode.Name));
+            // $it.Properties.this[]
+
+            //return Expression.Property(source, propertyAccessNode.Name);
+        }
+
         private Expression BindConstantNode(ConstantNode constantNode)
         {
             if (constantNode.Value == null)
@@ -122,10 +149,24 @@ namespace ODataQueryLinqExpressionBuilder
             return Expression.Constant(constantNode.Value);
         }
 
+        public static Type ToNullable(Type t)
+        {
+            if (t.IsNullable())
+            {
+                return t;
+            }
+            else
+            {
+                return typeof(Nullable<>).MakeGenericType(t);
+            }
+        }
+
         private Expression BindBinaryOperatorNode(BinaryOperatorNode binaryOperatorNode)
         {
             Expression left = BindExpression(binaryOperatorNode.Left);
             Expression right = BindExpression(binaryOperatorNode.Right);
+
+            right = Expression.Convert(right, left.Type);
 
             if (BinaryOperatorMapping.TryGetValue(binaryOperatorNode.OperatorKind, out ExpressionType binaryExpressionType))
             {
@@ -137,12 +178,46 @@ namespace ODataQueryLinqExpressionBuilder
 
         private Expression BindConvertNode(ConvertNode convertNode)
         {
-            return null;
+            Expression source = BindExpression(convertNode.Source);
+
+            IEdmModel model = null;
+            Type conversionType = model.GetClrType(convertNode.TypeReference);
+
+            return Expression.Convert(source, conversionType);
         }
 
         private Expression BindRangeVariable(RangeVariable rangeVariable)
         {
             return _lambdaParameters[rangeVariable.Name];
+        }
+
+    }
+
+    public static class EdmModelExtensions
+    {
+        public static Type GetClrType(this IEdmModel model, IEdmTypeReference typeRef)
+        {
+            if (typeRef.IsDouble())
+            {
+                if (typeRef.IsNullable)
+                {
+                    return typeof(double?);
+                }
+
+                return typeof(double);
+            }
+
+            if (typeRef.IsSingle())
+            {
+                if (typeRef.IsNullable)
+                {
+                    return typeof(double?);
+                }
+
+                return typeof(double);
+            }
+
+            return null;
         }
     }
 }
