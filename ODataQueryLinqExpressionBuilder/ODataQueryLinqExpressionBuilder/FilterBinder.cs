@@ -12,7 +12,7 @@ using ZSpitz.Util;
 
 namespace ODataQueryLinqExpressionBuilder
 {
-    internal class FilterBinder
+    internal class FilterBinder2
     {
         private static readonly Dictionary<BinaryOperatorKind, ExpressionType> BinaryOperatorMapping = new Dictionary<BinaryOperatorKind, ExpressionType>
         {

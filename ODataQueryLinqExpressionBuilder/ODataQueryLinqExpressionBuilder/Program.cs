@@ -7,6 +7,9 @@ using System.Linq.Expressions;
 using ExpressionTreeToString;
 using System.Reflection;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.OData.Query.Expressions;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace ODataQueryLinqExpressionBuilder
 {
@@ -16,16 +19,16 @@ namespace ODataQueryLinqExpressionBuilder
         {
             new Customer { Id = 1, Name = "Peter", Age= 36,
                 Location = new Address { City = "Redmond", Street = "156TH AVE"},
-                Properties = new Dictionary<string, object> { { "MyData", 5.4} } },
+                Properties = new Dictionary<string, object> { { "MyData", 5.4f} } },
             new Customer { Id = 2, Name = "Sam", Age= 34, Location = new Address { City = "Shanghai", Street = "Zixin Rd"},
-                Properties = new Dictionary<string, object> { { "MyData", 5.1} } },
+                Properties = new Dictionary<string, object> { { "MyData", 5.1f} } },
             new Customer
             {
                 Id = 3,
                 Name = "John",
                 Age = 12,
                 Location = new Address { City = "Beijing", Street = "Yunan Rd" },
-                Properties = new Dictionary<string, object> { { "MyData", 4.1 } }
+                Properties = new Dictionary<string, object> { { "MyData", 4.1f } }
             },
              new Customer
             {
@@ -33,11 +36,11 @@ namespace ODataQueryLinqExpressionBuilder
                 Name = "Kerry",
                 Age = 24,
                 Location = new Address { City = "Seattle", Street = "145TH NE ST" },
-                Properties = new Dictionary<string, object> { { "MyData", 6.1 } }
+                Properties = new Dictionary<string, object> { { "MyData", 6.1f } }
             },
              new Customer { Id = 5, Name = "Alex", Age = 78, Location = new Address { City = "Sammamish", Street = "225TH AVE" },
 
-                Properties = new Dictionary<string, object> { { "MyData", 7.1 } } }
+                Properties = new Dictionary<string, object> { { "MyData", 7.1f } } }
         };
 
 
@@ -93,8 +96,12 @@ namespace ODataQueryLinqExpressionBuilder
                 }
 
                 // Linq Expression
-                FilterBinder filterBinder = new FilterBinder(/*model*/);
-                Expression filterExp = filterBinder.Bind<Customer>(filter);
+                QueryBinderContext context = new QueryBinderContext(model, new ODataQuerySettings(), typeof(Customer));
+                FilterBinder binder = new FilterBinder();
+                Expression filterExp = binder.BindFilter(filter, context);
+
+                //FilterBinder2 filterBinder = new FilterBinder2(/*model*/);
+                //Expression filterExp = filterBinder.Bind<Customer>(filter);
 
                 string filterStr = filterExp.ToString("C#");
                 Console.WriteLine($"\n\t==> {filterStr}\n");
@@ -155,6 +162,7 @@ namespace ODataQueryLinqExpressionBuilder
 
             var builder = new ODataConventionModelBuilder();
             builder.EntitySet<Customer>("Customers");
+            builder.EntityType<Customer>().Property(c => c.Name).IsRequired();
             return builder.GetEdmModel();
         }
 
@@ -211,6 +219,7 @@ namespace ODataQueryLinqExpressionBuilder
     {
         public int Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public int Age { get; set; }

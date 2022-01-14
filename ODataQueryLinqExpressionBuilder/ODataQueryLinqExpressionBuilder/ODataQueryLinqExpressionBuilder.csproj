@@ -7,8 +7,9 @@
 
   <ItemGroup>
     <PackageReference Include="ExpressionTreeToString" Version="3.4.65" />
+    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.5" />
     <PackageReference Include="Microsoft.OData.Core" Version="7.9.4" />
-    <PackageReference Include="Microsoft.OData.ModelBuilder" Version="1.0.7" />
+    <PackageReference Include="Microsoft.OData.ModelBuilder" Version="1.0.8" />
   </ItemGroup>
 
 </Project>
