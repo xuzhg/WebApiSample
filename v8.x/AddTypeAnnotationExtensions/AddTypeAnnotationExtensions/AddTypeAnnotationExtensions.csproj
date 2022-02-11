@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.6" />
+    <ProjectReference Include="..\..\..\..\..\odata\AspNetCoreOData\src\Microsoft.AspNetCore.OData\Microsoft.AspNetCore.OData.csproj" />
   </ItemGroup>
 
 </Project>

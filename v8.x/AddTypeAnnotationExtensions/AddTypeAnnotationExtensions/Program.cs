@@ -7,9 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+//builder.Services.AddControllers()
+//    .AddOData(opt => opt.AddRouteComponents("odata", ModelBuilder.GetEdmModel(),
+//        builder => builder.AddSingleton<IODataSerializerProvider, AddTypeAnnotationSerializerProvider>()));
+
 builder.Services.AddControllers()
-    .AddOData(opt => opt.AddRouteComponents("odata", ModelBuilder.GetEdmModel(),
-        builder => builder.AddSingleton<IODataSerializerProvider, AddTypeAnnotationSerializerProvider>()));
+    .AddOData(opt => opt.AddRouteComponents("odata", ModelBuilder.GetEdmModel()));
 
 var app = builder.Build();
 

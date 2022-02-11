@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddTypeAnnotationExtensions", "AddTypeAnnotationExtensions\AddTypeAnnotationExtensions.csproj", "{0B5F7AFE-049E-4D2C-A2D7-20C847F3EED2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddTypeAnnotationExtensions", "AddTypeAnnotationExtensions\AddTypeAnnotationExtensions.csproj", "{0B5F7AFE-049E-4D2C-A2D7-20C847F3EED2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.AspNetCore.OData", "..\..\..\..\odata\AspNetCoreOData\src\Microsoft.AspNetCore.OData\Microsoft.AspNetCore.OData.csproj", "{7D51BE51-273D-40EF-B9B2-7B0134CC4AE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0B5F7AFE-049E-4D2C-A2D7-20C847F3EED2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B5F7AFE-049E-4D2C-A2D7-20C847F3EED2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B5F7AFE-049E-4D2C-A2D7-20C847F3EED2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D51BE51-273D-40EF-B9B2-7B0134CC4AE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D51BE51-273D-40EF-B9B2-7B0134CC4AE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D51BE51-273D-40EF-B9B2-7B0134CC4AE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D51BE51-273D-40EF-B9B2-7B0134CC4AE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
