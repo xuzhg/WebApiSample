@@ -16,6 +16,7 @@ using System.Web.OData.Routing;
 using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Library;
 using Xunit;
+using Xunit.Extensions;
 
 namespace Microsoft.AspNet.OData.Test.CRUD
 {
@@ -44,13 +45,15 @@ namespace Microsoft.AspNet.OData.Test.CRUD
             Console.WriteLine(response.Content.ReadAsStringAsync().Result);
         }
 
-        [Fact]
-        public void CanUpdatePrimitiveProperty()
+        [Theory]
+        [InlineData("Patch")]
+        [InlineData("Put")]
+        public void CanUpdatePrimitiveProperty(string httpMethod)
         {
             string requestUri = "http://localhost/odata/Customers(1)/Name";
             string payload = @"{""value"":""ChangedName""}";
 
-            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Patch"), requestUri);
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod(httpMethod), requestUri);
             request.Content = new StringContent(payload);
             request.Content.Headers.ContentType = MediaTypeWithQualityHeaderValue.Parse("application/json");
             HttpResponseMessage response = _client.SendAsync(request).Result;
@@ -58,9 +61,11 @@ namespace Microsoft.AspNet.OData.Test.CRUD
             response.EnsureSuccessStatusCode();
         }
 
-        [Fact]
+        [Theory]
+        [InlineData("Patch")]
+        [InlineData("Put")]
         [Category("Since v5.9.1")]
-        public void CanUpdateEnumProperty()
+        public void CanUpdateEnumProperty(string httpMethod)
         {
             string requestUri = "http://localhost/odata/Customers(1)/FavoriteColor";
 
@@ -68,7 +73,7 @@ namespace Microsoft.AspNet.OData.Test.CRUD
             //string payload = @"{""value"":Microsoft.AspNet.OData.Test.CRUD.Color'Green'}"; // doesn't work
             string payload = @"{""@odata.type"":""#Microsoft.AspNet.OData.Test.CRUD.Color"",""value"":""Blue""}"; // work
 
-            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Patch"), requestUri);
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod(httpMethod), requestUri);
             request.Content = new StringContent(payload);
             request.Content.Headers.ContentType = MediaTypeWithQualityHeaderValue.Parse("application/json");
             HttpResponseMessage response = _client.SendAsync(request).Result;
@@ -91,6 +96,29 @@ namespace Microsoft.AspNet.OData.Test.CRUD
             HttpResponseMessage response = _client.SendAsync(request).Result;
 
             response.EnsureSuccessStatusCode();
+        }
+
+        [Fact]
+        [Category("This test case will fail, leave here just for reference.")]
+        public void FailedToUpdateComplexPropertyUsingPayloadWithoutTopValue()
+        {
+            string requestUri = "http://localhost/odata/Customers(1)/Location";
+            const string payload = "{" +
+              "\"Street\":\"UpdatedStreet\"," +
+              "\"City\":\"UpdatedCity\"" +
+            "}";
+
+            HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("Patch"), requestUri);
+            request.Content = new StringContent(payload);
+            request.Content.Headers.ContentType = MediaTypeWithQualityHeaderValue.Parse("application/json");
+            HttpResponseMessage response = _client.SendAsync(request).Result;
+
+            string payload3 = response.Content.ReadAsStringAsync().Result;
+
+            // Check the model binding:
+            // 'A top-level property with name 'Street' was found in the payload; however, property and collection payloads must always have a top-level property with name 'value'."
+
+            response.EnsureSuccessStatusCode(); // here will make the test failing
         }
 
         // To patch a collection property is not reasonable.
@@ -181,6 +209,14 @@ namespace Microsoft.AspNet.OData.Test.CRUD
                 return Ok();
             }
 
+            [HttpPut]
+            public IHttpActionResult PutToName(int key, [FromBody] string name)
+            {
+                Assert.Equal(1, key);
+                Assert.Equal("ChangedName", name);
+                return Ok();
+            }
+
             public IHttpActionResult PatchToLocation(int key, Delta<Address> patch)
             {
                 Assert.Equal(new[] {"Street", "City"}, patch.GetChangedPropertyNames());
@@ -196,6 +232,7 @@ namespace Microsoft.AspNet.OData.Test.CRUD
             }
 
             [HttpPatch]
+            [HttpPut]
             [ODataRoute("Customers({customerId})/FavoriteColor")]
             public IHttpActionResult AnyActionNameHere(int customerId, [FromBody] Color color)
             {
