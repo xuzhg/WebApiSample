@@ -15,7 +15,7 @@ namespace ODataQueryLinqExpressionBuilder
 {
     internal class Program
     {
-        static IList<Customer> _customers = new List<Customer>
+        public static IList<Customer> _customers = new List<Customer>
         {
             new Customer { Id = 1, Name = "Peter", Age= 36,
                 Location = new Address { City = "Redmond", Street = "156TH AVE"},
@@ -46,6 +46,14 @@ namespace ODataQueryLinqExpressionBuilder
 
         static void Main(string[] args)
         {
+            Console.Clear();
+            Console.WriteLine("\nPlay $filter using F/f, Play $select using S/s:");
+            string cmd = Console.ReadLine();
+            if (cmd == "S" || cmd == "s")
+            {
+                SelectDemo.Execute();
+                return;
+            }
             ////foreach (var item in _customers.Where(a => a.Name == "Sam"))
             ////{
             ////    Console.WriteLine(item.Name);
@@ -74,7 +82,7 @@ namespace ODataQueryLinqExpressionBuilder
 
                 // Or use dynamic property as : MyData gt 5.0
                 Console.WriteLine("\nPlease input $filter (For example: Location/City eq 'Shanghai' or Q/q for quit):");
-                string cmd = Console.ReadLine();
+                cmd = Console.ReadLine();
                 if (cmd == "q" || cmd == "Q")
                 {
                     break;
@@ -120,7 +128,7 @@ namespace ODataQueryLinqExpressionBuilder
         }
 
 
-        private static void Print(ConsoleColor color, IEnumerable<Customer> customers, bool head = false)
+        public static void Print(ConsoleColor color, IEnumerable<Customer> customers, bool head = false)
         {
             ConsoleColor backColor = Console.ForegroundColor;
             Console.ForegroundColor = color;
@@ -213,6 +221,13 @@ namespace ODataQueryLinqExpressionBuilder
         public string City { get; set; }
 
         public string Street { get; set; }
+
+        public override string ToString()
+        {
+            string cityStr = $"City: {City}";
+            string streetStr = $"Street: {Street}";
+            return $"{{{cityStr},{streetStr}}}";
+        }
     }
 
     public class Customer
