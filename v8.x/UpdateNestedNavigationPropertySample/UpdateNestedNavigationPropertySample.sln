@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.32804.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateNestedNavigationPropertySample", "UpdateNestedNavigationPropertySample\UpdateNestedNavigationPropertySample.csproj", "{7941648C-4CEB-4D61-8977-09A3D93990FC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7941648C-4CEB-4D61-8977-09A3D93990FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7941648C-4CEB-4D61-8977-09A3D93990FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7941648C-4CEB-4D61-8977-09A3D93990FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7941648C-4CEB-4D61-8977-09A3D93990FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A1DD2824-C19E-4E41-B462-5E4AC95EB365}
+	EndGlobalSection
+EndGlobal
