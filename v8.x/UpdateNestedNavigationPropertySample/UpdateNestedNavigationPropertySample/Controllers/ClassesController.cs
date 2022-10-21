@@ -17,6 +17,21 @@ namespace UpdateNestedNavigationPropertySample.Controllers
             _logger = logger;
         }
 
+        [HttpPatch("classes/{classId}/assignmentSettings/GradingCategories")]
+        public IActionResult PatchGradingCategories(DeltaSet<EducationGradingCategory> deltaSet)
+        {
+            IList<EducationGradingCategory> originalData = new List<EducationGradingCategory>();
+            foreach (var delta in deltaSet)
+            {
+                EducationGradingCategory original = new EducationGradingCategory();
+                Delta<EducationGradingCategory> categoryDelta = delta as Delta<EducationGradingCategory>;
+                categoryDelta.Patch(original);
+
+                originalData.Add(original);
+            }
+            return Ok(originalData);
+        }
+
         [HttpPatch("classes/{classId}/assignmentSettings")]
         public IActionResult PatchGradingCategories(int classId, Delta<EducationSettings> delta)
         {

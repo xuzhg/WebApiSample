@@ -9,6 +9,7 @@ namespace UpdateNestedNavigationPropertySample.Models
         {
             var builder = new ODataConventionModelBuilder();
             builder.EntitySet<EducationClass>("Classes");
+            builder.EntitySet<EducationGradingCategory>("GradingCategories");
 
             return builder.GetEdmModel();
         }
