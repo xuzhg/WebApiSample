@@ -1,4 +1,9 @@
-Create a new EdmType to play serialize and deserialize.
+**[Be noted:]** I use the project reference in my project. I don't want to change it (lazy). 
+If you want to run, please clone the AspNetCoreOData repo and change the project reference. 
+Or, just replace the project reference using the latest Microsoft.AspNetCore.OData 8 version.
+
+
+# Create a new EdmType or using Type definition to play serialize and deserialize.
 
 # Serialize
 
