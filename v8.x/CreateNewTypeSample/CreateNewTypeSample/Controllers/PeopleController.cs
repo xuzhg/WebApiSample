@@ -1,5 +1,4 @@
-﻿using CreateNewTypeSample.Extensions;
-using CreateNewTypeSample.Models;
+﻿using CreateNewTypeSample.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
@@ -15,12 +14,14 @@ namespace CreateNewTypeSample.Controllers
                 new Person
                 {
                     Id = 1,
-                    NormalTemp = new Temperature(30.17, TemperatureKind.Celsius)
+                    NormalTemp = new Temperature(30.17, TemperatureKind.Celsius),
+                    Dist = new Distance { Value = 9, Unit = DistanceUnit.M }
                 },
                 new Person
                 {
                     Id = 2,
-                    NormalTemp = new Temperature(10.57, TemperatureKind.Fahrenheit)
+                    NormalTemp = new Temperature(10.57, TemperatureKind.Fahrenheit),
+                    Dist = new Distance { Value = 19, Unit = DistanceUnit.FT }
                 }
             };
 

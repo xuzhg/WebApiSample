@@ -1,4 +1,4 @@
-﻿namespace CreateNewTypeSample.Extensions
+﻿namespace CreateNewTypeSample.Models
 {
     public enum TemperatureKind
     {

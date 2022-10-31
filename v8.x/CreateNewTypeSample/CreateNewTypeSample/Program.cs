@@ -17,7 +17,8 @@ namespace CreateNewTypeSample
                 .AddOData(opt => 
                 opt.AddRouteComponents("odata", EdmModelBuilder.GetEdmModel(),
                 services => services.AddSingleton<ODataPrimitiveSerializer, MyPrimitiveReserializer>()
-                .AddSingleton<ODataPayloadValueConverter, MyPayloadValueConverter>()).EnableQueryFeatures());
+                .AddSingleton<ODataPayloadValueConverter, MyPayloadValueConverter>()
+                .AddSingleton<ODataResourceSerializer, MyResourceReserializer>()).EnableQueryFeatures());
 
             var app = builder.Build();
 
