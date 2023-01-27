@@ -1,11 +1,9 @@
 ﻿using GenericControllerSample.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.OData.Routing;
 using Microsoft.AspNetCore.OData.Routing.Template;
-using Microsoft.OData.ModelBuilder;
-using System.IO;
-using System.Reflection;
 
 namespace GenericControllerSample.Extensions
 {
@@ -18,24 +16,65 @@ namespace GenericControllerSample.Extensions
         {
             if (controller.ControllerType.IsGenericType)
             {
+                var model = ODataBuilder.GetEdmModel();
+
                 Type genericType = controller.ControllerType.GenericTypeArguments[0];
 
                 var name = genericType.Name;
 
                 controller.ControllerName = name + "Controller";
 
-                SelectorModel selectorModel = new SelectorModel
+                //SelectorModel selectorModel = new SelectorModel
+                //{
+                //    AttributeRouteModel = new AttributeRouteModel(new RouteAttribute($"{_prefix}/{name}")),
+                //};
+
+                foreach (var action in controller.Actions)
                 {
-                    AttributeRouteModel = new AttributeRouteModel(new RouteAttribute($"{_prefix}/{name}")),
-                };
+                    bool withKey = true;
+                    var parameter = action.Parameters.FirstOrDefault(p => p.Name == "key");
+                    if (parameter != null)
+                    {
+                        IRouteTemplateProvider routeProvider = null;
+                        if (action.ActionName == "Get")
+                        {
+                            routeProvider = new HttpGetAttribute($"{_prefix}/{name}/{{key}}"); // only add the key as segment.
+                        }
+                        else if (action.ActionName == "Patch")
+                        {
+                            routeProvider = new HttpPatchAttribute($"{_prefix}/{name}/{{key}}"); // only add the key as segment.
+                        }
+                        else if (action.ActionName == "Delete")
+                        {
+                            routeProvider = new HttpDeleteAttribute($"{_prefix}/{name}/{{key}}"); // only add the key as segment.
+                        }
+                        else
+                        {
+                            routeProvider = new RouteAttribute($"{_prefix}/{name}"); // without key
+                            withKey = false;
+                        }
 
-                controller.Selectors.Add(selectorModel);
+                        // since we have all [HttpVerb] on each action, it's safe to find a selectorModel with  AttributeRouteModel == null.
+                        SelectorModel actionSelectorModel = action.Selectors.FirstOrDefault(s => s.AttributeRouteModel == null);
+                        if (actionSelectorModel != null)
+                        {
+                            actionSelectorModel.AttributeRouteModel = new AttributeRouteModel(routeProvider);
 
-                var model = ODataBuilder.GetEdmModel();
-                ODataPathTemplate path = new ODataPathTemplate(new GenericODataTemplate(name));
+                            ODataPathTemplate path;
+                            if (withKey)
+                            {
+                                path = new ODataPathTemplate(new GenericODataTemplateWithKey(name));
+                            }
+                            else
+                            {
+                                path = new ODataPathTemplate(new GenericODataTemplate(name));
+                            }
 
-                ODataRoutingMetadata odataMetadata = new ODataRoutingMetadata(_prefix, model, path);
-                selectorModel.EndpointMetadata.Add(odataMetadata);
+                            ODataRoutingMetadata odataMetadata = new ODataRoutingMetadata(_prefix, model, path);
+                            actionSelectorModel.EndpointMetadata.Add(odataMetadata);
+                        }
+                    }
+                }
             }
         }
     }
