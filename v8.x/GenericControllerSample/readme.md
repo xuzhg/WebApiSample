@@ -2,6 +2,10 @@ It's related to issue:
 
 https://github.com/OData/AspNetCoreOData/issues/737
 
+**Be noted**: If you use [ApiController] on the controller, it could throw exception that ApiController need the attribute routing.
+Since this extension uses the convention to add the endpoint, the endpoints are added after the api controller verification.
+In order to making it work, you can create a ModelProvider (make a order less than the order for ApiBehavior...ModelProvider). In the OnProviderExecuting, build the selector for the generic controller action.
+
 # Updated 2/2/2023:
 There's a customer who needs key in paranthesis.
 
