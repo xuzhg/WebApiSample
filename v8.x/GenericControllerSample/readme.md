@@ -2,9 +2,24 @@ It's related to issue:
 
 https://github.com/OData/AspNetCoreOData/issues/737
 
+# Updated 2/2/2023:
+There's a customer who needs key in paranthesis.
+
+<img width="1884" alt="image" src="https://user-images.githubusercontent.com/9426627/216411283-326f9d94-64cd-4636-951a-301f1f331590.png">
+
+Query entity using key in paranthesis:
+
+<img width="705" alt="image" src="https://user-images.githubusercontent.com/9426627/216411663-2bed0c86-f192-40b2-a2f0-a121d14d38f9.png">
 
 
-Updated 1/27/2023 for https://github.com/JasonEades/GenericControllerSample
+Query entity using key as segment:
+
+<img width="685" alt="image" src="https://user-images.githubusercontent.com/9426627/216411514-863b5729-5051-489b-b46b-831eabdeb164.png">
+
+
+
+# Updated 1/27/2023
+for https://github.com/JasonEades/GenericControllerSample
 
 
 <img width="1839" alt="image" src="https://user-images.githubusercontent.com/9426627/215216254-75082211-dfe2-4890-bef7-0dd553aa11b9.png">
