@@ -18,7 +18,8 @@ namespace GenericControllerSample.Extensions
 
         public override IEnumerable<string> GetTemplates(ODataRouteOptions options)
         {
-            yield return $"/{TemplateName}/{{key}}";
+            yield return $"/{TemplateName}/{{key}}";  // add this to make key as segment
+            yield return $"/{TemplateName}({{key}})"; // add this to make key in paranthesis
         }
 
         public override bool TryTranslate(ODataTemplateTranslateContext context)
