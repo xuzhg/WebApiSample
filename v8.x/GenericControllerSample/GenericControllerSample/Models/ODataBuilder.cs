@@ -12,7 +12,11 @@ namespace GenericControllerSample.Models
             if (_model == null)
             {
                 var builder = new ODataConventionModelBuilder();
-                builder.EntitySet<Customer>("Customers");
+                var customer = builder.EntitySet<Customer>("Customers").EntityType;
+
+                customer.Collection.Function("GetLatestCustomer").Returns<int>().Parameter<int>("key");
+                customer.Function("GetLatestCustomer").Returns<int>().Parameter<int>("key");
+
                 builder.EntitySet<Order>("Orders");
                 _model = builder.GetEdmModel();
             }

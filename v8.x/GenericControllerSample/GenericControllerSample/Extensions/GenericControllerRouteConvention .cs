@@ -16,6 +16,12 @@ namespace GenericControllerSample.Extensions
 
         public void Apply(ControllerModel controller)
         {
+            if (controller.ControllerName.StartsWith("CustomersController"))
+            {
+                // skip the 'CustomerController<Customer>' for basic CRUD.
+                return;
+            }
+
             if (controller.ControllerType.IsGenericType)
             {
                 var model = ODataBuilder.GetEdmModel();
@@ -35,6 +41,10 @@ namespace GenericControllerSample.Extensions
                     {
                         httpMethods = "get";
                     }
+                    else if (action.ActionName == "Post")
+                    {
+                        httpMethods = "Post";
+                    }
                     else if (action.ActionName == "Patch")
                     {
                         httpMethods = "Patch";
@@ -42,6 +52,10 @@ namespace GenericControllerSample.Extensions
                     else if (action.ActionName == "Delete")
                     {
                         httpMethods = "Delete";
+                    }
+                    else
+                    {
+                        continue;
                     }
 
                     ODataPathTemplate path;
