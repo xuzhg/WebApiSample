@@ -11,17 +11,23 @@ namespace GenericControllerSample
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            var model = ODataBuilder.GetEdmModel();
 
             builder.Services.AddControllersWithViews()
                 .AddOData(opt =>
                 {
                     opt.EnableQueryFeatures();
-                    opt.AddRouteComponents("api/odata", ODataBuilder.GetEdmModel());
+                    opt.AddRouteComponents("api/odata", model);
                 })
                 .ConfigureApplicationPartManager(pm =>
                 {
                     pm.FeatureProviders.Add(new TestProvider());
                 });
+
+            builder.Services.AddMvc(options =>
+            {
+                options.Conventions.Add(new GenericEdmOperationRouteConvention(model));
+            });
 
             var app = builder.Build();
 

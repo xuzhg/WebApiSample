@@ -21,6 +21,10 @@ namespace GenericControllerSample.Extensions
             // This is required to identify the generic controller
             controllerType = typeof(CustomersController<Customer>).GetTypeInfo();
             feature.Controllers.Add(controllerType);
+
+            // This is required to identify the generic controller
+            controllerType = typeof(EngagementEntitySetController<,>).MakeGenericType(typeof(Customer), typeof(int)).GetTypeInfo();
+            feature.Controllers.Add(controllerType);
         }
     }
 }
