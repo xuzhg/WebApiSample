@@ -6,6 +6,24 @@ https://github.com/OData/AspNetCoreOData/issues/737
 Since this extension uses the convention to add the endpoint, the endpoints are added after the api controller verification.
 In order to making it work, you can create a ModelProvider (make a order less than the order for ApiBehavior...ModelProvider). In the OnProviderExecuting, build the selector for the generic controller action.
 
+# Updated 3/6/2023:
+
+One of customer is asking to add the edm function/edm action into the generic controller sample. 
+### If the number of function/action is less, we can add the routing template one by one to the action.
+See https://github.com/xuzhg/WebApiSample/blob/main/v8.x/GenericControllerSample/GenericControllerSample/Controllers/CustomerController.cs#L11
+
+It will build a routing endpoint as below (Be noted, IsConventional is --)
+![image](https://github.com/xuzhg/WebApiSample/assets/9426627/88b67e3e-8f23-4ed8-a4c5-430831ce6bcb)
+
+### If the number of function/action is hugh, we can add the routing template using convention.
+
+See https://github.com/xuzhg/WebApiSample/blob/main/v8.x/GenericControllerSample/GenericControllerSample/Controllers/GenericController.cs#L11
+
+It will build routing endpoints as below:
+
+![image](https://github.com/xuzhg/WebApiSample/assets/9426627/6fe9a90a-0cc5-45dc-99c1-5a0f815dd055)
+
+
 # Updated 2/2/2023:
 There's a customer who needs key in paranthesis.
 
