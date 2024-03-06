@@ -9,13 +9,13 @@ In order to making it work, you can create a ModelProvider (make a order less th
 # Updated 3/6/2023:
 
 One of customer is asking to add the edm function/edm action into the generic controller sample. 
-### If the number of function/action is less, we can add the routing template one by one to the action.
+### If the number of function/action is small, we can add the routing template one by one to the action.
 See https://github.com/xuzhg/WebApiSample/blob/main/v8.x/GenericControllerSample/GenericControllerSample/Controllers/CustomerController.cs#L11
 
 It will build a routing endpoint as below (Be noted, IsConventional is --)
 ![image](https://github.com/xuzhg/WebApiSample/assets/9426627/88b67e3e-8f23-4ed8-a4c5-430831ce6bcb)
 
-### If the number of function/action is hugh, we can add the routing template using convention.
+### If the number of function/action is huge, we can add the routing template using convention.
 
 See https://github.com/xuzhg/WebApiSample/blob/main/v8.x/GenericControllerSample/GenericControllerSample/Controllers/GenericController.cs#L11
 
