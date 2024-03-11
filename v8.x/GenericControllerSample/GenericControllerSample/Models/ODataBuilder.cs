@@ -13,6 +13,8 @@ namespace GenericControllerSample.Models
             {
                 var builder = new ODataConventionModelBuilder();
                 var customer = builder.EntitySet<Customer>("Customers").EntityType;
+                builder.EntitySet<Annotation>("Annotations");
+                builder.EntitySet<Attachement>("Attachements");
 
                 customer.Collection.Function("GetLatestCustomer").Returns<int>().Parameter<int>("key");
                 customer.Function("GetLatestCustomer").Returns<int>().Parameter<int>("key");

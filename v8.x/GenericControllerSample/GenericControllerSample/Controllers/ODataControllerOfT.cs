@@ -54,5 +54,13 @@ namespace GenericControllerSample.Controllers
             return NoContent();
 
         }
+
+        [HttpPost]
+        [HttpPut]
+        public async Task<IActionResult> CreateLinkAsync(int key, string entityset, string navigationProperty)
+        {
+            await Task.CompletedTask;
+            return Ok($"CreateLinkAsync,key={key}, entityset={entityset}, navigationProperty={navigationProperty}");
+        }
     }
 }

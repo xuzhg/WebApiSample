@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.OData.Extensions;
 using Microsoft.AspNetCore.OData.Routing;
 using Microsoft.AspNetCore.OData.Routing.Template;
+using Microsoft.OData.Edm;
 using System.IO;
 
 namespace GenericControllerSample.Extensions
@@ -53,6 +54,11 @@ namespace GenericControllerSample.Extensions
                     {
                         httpMethods = "Delete";
                     }
+                    else if (action.ActionName == "CreateLink")
+                    {
+                        HandleCreateLink(action, _prefix, model);
+                        continue;
+                    }
                     else
                     {
                         continue;
@@ -72,5 +78,18 @@ namespace GenericControllerSample.Extensions
                 }
             }
         }
+
+        private void HandleCreateLink(ActionModel actionModel, string prefix, IEdmModel model)
+        {
+            var entitySetClientRequest = model.EntityContainer.FindEntitySet("Customers");
+
+            // Without provide the entityset, it creates the more generic endpoints.
+            var path = new ODataPathTemplate(new GenericNavigationPropertyLinkTemplate());
+
+            // With the entityset, it creates the more concrete endpoints.
+          //  var path = new ODataPathTemplate(new GenericNavigationPropertyLinkTemplate(entitySetClientRequest));
+            actionModel.AddSelector("Post,Put", prefix, model, path);
+        }
     }
 }
+

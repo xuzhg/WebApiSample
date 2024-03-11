@@ -37,4 +37,77 @@ namespace GenericControllerSample.Extensions
             return false;
         }
     }
+
+    public class GenericNavigationPropertyLinkTemplate : ODataSegmentTemplate
+    {
+        private IEdmEntitySet edmEntitySet;
+
+        public GenericNavigationPropertyLinkTemplate()
+        {
+        }
+
+
+        public GenericNavigationPropertyLinkTemplate(IEdmEntitySet entitySet)
+        {
+            edmEntitySet = entitySet;
+        }
+
+        public override IEnumerable<string> GetTemplates(ODataRouteOptions options)
+        {
+            if (edmEntitySet != null)
+            {
+                yield return $"{edmEntitySet.Name}({{key}})/{{navigationProperty}}/$ref";
+                yield return $"{edmEntitySet.Name}/{{key}}/{{navigationProperty}}/$ref";
+            }
+            else
+            {
+                yield return "/{entityset}({key})/{navigationProperty}/$ref";
+                yield return "/{entityset}/{key}/{navigationProperty}/$ref";
+            }
+        }
+
+        public override bool TryTranslate(ODataTemplateTranslateContext context)
+        {
+            IEdmModel model = context.Model;
+            EntitySetSegment entitySetSegment;
+
+            IEdmEntitySet entitySet = edmEntitySet;
+            if (edmEntitySet != null)
+            {
+                entitySetSegment = new EntitySetSegment(edmEntitySet);
+            }
+            else
+            {
+                context.RouteValues.TryGetValue("entityset", out var entitysetObj);
+                string entitySetName = entitysetObj as string;
+
+                entitySet = model.EntityContainer.FindEntitySet(entitySetName);
+                entitySetSegment = new EntitySetSegment(entitySet);
+            }
+
+            context.RouteValues.TryGetValue("key", out var key);
+
+            int keyValue = int.Parse(key.ToString());
+
+            KeySegment keySegment = new KeySegment(new[] { new KeyValuePair<string, object>("Id", keyValue) }, entitySet.EntityType(), edmEntitySet);
+
+            context.RouteValues.TryGetValue("navigationProperty", out var navigationProperty);
+
+            var edmNavProperty = entitySet.EntityType().NavigationProperties().FirstOrDefault(c => c.Name == navigationProperty.ToString());
+
+            var targetNav = entitySet.FindNavigationTarget(edmNavProperty);
+
+            NavigationPropertyLinkSegment navSegment = new NavigationPropertyLinkSegment(edmNavProperty, targetNav);
+
+            context.Segments.Add(entitySetSegment);
+
+            context.Segments.Add(keySegment);
+
+            context.Segments.Add(navSegment);
+
+            return true;
+
+        }
+
+    }
 }
