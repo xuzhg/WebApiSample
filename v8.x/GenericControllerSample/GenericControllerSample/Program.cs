@@ -1,6 +1,8 @@
 using GenericControllerSample.Extensions;
 using GenericControllerSample.Models;
 using Microsoft.AspNetCore.OData;
+using Microsoft.AspNetCore.OData.Batch;
+using Microsoft.AspNetCore.OData.Formatter.Deserialization;
 
 namespace GenericControllerSample
 {
@@ -17,7 +19,9 @@ namespace GenericControllerSample
                 .AddOData(opt =>
                 {
                     opt.EnableQueryFeatures();
-                    opt.AddRouteComponents("api/odata", model);
+                opt.AddRouteComponents("api/odata", model,
+                    services => services.AddSingleton<ODataEntityReferenceLinkDeserializer, MyEntityReferenceLinkDeserializer>()
+                    .AddSingleton(sp => new DefaultODataBatchHandler()));
                 })
                 .ConfigureApplicationPartManager(pm =>
                 {
@@ -32,6 +36,8 @@ namespace GenericControllerSample
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+
+            app.UseODataBatching();
 
             app.UseAuthorization();
 

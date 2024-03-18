@@ -81,7 +81,9 @@ namespace GenericControllerSample.Extensions
                 context.RouteValues.TryGetValue("entityset", out var entitysetObj);
                 string entitySetName = entitysetObj as string;
 
-                entitySet = model.EntityContainer.FindEntitySet(entitySetName);
+                entitySet = model.EntityContainer.EntitySets().FirstOrDefault(e => e.Name.Equals(entitySetName, StringComparison.OrdinalIgnoreCase));
+                // TODO: add error handle
+                
                 entitySetSegment = new EntitySetSegment(entitySet);
             }
 
@@ -93,7 +95,7 @@ namespace GenericControllerSample.Extensions
 
             context.RouteValues.TryGetValue("navigationProperty", out var navigationProperty);
 
-            var edmNavProperty = entitySet.EntityType().NavigationProperties().FirstOrDefault(c => c.Name == navigationProperty.ToString());
+            var edmNavProperty = entitySet.EntityType().NavigationProperties().FirstOrDefault(c => c.Name.Equals(navigationProperty.ToString(), StringComparison.OrdinalIgnoreCase));
 
             var targetNav = entitySet.FindNavigationTarget(edmNavProperty);
 
