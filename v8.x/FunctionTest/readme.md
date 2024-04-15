@@ -53,6 +53,7 @@ Where, [FromBody] is required.
 
 The problem is that the request Uri should contain the 'dummy' parameter,for example: (d='d') to match the endpoint.
 
+Maybe we can config the 'd' as optional parameter. I'd leave it to 'YOU'.
 
 ## 3, customize the routing
 
