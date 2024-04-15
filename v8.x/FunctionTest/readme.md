@@ -27,6 +27,15 @@ Where, [FromODataUri] is required.  Here's a snapshot:
 
 The only problem is that the request Uri is longer than expected.
 
+of course, you can use the parameter alias like:
+
+```C#
+http://localhost:5219/odata/customers/MyFunction3(d=@p,k=7)?@p={"RequiredConfiguration": false,"Configuration": ["a","b"],"RequiredFullInformation": true,"FullInformation": [],"ServerInformation": true,"RequiredSummary": true,"RequiredConnectionCheck": false}
+```
+
+It should work as expected.
+
+
 ## 2, use the request body data
 
 You can use the 'JSON data' directly in the request body as:
