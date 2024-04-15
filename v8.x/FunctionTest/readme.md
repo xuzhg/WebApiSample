@@ -1,12 +1,11 @@
 ### This is related to this issue at: https://github.com/OData/AspNetCoreOData/issues/1210
-
-I'd use this sample to illustrate how to pass `Complex object` in the ODATA function
 ---
+I'd use this sample to illustrate how to pass `Complex object` in the ODATA function
+
 
 ## 1, use the request route data directly
 
 You can use the 'JSON data' directly in the request Uri as:
-
 
 ```C#
 http://localhost:5219/odata/customers/MyFunction3(d={"RequiredConfiguration": false,"Configuration": ["a","b"],"RequiredFullInformation": true,"FullInformation": [],"ServerInformation": true,"RequiredSummary": true,"RequiredConnectionCheck": false},k=7)
@@ -22,7 +21,9 @@ public IActionResult MyFunction3(int k, [FromODataUri] Detail d)
     return Ok(d);
 }
 ```
-Where, [FromODataUri] is required. 
+Where, [FromODataUri] is required.  Here's a snapshot:
+
+![image](https://github.com/xuzhg/WebApiSample/assets/9426627/2026d208-7073-4496-9542-38efb593651e)
 
 The only problem is that the request Uri is longer than expected.
 
@@ -47,7 +48,10 @@ public IActionResult MyFunction2(int k, [FromBody]Detail d)
 
 Where, [FromBody] is required. 
 
-The problem is that the request Uri should contains the 'dummy' parameter,for example: (d='d') to match the endpoint.
+![image](https://github.com/xuzhg/WebApiSample/assets/9426627/4aa161f6-1b95-4696-904b-7bc37a362ca3)
+
+
+The problem is that the request Uri should contain the 'dummy' parameter,for example: (d='d') to match the endpoint.
 
 
 ## 3, customize the routing
@@ -58,7 +62,7 @@ In order to get rid of the 'dummy' parameter, we can customize the routing. Plea
 http://localhost:5219/odata/MyFunction(k=18)
 ```
 
-At controller side, you should have an action to handle the above request (using the conventional routing):
+At controller side, you should have an action to handle the above request:
 
 ```C#
 [HttpGet]
@@ -73,3 +77,6 @@ public IActionResult MyFunction([FromRoute]int k, [FromBody]Detail detail)
 Where, 'ODataFunction' is the customized attribute to build the endpoint.
 
 Where, [FromRoute] for 'k' is required. 
+
+![image](https://github.com/xuzhg/WebApiSample/assets/9426627/a3c12b33-2711-44b1-9301-dd4e2f6ab16e)
+
