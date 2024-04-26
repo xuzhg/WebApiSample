@@ -38,3 +38,40 @@ So, you can send the follow (4) requests to get entity:
 
 <img width="1539" alt="image" src="https://github.com/xuzhg/WebApiSample/assets/9426627/099c548d-7fb0-4a51-8c20-009969a9641c">
 
+## Query property
+
+I created two actions as below to handle "property query"
+
+### 1. using static string
+```C#
+[HttpGet]
+[ODataRoute("v1", "customers/{key}/Address")]
+public IActionResult GetAddress(int key)
+```
+
+### 2. using template string
+```C#
+[HttpGet]
+[ODataRoute("v2", "{entityset}({key})/{property}")]
+public IActionResult Get(string entitySet, int key, string property)
+```
+
+<img width="1053" alt="image" src="https://github.com/xuzhg/WebApiSample/assets/9426627/545c84a9-544c-4bb9-bf42-710996c0b953">
+
+You can see, if you try to query "v1/people(2)/emails", it's not found.
+
+## Query options
+
+I enabled the OData query ($select only for your reference, you can enable more) for 'v1' as:
+
+
+```C#
+app.MapODataRoute("v1", q => q.EnableSelect = true);
+app.MapODataRoute("v2");
+```
+Here's the requests:
+<img width="1341" alt="image" src="https://github.com/xuzhg/WebApiSample/assets/9426627/978d440d-fa9f-40d0-9575-f5b0cf63aa27">
+
+
+
+
