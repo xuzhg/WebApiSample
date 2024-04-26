@@ -1,0 +1,6 @@
+@DynamicRouteSample_HostAddress = http://localhost:5182
+
+GET {{DynamicRouteSample_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
