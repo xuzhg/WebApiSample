@@ -6,7 +6,8 @@ There are many ways to reduce the endpoint number. This sample illustrates a way
 
 ## Endpoints overview
 
-Here's endpoints created ahead. You can there's no OData endpoint created.
+Here's all endpoints created ahead. You can see there's no OData endpoint created.
+
 <img width="1893" alt="image" src="https://github.com/xuzhg/WebApiSample/assets/9426627/db045f1a-6d7f-45ff-b9f7-54c96ee00d88">
 
 ## Query entityset
