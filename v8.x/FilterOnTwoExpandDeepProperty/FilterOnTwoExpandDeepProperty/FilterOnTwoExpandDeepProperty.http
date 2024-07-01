@@ -1,0 +1,6 @@
+@FilterOnTwoExpandDeepProperty_HostAddress = http://localhost:5017
+
+GET {{FilterOnTwoExpandDeepProperty_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
