@@ -1,0 +1,6 @@
+@ODataDynamicPropertiesQuery_HostAddress = http://localhost:5114
+
+GET {{ODataDynamicPropertiesQuery_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
