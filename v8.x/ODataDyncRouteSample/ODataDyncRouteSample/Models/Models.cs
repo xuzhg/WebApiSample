@@ -45,4 +45,14 @@
 
         public string Month { get; set; }
     }
+     
+    public class ODataResponse<T>
+    {
+        public ODataValue<T> Value { get; set; }
+    }
+
+    public class ODataValue<T>
+    {
+        public ICollection<T> Content { get; set; }
+    }
 }
