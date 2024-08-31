@@ -12,7 +12,8 @@ namespace ODataDyncRouteSample.Controllers
     public class CommsEntityController<T> : ODataController
         where T : CommsEntity, new()
     {
-        public Task<ActionResult<ODataResponse<T>>> GetAsync(ODataQueryOptions<T> queryOptions)
+       // public Task<ActionResult<ODataResponse<T>>> GetAsync(ODataQueryOptions<T> queryOptions)
+        public async Task<IActionResult> GetAsync(ODataQueryOptions<T> queryOptions)
         {
             List<AzureUpdate> result = new List<AzureUpdate>();
             result.Add(new AzureUpdate
@@ -32,6 +33,10 @@ namespace ODataDyncRouteSample.Controllers
             IQueryable<AzureUpdate> resultsAsQueryable = result.AsQueryable();
             IQueryable filteredResults = queryOptions.ApplyTo(resultsAsQueryable);
 
+            IActionResult okResult = Ok(filteredResults);
+            return okResult;
+
+#if false  // you don't need the follow
             // There is a known issue where converting selected data back to a list is not easily supported.
             // See the GitHub issue here: https://github.com/OData/AspNetCoreOData/issues/865
             // This is a workaround to handle that scenario until it is better supported officially.
@@ -69,6 +74,7 @@ namespace ODataDyncRouteSample.Controllers
             ActionResult<ODataResponse<T>> actionResult = Ok(response);
 
             return Task.FromResult(actionResult);
+#endif
         }
     }
 }
