@@ -35,7 +35,21 @@ It returns:
             "Created": "0001-01-01T00:00:00-08:00",
             "Modified": "0001-01-01T00:00:00-08:00",
             "Products": [],
-            "Availabilities": []
+            "Availabilities": [],
+            "content1": [
+                {
+                    "Id": 1,
+                    "Name": "My Name 2"
+                }
+            ],
+            "content2": {
+                "Id": 1,
+                "Name": "My Name 2"
+            },
+            "additionalmetadata": {
+                "someProperty1": "someValue 1",
+                "someProperty2": "someValue  2"
+            }
         }
     ]
 }
@@ -61,7 +75,21 @@ It returns:
             "Created": "0001-01-01T00:00:00-08:00",
             "Modified": "0001-01-01T00:00:00-08:00",
             "Products": [],
-            "Availabilities": []
+            "Availabilities": [],
+            "content1": [
+                {
+                    "Id": 1,
+                    "Name": "My Name 2"
+                }
+            ],
+            "content2": {
+                "Id": 1,
+                "Name": "My Name 2"
+            },
+            "additionalmetadata": {
+                "someProperty1": "someValue 1",
+                "someProperty2": "someValue  2"
+            }
         }
     ]
 }
@@ -70,7 +98,7 @@ It returns:
 More:
 
 ```C#
-http://localhost:5043/api/v2/Azure?$filter=Id eq '2'&$select=Created,Modified
+http://localhost:5043/api/v2/Azure?$filter=Id eq '2'&$select=Created,Modified,content1,content2,additionalmetadata
 ```
 
 It returns:
@@ -78,11 +106,25 @@ It returns:
 
 ```json
 {
-    "@odata.context": "http://localhost:5043/api/v2/$metadata#Azure(Created,Modified)",
+    "@odata.context": "http://localhost:5043/api/v2/$metadata#Azure(Created,Modified,content1,content2,additionalmetadata)",
     "value": [
         {
             "Created": "0001-01-01T00:00:00-08:00",
-            "Modified": "0001-01-01T00:00:00-08:00"
+            "Modified": "0001-01-01T00:00:00-08:00",
+            "content1": [
+                {
+                    "Id": 1,
+                    "Name": "My Name 2"
+                }
+            ],
+            "content2": {
+                "Id": 1,
+                "Name": "My Name 2"
+            },
+            "additionalmetadata": {
+                "someProperty1": "someValue 1",
+                "someProperty2": "someValue  2"
+            }
         }
     ]
 }
