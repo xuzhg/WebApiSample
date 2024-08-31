@@ -22,6 +22,8 @@ namespace ODataDyncRouteSample.Controllers
                 Title = "Azure Update 1",
                 Description = "Azure Update 1 Description",
             });
+            result[0].DynamicProperties.Add("Content", "a string value here");
+            result[0].DynamicProperties.Add("otherdata", true);// a boolean value here
 
             result.Add(new AzureUpdate
             {

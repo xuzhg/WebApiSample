@@ -2,6 +2,7 @@
 {
     public class CommsEntity
     {
+
         public string Id { get; set; }
 
         public string Title { get; set; }
@@ -17,6 +18,8 @@
         public ICollection<Availability> Availabilities { get; set; }
 
         public ICollection<string> Products { get; set; }
+
+        public IDictionary<string, object> DynamicProperties { get; set; } = new Dictionary<string, object>();
     }
 
     public class AzureUpdate : CommsEntity
