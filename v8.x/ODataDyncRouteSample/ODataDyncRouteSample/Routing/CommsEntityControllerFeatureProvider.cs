@@ -23,6 +23,8 @@ namespace ODataDyncRouteSample.Routing
                 .GetTypeInfo();
 
             feature.Controllers.Add(controllerType);
+
+            feature.Controllers.Add(typeof(SingleEntityController).GetTypeInfo());
         }
     }
 }

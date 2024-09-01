@@ -1,5 +1,40 @@
 It's a customer sample project that needs to investigate.
 
+### 08-31-2024
+
+Add a singleton with dynamic properties
+
+```C#
+http://localhost:5043/api/v2/One
+```
+
+It returns:
+
+
+```json
+{
+    "@odata.context": "http://localhost:5043/api/v2/$metadata#One",
+    "Value": {
+        "Name": "Sam",
+        "content1": [
+            {
+                "Id": 1,
+                "Name": "My Name 2"
+            }
+        ],
+        "content2": {
+            "Id": 1,
+            "Name": "My Name 2"
+        },
+        "additionalmetadata": {
+            "someProperty1": "someValue 1",
+            "someProperty2": "someValue  2"
+        }
+    }
+}
+```
+
+
 ### 08-30-2024
 
 ```C#

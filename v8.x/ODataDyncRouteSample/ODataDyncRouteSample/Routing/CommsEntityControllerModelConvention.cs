@@ -17,6 +17,26 @@ namespace ODataDyncRouteSample.Routing
 
         public void Apply(ControllerModel controller)
         {
+
+            if (controller.ControllerName == "SingleEntity")
+            {
+                SelectorModel selector = new SelectorModel
+                {
+                    AttributeRouteModel = new AttributeRouteModel
+                    {
+                        Template = "api/v2/One"
+                    },
+                };
+
+                IEdmSingleton one = _model.FindDeclaredSingleton("One");
+                ODataPathTemplate template = new ODataPathTemplate(new SingletonSegmentTemplate(one));
+                selector.EndpointMetadata.Add(new ODataRoutingMetadata("api/v2", _model, template));
+
+                controller.Selectors.Add(selector);
+                return;
+            }
+
+
             if (!controller.ControllerType.IsGenericType || controller.ControllerType.GetGenericTypeDefinition() != typeof(CommsEntityController<>))
             {
                 return;

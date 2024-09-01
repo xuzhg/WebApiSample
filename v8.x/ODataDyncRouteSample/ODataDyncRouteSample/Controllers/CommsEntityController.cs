@@ -10,6 +10,44 @@ using ODataDyncRouteSample.Models;
 
 namespace ODataDyncRouteSample.Controllers
 {
+    public class SingleEntityController : ODataController
+    {
+        [EnableQuery]
+        public IActionResult Get()
+        {
+            DynamicComplex complex = new DynamicComplex
+            {
+                Name = "Sam"
+            };
+
+            // Create the dynamic collection in which contains one object
+            complex.DynamicProperties.Add("content1", new List<EdmUntypedObject>
+            {
+                new EdmUntypedObject
+                {
+                    {"Id", 1}, {"Name", "My Name 2" }
+                }
+            });
+
+            // Create the dynamic "object"
+            complex.DynamicProperties.Add("content2", new Dictionary<string, object>
+            {
+                {"Id", 1}, {"Name", "My Name 2" }
+            });
+            complex.DynamicProperties.Add("additionalmetadata", new EdmUntypedObject
+            {
+                {"someProperty1", "someValue 1"}, {"someProperty2", "someValue  2" }
+            });
+
+            SingleEntity single = new SingleEntity
+            {
+                Value = complex
+            };
+
+            return Ok(single);
+        }
+    }
+
     public class CommsEntityController<T> : ODataController
         where T : CommsEntity, new()
     {

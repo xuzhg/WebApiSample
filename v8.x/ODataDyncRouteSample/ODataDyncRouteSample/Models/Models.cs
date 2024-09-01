@@ -1,5 +1,18 @@
 ﻿namespace ODataDyncRouteSample.Models
 {
+    public class SingleEntity
+    {
+        public DynamicComplex Value { get; set; }
+
+    }
+
+    public class DynamicComplex
+    {
+        public string Name { get; set; }
+
+        public IDictionary<string, object> DynamicProperties { get; set; } = new Dictionary<string, object>();
+    }
+
     public class CommsEntity
     {
 

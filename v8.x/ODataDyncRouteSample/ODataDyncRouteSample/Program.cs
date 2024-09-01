@@ -14,6 +14,7 @@ namespace ODataDyncRouteSample
             ODataConventionModelBuilder modelBuilder = new ODataConventionModelBuilder();
             modelBuilder.EntitySet<AzureUpdate>("Azure");
             modelBuilder.EntitySet<M365Roadmap>("M365");
+            modelBuilder.Singleton<SingleEntity>("One");
             IEdmModel edmModel = modelBuilder.GetEdmModel();
 
             var builder = WebApplication.CreateBuilder(args);
