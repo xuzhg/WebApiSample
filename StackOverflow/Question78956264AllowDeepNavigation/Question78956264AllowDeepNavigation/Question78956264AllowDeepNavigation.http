@@ -1,0 +1,6 @@
+@Question78956264AllowDeepNavigation_HostAddress = http://localhost:5044
+
+GET {{Question78956264AllowDeepNavigation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
