@@ -1,0 +1,6 @@
+@NullValueSample_HostAddress = http://localhost:5285
+
+GET {{NullValueSample_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
