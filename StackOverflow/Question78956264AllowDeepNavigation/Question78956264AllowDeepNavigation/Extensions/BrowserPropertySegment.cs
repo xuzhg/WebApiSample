@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.OData.Routing;
 using Microsoft.AspNetCore.OData.Routing.Template;
 using Microsoft.Extensions.Options;
 using Microsoft.OData.UriParser;
-using Question78956264AllowDeepNavigation.Controllers;
 
 namespace Question78956264AllowDeepNavigation.Extensions;
 
