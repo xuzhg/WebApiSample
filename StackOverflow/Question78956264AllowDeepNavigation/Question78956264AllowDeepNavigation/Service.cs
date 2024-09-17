@@ -19,4 +19,16 @@ public class ServiceArticle
 public class Article
 {
     public int ArticleId { get; set; }
+
+    public string Title { get; set; }
+
+    public string Description { get; set; }
+
+    public Address Location { get; set; }
+}
+
+
+public class Address
+{
+    public string City { get; set; }
 }

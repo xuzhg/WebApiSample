@@ -29,7 +29,7 @@ public class NavigationKeyRoutingConvention : IODataControllerActionConvention
         IEdmModel model = context.Model;
         IEdmEntitySet services = model.EntityContainer.FindEntitySet("Services");
         IEdmNavigationProperty navProperty = services.EntityType.FindProperty("ServiceArticle") as IEdmNavigationProperty;
-        IEdmEntitySet articles = model.EntityContainer.FindEntitySet("Articles");
+        IEdmEntitySet articles = model.EntityContainer.FindEntitySet("ServiceArticles");
         ODataPathTemplate template = new ODataPathTemplate(
             new EntitySetSegmentTemplate(services),
             new KeySegmentTemplate(new Dictionary<string, string>
