@@ -117,5 +117,15 @@ namespace DynamicRouteSample.Controllers
             object propertyValue = propertyInfo.GetValue(data);
             return Ok(propertyValue);
         }
+
+        [HttpGet]
+        [ODataRoute("$metadata")]
+        public IActionResult GetMetadata([FromServices]IODataModelProvider modelProvider)
+        {
+            IODataFeature feature = Request.ODataFeature();
+            string prefix = feature.RoutingConventionsStore["odata_prefix"] as string;
+
+            return Ok(modelProvider.GetEdmModel(prefix));
+        }
     }
 }
