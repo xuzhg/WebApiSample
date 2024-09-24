@@ -10,6 +10,14 @@ Here's all endpoints created ahead. You can see there's no OData endpoint create
 
 <img width="1893" alt="image" src="https://github.com/xuzhg/WebApiSample/assets/9426627/db045f1a-6d7f-45ff-b9f7-54c96ee00d88">
 
+## Query metadata (Updated 09/24/2024)
+
+Related to discussion at: https://github.com/OData/AspNetCoreOData/discussions/1318
+
+<img width="1237" alt="image" src="https://github.com/user-attachments/assets/641291ca-520c-4b86-81ee-c160ec230c0b">
+
+
+
 ## Query entityset
 
 I created an action as below to handle "entityset query"
