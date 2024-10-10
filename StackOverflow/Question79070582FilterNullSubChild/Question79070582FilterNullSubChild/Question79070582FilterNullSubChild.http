@@ -1,0 +1,6 @@
+@Question79070582FilterNullSubChild_HostAddress = http://localhost:5269
+
+GET {{Question79070582FilterNullSubChild_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
