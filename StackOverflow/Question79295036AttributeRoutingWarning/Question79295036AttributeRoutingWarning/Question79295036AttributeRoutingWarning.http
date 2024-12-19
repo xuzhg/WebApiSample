@@ -1,0 +1,6 @@
+@Question79295036AttributeRoutingWarning_HostAddress = http://localhost:5260
+
+GET {{Question79295036AttributeRoutingWarning_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
