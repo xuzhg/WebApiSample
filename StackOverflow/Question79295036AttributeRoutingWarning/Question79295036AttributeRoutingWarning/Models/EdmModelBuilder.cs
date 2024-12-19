@@ -12,10 +12,10 @@ public class EdmModelBuilder
         builder.EntitySet<MessageViewModel>("Message");
 
         // Define the bound action
-        // var getTagMessagesAction = builder.EntityType<MessageViewModel>().Collection.Action("GetTagMessages");
+        var getTagMessagesAction = builder.EntityType<MessageViewModel>().Collection.Action("GetTagMessages");
 
         // Optionally define parameters for the action
-        // getTagMessagesAction.Parameter<List<int>>("tagIds");
+        getTagMessagesAction.CollectionParameter<int>("tagIds");
 
         return builder.GetEdmModel();
     }
