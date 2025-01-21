@@ -1,9 +1,8 @@
-﻿namespace WKBSample.WBK
-{
-    public class BitsInfo
-    {
-        public string Bytes { get; set; }
+﻿namespace WKBSample.WBK;
 
-        public string Info { get; set; }
-    }
+public class BitsInfo
+{
+    public string Bytes { get; set; }
+
+    public string Info { get; set; }
 }

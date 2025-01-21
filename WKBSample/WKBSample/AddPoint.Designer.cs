@@ -38,7 +38,6 @@
             xTextBox = new TextBox();
             okButton = new Button();
             cancelButton = new Button();
-            emptyCheckBox = new CheckBox();
             SuspendLayout();
             // 
             // label4
@@ -83,7 +82,7 @@
             mTextBox.Name = "mTextBox";
             mTextBox.Size = new Size(163, 23);
             mTextBox.TabIndex = 10;
-            mTextBox.Text = "null";
+            mTextBox.Text = "NaN";
             // 
             // zTextBox
             // 
@@ -91,7 +90,7 @@
             zTextBox.Name = "zTextBox";
             zTextBox.Size = new Size(163, 23);
             zTextBox.TabIndex = 11;
-            zTextBox.Text = "null";
+            zTextBox.Text = "NaN";
             // 
             // yTextBox
             // 
@@ -121,7 +120,7 @@
             // 
             // cancelButton
             // 
-            cancelButton.Location = new Point(89, 162);
+            cancelButton.Location = new Point(69, 161);
             cancelButton.Name = "cancelButton";
             cancelButton.Size = new Size(75, 23);
             cancelButton.TabIndex = 18;
@@ -129,23 +128,11 @@
             cancelButton.UseVisualStyleBackColor = true;
             cancelButton.Click += cancelButton_Click;
             // 
-            // emptyCheckBox
-            // 
-            emptyCheckBox.AutoSize = true;
-            emptyCheckBox.Location = new Point(12, 165);
-            emptyCheckBox.Name = "emptyCheckBox";
-            emptyCheckBox.Size = new Size(60, 19);
-            emptyCheckBox.TabIndex = 19;
-            emptyCheckBox.Text = "Empty";
-            emptyCheckBox.UseVisualStyleBackColor = true;
-            emptyCheckBox.CheckedChanged += emptyCheckBox_CheckedChanged;
-            // 
             // AddPoint
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(251, 196);
-            Controls.Add(emptyCheckBox);
             Controls.Add(cancelButton);
             Controls.Add(okButton);
             Controls.Add(label4);
@@ -174,6 +161,5 @@
         private TextBox xTextBox;
         private Button okButton;
         private Button cancelButton;
-        private CheckBox emptyCheckBox;
     }
 }

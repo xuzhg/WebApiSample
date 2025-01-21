@@ -5,7 +5,6 @@ using System;
 using System.Buffers.Binary;
 using System.Linq;
 using System.Security.Policy;
-using System.Text;
 using System.Windows.Forms;
 using WKBSample.WBK;
 
@@ -13,12 +12,9 @@ namespace WKBSample
 {
     public partial class Form1 : Form
     {
-        private WKBConfig _config = new WKBConfig();
-
-        private Geometry _geometry = null;
-
         private IWKBObject _wkbObject = null;
-
+        private int _srid = 4326;
+        private string sridTextBoxText;
 
         public Form1()
         {
@@ -26,12 +22,13 @@ namespace WKBSample
 
             toolTip1.SetToolTip(isoWkbcheckBox, "Enable ISO WKB extened Heade:\n +1000 for Z\n + 2000 for M\n + 3000 for ZM.");
             toolTip1.SetToolTip(spatialListBox, "Right click the mouse to add spatial types");
+            wkbBitsTextBox.Text = "Please add spatial types in the spatial list box.";
             spatialListBox.Items.Clear();
 
             InitContextMenu();
 
-            wkbListView.Items.Add(new ListViewItem(new string[] { "abc", "efg" }));
-            wkbListView.Items.Add(new ListViewItem(new string[] { "abc", "efg" }));
+            sridTextBox.Text = _srid.ToString();
+            sridTextBoxText = sridTextBox.Text;
         }
 
         private ContextMenuStrip spatialContextMenu = new ContextMenuStrip();
@@ -281,12 +278,6 @@ namespace WKBSample
             UpdateWKB();
         }
 
-
-        private void Reset()
-        {
-            _wkbObject = null;
-        }
-
         private void spatialListBox_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
@@ -306,58 +297,10 @@ namespace WKBSample
                 item.ContextMenuStrip.Show(Cursor.Position);
                 item.ContextMenuStrip.Visible = true;
             }
-            //else
-            //{
-            //    collectionRoundMenuStrip.Visible = false;
-            //}
-        }
-
-        internal class ListBoxWKBItem
-        {
-            public int Indent { get; set; }
-            public IWKBObject WkbObject { get; set; }
-            public ContextMenuStrip ContextMenuStrip { get; set; }
-
-            public override string ToString()
-            {
-                StringBuilder sb = new StringBuilder(Indent * 4 + 2);
-                for (int i = 0; i < Indent; i++)
-                {
-                    if (i != Indent - 1)
-                    {
-                        sb.Append("    ");
-                    }
-                    else
-                    {
-                        sb.Append("    |-");
-                    }
-                }
-
-                return $"{sb.ToString()} {WkbObject.ToString()}";
-            }
-        }
-
-        private void pointSpatialTypebtn_Click(object sender, EventArgs e)
-        {
-            //_geometry = 
-            _wkbObject = new WKBPoint();
-            spatialListBox.Items.Add(new ListBoxWKBItem { WkbObject = _wkbObject, ContextMenuStrip = pointContextMenu });
-        }
-
-        private void multiPointBtn_Click(object sender, EventArgs e)
-        {
-            _wkbObject = new WKBMultiPoint();
-            spatialListBox.Items.Add(new ListBoxWKBItem { WkbObject = _wkbObject, ContextMenuStrip = multiPointContextMenu });
-        }
-
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private void sridCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -385,49 +328,35 @@ namespace WKBSample
             UpdateBits();
         }
 
-
         private void UpdateWKB()
         {
             spatialListBox.Items.Clear();
-
             InsertItemToListBox(_wkbObject, 0);
-
             UpdateBits();
         }
 
         private void UpdateBits()
         {
-            wkbBytesListBox.Items.Clear();
+            wkbListView.Items.Clear();
             wkbBitsTextBox.Text = "";
             if (_wkbObject == null)
             {
+                wkbBitsTextBox.Text = "Please add spatial types in the spatial list box.";
                 return;
             }
-
-            //IList<string> byteLines = new List<string>();
-            //StringBuilder sb = new StringBuilder();
-
-            //WriteItemToByteListBox(_wkbObject, byteLines, sb, true);
-
-            //foreach (var line in byteLines)
-            //{
-            //    wkbBytesListBox.Items.Add(line);
-            //}
-            //wkbBitsTextBox.Text = sb.ToString();
 
             WKBConfig config = new WKBConfig
             {
                 Order = littleEndianRadioButton.Checked ? ByteOrder.LittleEndian : ByteOrder.BigEndian,
-                SRID = int.Parse(sridTextBox.Text),
+                //SRID = int.Parse(sridTextBox.Text),
+                SRID = _srid,
                 IsoWKB = isoWkbcheckBox.Checked,
                 HasM = mCheckBox.Checked,
                 HasSRID = sridCheckBox.Checked,
                 HasZ = zCheckBox.Checked,
             };
 
-            wkbListView.Items.Clear();
             IList<BitsInfo> bitsInfos = new List<BitsInfo>();
-     //       WriteItemToByteListBox(_wkbObject, bitsInfos, config, true);
 
             _wkbObject.GetBits(bitsInfos, config, true);
 
@@ -435,264 +364,11 @@ namespace WKBSample
             {
                 ListViewItem item = new ListViewItem([info.Bytes, info.Info, BitUtils.HexToBinary(info.Bytes)]);
                 wkbListView.Items.Add(item);
-
-                string newBytes = info.Bytes.PadRight(20);
-
-                string listBox = $"{newBytes} - {info.Info}";
-                wkbBytesListBox.Items.Add(listBox);
             }
 
             wkbBitsTextBox.Text = string.Join("", bitsInfos.Select(c => c.Bytes));
         }
 
-        private void WriteItemToByteListBox(IWKBObject wkbObject, IList<BitsInfo> byteLines, WKBConfig config, bool handSrid)
-        {
-            if (wkbObject == null)
-            {
-                return;
-            }
-
-            switch (wkbObject.SpatialType)
-            {
-                case SpatialType.Point:
-                    wkbObject.GetBits(byteLines, config, handSrid);
-                    break;
-
-                case SpatialType.LineString:
-
-                    break;
-
-                case SpatialType.Polygon:
-
-                    break;
-
-                case SpatialType.MultiPoint:
-
-                    break;
-
-                case SpatialType.MultiLineString:
-
-
-                    break;
-
-                case SpatialType.MultiPolygon:
-
-                    break;
-
-                case SpatialType.Collection:
-
-                    break;
-            }
-        }
-
-        private void WriteItemToByteListBox(IWKBObject wkbObject, IList<string> byteLines, StringBuilder sb, bool handSrid)
-        {
-            if (wkbObject == null)
-            {
-                return;
-            }
-
-            switch (wkbObject.SpatialType)
-            {
-                case SpatialType.Point:
-                    GetBits((WKBPoint)wkbObject, byteLines, sb, handSrid);
-                    break;
-
-                case SpatialType.LineString:
-
-
-                    break;
-
-                case SpatialType.Polygon:
-
-                    break;
-
-                case SpatialType.MultiPoint:
-
-                    break;
-
-                case SpatialType.MultiLineString:
-
-
-                    break;
-
-                case SpatialType.MultiPolygon:
-
-                    break;
-
-                case SpatialType.Collection:
-
-                    break;
-            }
-        }
-
-        private void GetBits(WKBPoint point, IList<string> byteLines, StringBuilder sb, bool handleSrid)
-        {
-            InsertByteOrder(byteLines, sb);
-            byte[] headerBytes = GetHeader(SpatialType.Point, handleSrid);
-            string headerStr = ToHex(headerBytes);
-
-            string zHeader = "";
-            if (zCheckBox.Checked)
-            {
-                if (isoWkbcheckBox.Checked)
-                {
-                    zHeader = "Z(ISO)";
-                }
-                else
-                {
-                    zHeader = "Z";
-                }
-            }
-
-            string mHeader = "";
-            if (mCheckBox.Checked)
-            {
-                if (isoWkbcheckBox.Checked)
-                {
-                    mHeader = "M(ISO)";
-                }
-                else
-                {
-                    mHeader = "M";
-                }
-            }
-
-            byteLines.Add(headerStr + "          - Point " + zHeader + " " + mHeader);
-            sb.Append(headerStr);
-
-
-            InsertSRID(byteLines, sb, handleSrid);
-
-            string xBits = GetDouble(point.X);
-            byteLines.Add(xBits + $"  - x({point.X})");
-            sb.Append(xBits);
-
-            string yBits = GetDouble(point.Y);
-            byteLines.Add(yBits + $"  - y({point.Y})");
-            sb.Append(yBits);
-
-            if (zCheckBox.Checked)
-            {
-                string zBits = GetDouble(point.Z);
-                byteLines.Add(zBits + $"  - z({point.Z})");
-                sb.Append(zBits);
-            }
-
-            if (mCheckBox.Checked)
-            {
-                string mBits = GetDouble(point.M);
-                byteLines.Add(mBits + $"  - m({point.M})");
-                sb.Append(mBits);
-            }
-        }
-
-        private string GetDouble(double? d)
-        {
-            double dValue = d ?? double.NaN;
-            if (littleEndianRadioButton.Checked)
-            {
-                return ToHex(BitConverter.GetBytes(dValue));
-            }
-            else
-            {
-                double newD = BitUtils.ReverseByteOrder(dValue);
-                return ToHex(BitConverter.GetBytes(newD));
-            }
-        }
-
-        private string GetDouble(double d)
-        {
-            if (littleEndianRadioButton.Checked)
-            {
-                return ToHex(BitConverter.GetBytes(d));
-            }
-            else
-            {
-                double newD = BitUtils.ReverseByteOrder(d);
-                return ToHex(BitConverter.GetBytes(newD));
-            }
-        }
-
-        private void InsertSRID(IList<string> byteLines, StringBuilder sb, bool handleSrid)
-        {
-            if (handleSrid)
-            {
-                if (sridCheckBox.Checked)
-                {
-                    int srid = int.Parse(sridTextBox.Text);
-
-                    byte[] bytes;
-                    if (littleEndianRadioButton.Checked)
-                    {
-                        bytes = BitConverter.GetBytes(srid);
-                    }
-                    else
-                    {
-                        int newValue = BinaryPrimitives.ReverseEndianness(srid);
-                        bytes = BitConverter.GetBytes(newValue);
-                    }
-
-                    string sridStr = ToHex(bytes);
-                    byteLines.Add(sridStr + $"          - SIRD ({srid})");
-                    sb.Append(sridStr);
-                }
-            }
-        }
-
-
-        private void InsertByteOrder(IList<string> byteLines, StringBuilder sb)
-        {
-            byteLines.Add(littleEndianRadioButton.Checked ?
-                "01                - LittleEndian" :
-                "00                - BigEndian");
-
-            sb.Append(littleEndianRadioButton.Checked ? "01" : "00");
-        }
-
-        private byte[] GetHeader(SpatialType type, bool handleSrid)
-        {
-            uint intSpatialType = (uint)type & 0xff;
-
-            if (zCheckBox.Checked)
-            {
-                if (isoWkbcheckBox.Checked)
-                {
-                    intSpatialType += 1000;
-                }
-
-                intSpatialType |= 0x80000000;
-            }
-
-            if (mCheckBox.Checked)
-            {
-                if (isoWkbcheckBox.Checked)
-                {
-                    intSpatialType += 2000;
-                }
-
-                intSpatialType |= 0x40000000;
-            }
-
-            if (handleSrid)
-            {
-                if (sridCheckBox.Checked)
-                {
-                    intSpatialType |= 0x20000000;
-                }
-            }
-
-            byte[] bytes = BitConverter.GetBytes(intSpatialType);
-            if (littleEndianRadioButton.Checked)
-            {
-                return bytes;
-            }
-            else
-            {
-                uint newValue = BinaryPrimitives.ReverseEndianness(intSpatialType);
-                return BitConverter.GetBytes(newValue);
-            }
-        }
 
         private void InsertItemToListBox(IWKBObject wkbObject, int indent)
         {
@@ -770,35 +446,37 @@ namespace WKBSample
         {
             spatialListBox.Items.Clear();
             _wkbObject = null;
-            wkbBytesListBox.Items.Clear();
             wkbListView.Items.Clear();
             wkbBitsTextBox.Text = "Please add spatial types in the spatial list box.";
-        }
-
-        public static string ToHex(byte[] bytes)
-        {
-            var buf = new StringBuilder(bytes.Length * 2);
-            for (int i = 0; i < bytes.Length; i++)
-            {
-                byte b = bytes[i];
-                buf.Append(ToHexDigit((b >> 4) & 0x0F));
-                buf.Append(ToHexDigit(b & 0x0F));
-            }
-            return buf.ToString();
-        }
-
-        private static char ToHexDigit(int n)
-        {
-            if (n < 0 || n > 15)
-                throw new ArgumentException("Nibble value out of range: " + n);
-            if (n <= 9)
-                return (char)('0' + n);
-            return (char)('A' + (n - 10));
         }
 
         private void isoWkbcheckBox_CheckedChanged(object sender, EventArgs e)
         {
             UpdateBits();
+        }
+
+        private void sridTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (!int.TryParse(sridTextBox.Text, out int srid))
+            {
+                MessageBox.Show($"SIRD value '{sridTextBox.Text}' is not a valid value. SRID should be an integer.");
+                sridTextBox.Text = sridTextBoxText;
+                return;
+            }
+            else
+            {
+                sridTextBoxText = sridTextBox.Text;
+            }
+        }
+
+        private void sridTextBox_Leave(object sender, EventArgs e)
+        {
+            int srid = int.Parse(sridTextBox.Text);
+            if (_srid != srid)
+            {
+                _srid = srid;
+                UpdateBits();
+            }
         }
     }
 }

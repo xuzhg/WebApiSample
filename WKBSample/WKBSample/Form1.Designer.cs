@@ -34,20 +34,18 @@
             zCheckBox = new CheckBox();
             groupBox1 = new GroupBox();
             sridTextBox = new TextBox();
-            label5 = new Label();
             bigEndianRadioButton = new RadioButton();
             isoWkbcheckBox = new CheckBox();
             littleEndianRadioButton = new RadioButton();
             spatialListBox = new ListBox();
-            wkbBytesListBox = new ListBox();
             wkbBitsTextBox = new TextBox();
             toolTip1 = new ToolTip(components);
             clearAllBtn = new Button();
-            label1 = new Label();
             wkbListView = new ListView();
             hexColumnHeader = new ColumnHeader();
             detailsColumnHeader = new ColumnHeader();
             binaryColumnHeader = new ColumnHeader();
+            label1 = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -93,41 +91,33 @@
             // groupBox1
             // 
             groupBox1.Controls.Add(sridTextBox);
-            groupBox1.Controls.Add(label5);
             groupBox1.Controls.Add(bigEndianRadioButton);
             groupBox1.Controls.Add(isoWkbcheckBox);
             groupBox1.Controls.Add(littleEndianRadioButton);
             groupBox1.Controls.Add(sridCheckBox);
             groupBox1.Controls.Add(zCheckBox);
             groupBox1.Controls.Add(mCheckBox);
-            groupBox1.Location = new Point(12, 22);
+            groupBox1.Location = new Point(827, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(515, 163);
+            groupBox1.Size = new Size(452, 145);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
             groupBox1.Text = "Settings";
             // 
             // sridTextBox
             // 
-            sridTextBox.Location = new Point(329, 110);
+            sridTextBox.Location = new Point(76, 33);
             sridTextBox.Name = "sridTextBox";
-            sridTextBox.Size = new Size(163, 23);
+            sridTextBox.Size = new Size(349, 23);
             sridTextBox.TabIndex = 9;
             sridTextBox.Text = "4326";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(278, 111);
-            label5.Name = "label5";
-            label5.Size = new Size(34, 15);
-            label5.TabIndex = 10;
-            label5.Text = "SRID:";
+            sridTextBox.TextChanged += sridTextBox_TextChanged;
+            sridTextBox.Leave += sridTextBox_Leave;
             // 
             // bigEndianRadioButton
             // 
             bigEndianRadioButton.AutoSize = true;
-            bigEndianRadioButton.Location = new Point(405, 62);
+            bigEndianRadioButton.Location = new Point(338, 113);
             bigEndianRadioButton.Name = "bigEndianRadioButton";
             bigEndianRadioButton.Size = new Size(78, 19);
             bigEndianRadioButton.TabIndex = 1;
@@ -152,7 +142,7 @@
             // 
             littleEndianRadioButton.AutoSize = true;
             littleEndianRadioButton.Checked = true;
-            littleEndianRadioButton.Location = new Point(405, 36);
+            littleEndianRadioButton.Location = new Point(338, 87);
             littleEndianRadioButton.Name = "littleEndianRadioButton";
             littleEndianRadioButton.Size = new Size(87, 19);
             littleEndianRadioButton.TabIndex = 0;
@@ -167,57 +157,38 @@
             spatialListBox.FormattingEnabled = true;
             spatialListBox.ItemHeight = 21;
             spatialListBox.Items.AddRange(new object[] { "1", "2" });
-            spatialListBox.Location = new Point(1343, 84);
+            spatialListBox.Location = new Point(827, 200);
             spatialListBox.Name = "spatialListBox";
             spatialListBox.Size = new Size(452, 466);
             spatialListBox.TabIndex = 12;
             spatialListBox.MouseDown += spatialListBox_MouseDown;
             // 
-            // wkbBytesListBox
-            // 
-            wkbBytesListBox.FormattingEnabled = true;
-            wkbBytesListBox.ItemHeight = 15;
-            wkbBytesListBox.Items.AddRange(new object[] { "1", "2" });
-            wkbBytesListBox.Location = new Point(12, 325);
-            wkbBytesListBox.Name = "wkbBytesListBox";
-            wkbBytesListBox.Size = new Size(247, 454);
-            wkbBytesListBox.TabIndex = 12;
-            // 
             // wkbBitsTextBox
             // 
-            wkbBitsTextBox.Location = new Point(12, 785);
+            wkbBitsTextBox.Location = new Point(12, 732);
             wkbBitsTextBox.Multiline = true;
             wkbBitsTextBox.Name = "wkbBitsTextBox";
-            wkbBitsTextBox.Size = new Size(987, 61);
+            wkbBitsTextBox.Size = new Size(1267, 61);
             wkbBitsTextBox.TabIndex = 13;
             // 
             // clearAllBtn
             // 
             clearAllBtn.Font = new Font("Segoe UI", 12F);
-            clearAllBtn.Location = new Point(1521, 809);
+            clearAllBtn.Location = new Point(827, 679);
             clearAllBtn.Name = "clearAllBtn";
-            clearAllBtn.Size = new Size(233, 37);
+            clearAllBtn.Size = new Size(452, 37);
             clearAllBtn.TabIndex = 4;
             clearAllBtn.Text = "Clear All";
             clearAllBtn.UseVisualStyleBackColor = true;
             clearAllBtn.Click += clearAllBtn_Click;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(79, 301);
-            label1.Name = "label1";
-            label1.Size = new Size(82, 15);
-            label1.TabIndex = 15;
-            label1.Text = "Standard WKB";
-            // 
             // wkbListView
             // 
             wkbListView.Columns.AddRange(new ColumnHeader[] { hexColumnHeader, detailsColumnHeader, binaryColumnHeader });
             wkbListView.GridLines = true;
-            wkbListView.Location = new Point(376, 301);
+            wkbListView.Location = new Point(12, 12);
             wkbListView.Name = "wkbListView";
-            wkbListView.Size = new Size(809, 290);
+            wkbListView.Size = new Size(809, 704);
             wkbListView.TabIndex = 16;
             wkbListView.UseCompatibleStateImageBehavior = false;
             wkbListView.View = View.Details;
@@ -238,20 +209,29 @@
             binaryColumnHeader.TextAlign = HorizontalAlignment.Right;
             binaryColumnHeader.Width = 450;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            label1.Location = new Point(857, 172);
+            label1.Name = "label1";
+            label1.Size = new Size(395, 25);
+            label1.TabIndex = 17;
+            label1.Text = "Please right click below to add spatial types";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1952, 854);
-            Controls.Add(wkbListView);
+            ClientSize = new Size(1294, 803);
             Controls.Add(label1);
+            Controls.Add(wkbListView);
             Controls.Add(wkbBitsTextBox);
-            Controls.Add(wkbBytesListBox);
             Controls.Add(spatialListBox);
             Controls.Add(groupBox1);
             Controls.Add(clearAllBtn);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Well Known Binary (WKB) Lab";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -265,19 +245,17 @@
         private CheckBox zCheckBox;
         private GroupBox groupBox1;
         private ListBox spatialListBox;
-        private ListBox wkbBytesListBox;
         private TextBox wkbBitsTextBox;
         private RadioButton bigEndianRadioButton;
         private RadioButton littleEndianRadioButton;
-        private Label label5;
         private TextBox sridTextBox;
         private ToolTip toolTip1;
         private Button clearAllBtn;
-        private Label label1;
         private CheckBox isoWkbcheckBox;
         private ListView wkbListView;
         private ColumnHeader hexColumnHeader;
         private ColumnHeader detailsColumnHeader;
         private ColumnHeader binaryColumnHeader;
+        private Label label1;
     }
 }

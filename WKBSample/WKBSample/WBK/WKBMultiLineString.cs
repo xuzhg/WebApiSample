@@ -26,7 +26,7 @@ namespace WKBSample.WBK
 
             int num = LineStrings.Count;
             string numBytes = BitUtils.GetInt(num, config.Order);
-            bitInfos.Add(new BitsInfo { Bytes = numBytes, Info = $"LineString Number ({num})" });
+            bitInfos.Add(new BitsInfo { Bytes = numBytes, Info = $"({num}) LineStrings"});
 
             foreach (WKBLineString point in LineStrings)
             {
