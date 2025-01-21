@@ -24,7 +24,7 @@ Once you add a spatial type, you can select the added spatial type and right cli
 
 ![image](https://github.com/user-attachments/assets/5a79c35c-f6a0-4691-a49b-c38fc49e31bd)
 
-If you want to restart it, you can click the 'Reset All' button to restart.
+If you want to restart it, you can click the 'Clear All' button to restart.
 
 ## How to config
 
@@ -55,4 +55,4 @@ You can verify it using the App as below:
 
 ![image](https://github.com/user-attachments/assets/d09eef0d-b988-4073-b7e5-18a1a9772353)
 
-
+The aim/goal of this APP is to simplify the testing when supports WKB in OData.Spatial lib since this lib aleady supported WKT (Well Known Text).
