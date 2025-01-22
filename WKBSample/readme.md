@@ -10,19 +10,20 @@ For details about WKB, please refer to: https://libgeos.org/specifications/wkb/#
 ## How to play
 If you run the app, it opens a windows like below:
 
-![image](https://github.com/user-attachments/assets/b5445501-76ce-44e7-b957-adfb8045dd3e)
+![image](https://github.com/user-attachments/assets/fb298c43-5e54-435d-ab29-8121511ac6fd)
 
 What you can do is to right click on the Right List box to add Spatial types:
 
-![image](https://github.com/user-attachments/assets/b1df58b2-e33d-4c7a-9a42-0c99b757898e)
+![image](https://github.com/user-attachments/assets/de242d4b-0f7f-4f1f-8449-72add6b2e510)
 
 For example, you right click and select 'Add Collection', it turns out as:
 
-![image](https://github.com/user-attachments/assets/02bb8261-5af1-4872-9ea1-2d31c73e0b9c)
+![image](https://github.com/user-attachments/assets/536fc170-ae7b-44da-8a7d-28703780a1a1)
 
 Once you add a spatial type, you can select the added spatial type and right click on it to add more sub (corresponding) spatial types on it.
 
-![image](https://github.com/user-attachments/assets/5a79c35c-f6a0-4691-a49b-c38fc49e31bd)
+![image](https://github.com/user-attachments/assets/059a611f-99f4-4ebd-a6bb-75c25e72d096)
+
 
 If you want to restart it, you can click the 'Clear All' button to restart.
 
@@ -30,7 +31,7 @@ If you want to restart it, you can click the 'Clear All' button to restart.
 
 You can switch the settings, for example, if you uncheck the 'SRID', 'Z' and 'M', you can get the 'Standard WKB'.
 
-![image](https://github.com/user-attachments/assets/be45d0bb-8c0c-4652-83f5-a6247190302c)
+![image](https://github.com/user-attachments/assets/040c0b39-dc40-4111-953c-1c0b5e19c4ce)
 
 
 ## An example
@@ -53,6 +54,6 @@ The following bytes (in hex) make up the WKB for a LINESTRING(0 0, 1 1, 2 1):
 
 You can verify it using the App as below:
 
-![image](https://github.com/user-attachments/assets/d09eef0d-b988-4073-b7e5-18a1a9772353)
+![image](https://github.com/user-attachments/assets/87c8b78c-fbaf-46c9-8230-c843e2536ae2)
 
 The aim/goal of this APP is to simplify the testing when supports WKB in OData.Spatial lib since this lib aleady supported WKT (Well Known Text).
