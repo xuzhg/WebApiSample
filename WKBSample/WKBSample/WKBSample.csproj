@@ -8,8 +8,4 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="NetTopologySuite" Version="2.5.0" />
-  </ItemGroup>
-  
 </Project>

@@ -1,4 +1,6 @@
-﻿namespace WKBSample.WBK;
+﻿using System.Text;
+
+namespace WKBSample.WBK;
 
 internal class WKBPoint : WKBObject
 {
@@ -64,6 +66,58 @@ internal class WKBPoint : WKBObject
         {
             string mBits = BitUtils.GetDouble(M, config.Order);
             bitInfos.Add(new BitsInfo { Bytes = mBits, Info = $"m ({M})" });
+        }
+    }
+
+    public override void GetWKB(StringBuilder wkb, WKBConfig config, bool handSrid, bool hasHeader)
+    {
+        if (hasHeader)
+        {
+            if (handSrid && config.HasSRID)
+            {
+                wkb.Append($"SRID={config.SRID};");
+            }
+
+            wkb.Append("POINT ");
+        }
+
+        if (IsEmpty)
+        {
+            wkb.Append("EMPTY");
+            return;
+        }
+
+        wkb.Append($"(");
+        GetPoint(wkb, config);
+        wkb.Append(")");
+    }
+
+    internal void GetPoint(StringBuilder wkb, WKBConfig config)
+    {
+        wkb.Append($"{X} {Y}");
+
+        if (config.HasZ)
+        {
+            if (double.IsNaN(Z))
+            {
+                wkb.Append(" null");
+            }
+            else
+            {
+                wkb.Append($" {Z}");
+            }
+        }
+
+        if (config.HasM)
+        {
+            if (double.IsNaN(M))
+            {
+                wkb.Append(" null");
+            }
+            else
+            {
+                wkb.Append($" {M}");
+            }
         }
     }
 };

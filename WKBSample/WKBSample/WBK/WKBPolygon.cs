@@ -1,4 +1,6 @@
-﻿namespace WKBSample.WBK;
+﻿using System.Text;
+
+namespace WKBSample.WBK;
 
 internal class WKBPolygon : WKBObject
 {
@@ -60,5 +62,40 @@ internal class WKBPolygon : WKBObject
 
             index++;
         }
+    }
+
+    public override void GetWKB(StringBuilder wkb, WKBConfig config, bool handSrid, bool hasHeader)
+    {
+        if (hasHeader)
+        {
+            if (handSrid && config.HasSRID)
+            {
+                wkb.Append($"SRID={config.SRID};");
+            }
+
+            wkb.Append("POLYGON ");
+        }
+
+        if (Rings.Count == 0)
+        {
+            wkb.Append("EMPTY");
+            return;
+        }
+
+        int index = 0;
+        wkb.Append("(");
+        foreach (WKBLineString lineString in Rings)
+        {
+            lineString.GetWKB(wkb, config, false, false);
+
+            if (index != Rings.Count - 1)
+            {
+                wkb.Append(",");
+            }
+
+            ++index;
+        }
+
+        wkb.Append(")");
     }
 }

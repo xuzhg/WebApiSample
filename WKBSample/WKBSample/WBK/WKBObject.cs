@@ -1,4 +1,5 @@
 ﻿using System.Buffers.Binary;
+using System.Text;
 
 namespace WKBSample.WBK;
 
@@ -9,6 +10,8 @@ public abstract class WKBObject : IWKBObject
     public int? SRID { get; set; }
 
     public abstract void GetBits(IList<BitsInfo> bitInfos, WKBConfig config, bool handSrid);
+
+    public abstract void GetWKB(StringBuilder sb, WKBConfig config, bool handSrid, bool hasHeader);
 
     protected static void InsertByteOrder(IList<BitsInfo> bitInfos, ByteOrder order)
     {

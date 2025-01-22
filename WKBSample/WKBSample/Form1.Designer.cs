@@ -46,6 +46,9 @@
             detailsColumnHeader = new ColumnHeader();
             binaryColumnHeader = new ColumnHeader();
             label1 = new Label();
+            wktTextBox = new TextBox();
+            label2 = new Label();
+            label3 = new Label();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -165,10 +168,10 @@
             // 
             // wkbBitsTextBox
             // 
-            wkbBitsTextBox.Location = new Point(12, 732);
+            wkbBitsTextBox.Location = new Point(50, 732);
             wkbBitsTextBox.Multiline = true;
             wkbBitsTextBox.Name = "wkbBitsTextBox";
-            wkbBitsTextBox.Size = new Size(1267, 61);
+            wkbBitsTextBox.Size = new Size(1229, 61);
             wkbBitsTextBox.TabIndex = 13;
             // 
             // clearAllBtn
@@ -219,11 +222,41 @@
             label1.TabIndex = 17;
             label1.Text = "Please right click below to add spatial types";
             // 
+            // wktTextBox
+            // 
+            wktTextBox.Font = new Font("Segoe UI", 12F);
+            wktTextBox.Location = new Point(50, 815);
+            wktTextBox.Multiline = true;
+            wktTextBox.Name = "wktTextBox";
+            wktTextBox.Size = new Size(1229, 56);
+            wktTextBox.TabIndex = 18;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 755);
+            label2.Name = "label2";
+            label2.Size = new Size(32, 15);
+            label2.TabIndex = 19;
+            label2.Text = "WKB";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(12, 838);
+            label3.Name = "label3";
+            label3.Size = new Size(32, 15);
+            label3.TabIndex = 19;
+            label3.Text = "WKT";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1294, 803);
+            ClientSize = new Size(1294, 884);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(wktTextBox);
             Controls.Add(label1);
             Controls.Add(wkbListView);
             Controls.Add(wkbBitsTextBox);
@@ -257,5 +290,8 @@
         private ColumnHeader detailsColumnHeader;
         private ColumnHeader binaryColumnHeader;
         private Label label1;
+        private TextBox wktTextBox;
+        private Label label2;
+        private Label label3;
     }
 }

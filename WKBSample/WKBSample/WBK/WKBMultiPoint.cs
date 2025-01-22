@@ -1,4 +1,7 @@
-﻿namespace WKBSample.WBK;
+﻿using System.Runtime;
+using System.Text;
+
+namespace WKBSample.WBK;
 
 internal class WKBMultiPoint : WKBObject
 {
@@ -30,5 +33,39 @@ internal class WKBMultiPoint : WKBObject
         {
             point.GetBits(bitInfos, config, false);
         }
+    }
+
+    public override void GetWKB(StringBuilder wkb, WKBConfig config, bool handSrid, bool hasHeader)
+    {
+        if (hasHeader)
+        {
+            if (handSrid && config.HasSRID)
+            {
+                wkb.Append($"SRID={config.SRID};");
+            }
+
+            wkb.Append("MULTIPOINT ");
+        }
+
+        if (Points.Count == 0)
+        {
+            wkb.Append("EMPTY");
+            return;
+        }
+
+        int index = 0;
+        wkb.Append("(");
+        foreach (WKBPoint point in Points)
+        {
+            point.GetWKB(wkb, config, false, false);
+
+            if (index != Points.Count - 1)
+            {
+                wkb.Append(",");
+            }
+
+            ++index;
+        }
+        wkb.Append(")");
     }
 }

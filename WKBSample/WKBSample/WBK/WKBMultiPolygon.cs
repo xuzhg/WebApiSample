@@ -1,4 +1,7 @@
-﻿namespace WKBSample.WBK;
+﻿using System;
+using System.Text;
+
+namespace WKBSample.WBK;
 
 internal class WKBMultiPolygon : WKBObject
 {
@@ -26,9 +29,43 @@ internal class WKBMultiPolygon : WKBObject
         string numBytes = BitUtils.GetInt(num, config.Order);
         bitInfos.Add(new BitsInfo { Bytes = numBytes, Info = $"({num}) Polygons" });
 
-        foreach (WKBPolygon point in Polygons)
+        foreach (WKBPolygon polygon in Polygons)
         {
-            point.GetBits(bitInfos, config, false);
+            polygon.GetBits(bitInfos, config, false);
         }
+    }
+
+    public override void GetWKB(StringBuilder wkb, WKBConfig config, bool handSrid, bool hasHeader)
+    {
+        if (hasHeader)
+        {
+            if (handSrid && config.HasSRID)
+            {
+                wkb.Append($"SRID={config.SRID};");
+            }
+
+            wkb.Append("MULTIPOLYGON ");
+        }
+
+        if (Polygons.Count == 0)
+        {
+            wkb.Append("EMPTY");
+            return;
+        }
+
+        int index = 0;
+        wkb.Append("(");
+        foreach (WKBPolygon polygon in Polygons)
+        {
+            polygon.GetWKB(wkb, config, false, false);
+
+            if (index != Polygons.Count - 1)
+            {
+                wkb.Append(",");
+            }
+
+            ++index;
+        }
+        wkb.Append(")");
     }
 }
