@@ -1,0 +1,30 @@
+@issue1432DollarIt_HostAddress = http://localhost:5171
+
+GET {{issue1432DollarIt_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{issue1432DollarIt_HostAddress}}/$odata
+
+###
+
+GET {{issue1432DollarIt_HostAddress}}/odata/customers/1/emails
+
+###
+GET {{issue1432DollarIt_HostAddress}}/odata/customers/1/emails?$filter=endswith($it,'.com')
+
+###
+
+GET {{issue1432DollarIt_HostAddress}}/odata/customers(1)?$expand=orders
+
+###
+GET {{issue1432DollarIt_HostAddress}}/odata/customers(1)?$expand=orders($filter=$it/Address/City%20eq%20ShipTo/City)
+
+
+###
+
+GET {{issue1432DollarIt_HostAddress}}/odata/customers(2)?$expand=orders($filter=$it/Address/City%20eq%20ShipTo/City)
+
+
+###

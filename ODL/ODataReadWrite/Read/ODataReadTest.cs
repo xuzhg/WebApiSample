@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace ODataReadWrite.Read
@@ -49,7 +50,7 @@ namespace ODataReadWrite.Read
                 ODataMessageReader messageReader = new ODataMessageReader((IODataRequestMessage)requestMessage, readerSettings, model);
 
                 Stack<ODataItemWrapper> resStack = new Stack<ODataItemWrapper>();
-                ODataReader odataReader = messageReader.CreateODataResourceReader(customers, customers.EntityType());
+                ODataReader odataReader = messageReader.CreateODataResourceReader(customers, customers.EntityType);
 
                 while (odataReader.Read())
                 {
@@ -141,7 +142,7 @@ namespace ODataReadWrite.Read
             ODataResourceWrapper topLevelResource = topLevel as ODataResourceWrapper;
             if (topLevelResource != null)
             {
-                foreach (var a in topLevelResource.Resource.Properties)
+                foreach (var a in topLevelResource.Resource.Properties.OfType<ODataProperty>())
                 {
                     Console.WriteLine(a.Name + ": " + a.Value);
                 }
@@ -153,7 +154,7 @@ namespace ODataReadWrite.Read
                     ODataResourceWrapper resourceWrapper = a.NestedWrapper as ODataResourceWrapper;
                     if (resourceWrapper != null)
                     {
-                        foreach (var prop in resourceWrapper.Resource.Properties)
+                        foreach (var prop in resourceWrapper.Resource.Properties.OfType<ODataProperty>())
                         {
                             Console.WriteLine(prop.Name + ": " + prop.Value);
                         }

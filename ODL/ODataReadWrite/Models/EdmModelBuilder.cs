@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.OData.Edm;
+using System.Net;
 
 namespace ODataReadWrite.Models
 {
@@ -22,8 +23,19 @@ namespace ODataReadWrite.Models
             var customerType = BuildCustomerType(addressType);
             model.AddElement(customerType);
 
+            var orderType = BuildOrderType();
+            model.AddElement(orderType);
+
+            customerType.AddUnidirectionalNavigation(new EdmNavigationPropertyInfo
+            {
+                Name = "Orders",
+                Target = orderType,
+                TargetMultiplicity = EdmMultiplicity.Many
+            });
+
             var container = new EdmEntityContainer("NS", "Container");
-            var customers = new EdmEntitySet(container, "Customers", customerType);
+            container.AddEntitySet("Customers", customerType);
+            container.AddEntitySet("Orders", orderType);
             model.AddElement(container);
 
             _edmModel = model;
@@ -45,10 +57,22 @@ namespace ODataReadWrite.Models
             customer.AddStructuralProperty("Name", EdmPrimitiveTypeKind.String);
             customer.AddStructuralProperty("DisplayName", EdmPrimitiveTypeKind.String);
             customer.AddStructuralProperty("MailEnabled", EdmPrimitiveTypeKind.Boolean);
+            customer.AddStructuralProperty("Emails", new EdmCollectionTypeReference(new EdmCollectionType(EdmCoreModel.Instance.GetString(false))));
+
             customer.AddStructuralProperty("AssignedLabels",
                 new EdmCollectionTypeReference(new EdmCollectionType(new EdmComplexTypeReference(address, true))));
 
             return customer;
+        }
+
+        public static EdmEntityType BuildOrderType()
+        {
+            var order = new EdmEntityType("NS", "Order");
+            order.AddKeys(order.AddStructuralProperty("Id", EdmPrimitiveTypeKind.Int32));
+            order.AddStructuralProperty("Title", EdmPrimitiveTypeKind.String);
+            order.AddStructuralProperty("Price", EdmPrimitiveTypeKind.Int32);
+
+            return order;
         }
     }
 
