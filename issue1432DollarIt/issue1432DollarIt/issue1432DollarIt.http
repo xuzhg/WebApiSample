@@ -16,6 +16,14 @@ GET {{issue1432DollarIt_HostAddress}}/odata/customers/1/emails?$filter=endswith(
 
 ###
 
+GET {{issue1432DollarIt_HostAddress}}/odata/customers(1)?$select=emails($filter=endswith($this,'.com'))
+###
+
+
+# The below request doesn't work since $it refers to the entity of customer.
+GET {{issue1432DollarIt_HostAddress}}/odata/customers(1)?$select=emails($filter=endswith($it,'.com'))
+###
+
 GET {{issue1432DollarIt_HostAddress}}/odata/customers(1)?$expand=orders
 
 ###
