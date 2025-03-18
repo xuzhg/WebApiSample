@@ -10,7 +10,7 @@ var app = builder.Build();
 
 
 
-var group = app.MapGroup("");
+var group = app.MapGroup(string.Empty);
 group.UseModel(new EdmModel("aa"))
     .AddEndpointFilter(async (efiContext, next) =>
     {
@@ -29,6 +29,7 @@ group.UseModel(new EdmModel("cc"));
 
 app.MapGet("/request", async (context) =>
 {
+    var endpoint = context.GetEndpoint();
     await context.Response.WriteAsync("In httpRequest delegate");
     await Task.CompletedTask;
 })

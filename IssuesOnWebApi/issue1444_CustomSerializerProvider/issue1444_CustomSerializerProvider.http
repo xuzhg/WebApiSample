@@ -1,0 +1,6 @@
+@issue1444_CustomSerializerProvider_HostAddress = http://localhost:5243
+
+GET {{issue1444_CustomSerializerProvider_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

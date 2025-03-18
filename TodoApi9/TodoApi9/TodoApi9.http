@@ -40,3 +40,7 @@ GET {{TodoApi9_HostAddress}}/v1
 GET {{TodoApi9_HostAddress}}/v2
 
 ###
+
+GET {{TodoApi9_HostAddress}}/request
+
+###
