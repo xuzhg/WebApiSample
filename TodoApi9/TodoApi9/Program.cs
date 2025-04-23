@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using TodoApi9;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,9 +8,29 @@ builder.Services.AddDbContext<TodoDb>(opt => opt.UseInMemoryDatabase("TodoList")
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddOpenApi();
-var app = builder.Build();
+WebApplication app = builder.Build();
 
+MethodInfo PopulateMetadataForParameterMethod = typeof(IODataResult2).GetMethod(nameof(IODataResult2.PopulateMetadataForEndpoint), BindingFlags.Public | BindingFlags.Static);
 
+object[] invokeArgs = new object[2];
+invokeArgs[0] = null;
+invokeArgs[1] = null;
+// PopulateMetadataForParameterMethod.MakeGenericMethod(typeof(IODataResult2)).Invoke(null, invokeArgs);
+
+//app.MapGet("null", () => (Todo)null);
+
+app.MapGet("odata", (ODataQueryOptions<Todo> queryOptions) => Results.Extensions.OData(new Todo()));
+
+//app.MapGet("odata2", (ODataQueryOptions<Todo> queryOptions) => Results.Extensions.OData2(new Todo()));
+
+app.MapGet("odata1", () => new ODataResult(new Todo()));
+
+app.MapGet("odata2", () => Results.Json(new Todo()));
+
+app.MapGet("/todos", async (TodoDb dbContext) =>
+{
+    return TypedResults.Ok(await dbContext.Todos.ToListAsync());
+});
 
 var group = app.MapGroup(string.Empty);
 group.UseModel(new EdmModel("aa"))
@@ -22,7 +44,10 @@ group.UseModel(new EdmModel("aa"))
     }
     );
 
-group.MapGet("v1", () => "hello v1");
+group.MapGet("v1", () => "hello v1").Finally(v =>
+{
+    v.Metadata.Add(new Todo());
+});
 group.MapGet("v2", () => "hello v2").UseModel(new EdmModel("bb"));
 
 group.UseModel(new EdmModel("cc"));
@@ -118,6 +143,6 @@ app.MapDelete("/todoitems/{id}", async (int id, TodoDb db) =>
     }
 
     return Results.NotFound();
-});
+}).Finally(c => { });
 
 app.Run();

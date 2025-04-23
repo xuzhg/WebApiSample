@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Metadata;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
@@ -111,4 +112,87 @@ public sealed class EdmModelMetadata : IEdmModelMetadata
     }
 
     public IEdmModel Model { get; }
+}
+
+
+static class ODataResultsExtensions
+{
+    public static IResult OData(this IResultExtensions resultExtensions, object value)
+    {
+        ArgumentNullException.ThrowIfNull(resultExtensions);
+
+        return new ODataResult(value);
+    }
+
+    public static IODataResult2 OData2(this IResultExtensions resultExtensions, object value)
+    {
+        ArgumentNullException.ThrowIfNull(resultExtensions);
+
+        return new ODataResult2(value);
+    }
+}
+
+public interface IODataResult2 : IResult, IEndpointMetadataProvider
+{
+    public static virtual void PopulateMetadata(MethodInfo method, EndpointBuilder builder)
+    {
+        //builder.Metadata.Add(new EdmModelMetadata(new EdmModel("abc")));
+    }
+
+    public static void PopulateMetadataForEndpoint<T>(MethodInfo method, EndpointBuilder builder)
+        where T : IEndpointMetadataProvider
+    {
+        T.PopulateMetadata(method, builder);
+    }
+}
+
+public class ODataResult2 : IODataResult2
+{
+    public ODataResult2(object value)
+    {
+        Value = value;
+    }
+    public object Value { get; }
+    public static void PopulateMetadata(MethodInfo method, EndpointBuilder builder)
+    {
+        builder.Metadata.Add(new EdmModelMetadata(new EdmModel("efg")));
+    }
+
+    public async Task ExecuteAsync(HttpContext httpContext)
+    {
+        await httpContext.Response.WriteAsJsonAsync(Value);
+    }
+}
+
+
+public interface IODataResult
+{
+    object Value { get; }
+}
+
+internal class ODataResult : IResult, IODataResult, IEndpointMetadataProvider
+{
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ODataResult"/> class
+    /// </summary>
+    /// <param name="value">The wrapper real value.</param>
+    public ODataResult(object value)
+    {
+        Value = value;
+    }
+
+    /// <summary>
+    /// Gets the wrapper value.
+    /// </summary>
+    public object Value { get; }
+
+    public static void PopulateMetadata(MethodInfo method, EndpointBuilder builder)
+    {
+        builder.Metadata.Add(new EdmModelMetadata(new EdmModel("abc")));
+    }
+
+    public async Task ExecuteAsync(HttpContext httpContext)
+    {
+        await httpContext.Response.WriteAsJsonAsync(Value);
+    }
 }

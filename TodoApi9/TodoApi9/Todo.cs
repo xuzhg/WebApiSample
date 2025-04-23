@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Routing;
+﻿using Microsoft.AspNetCore.Http.Metadata;
+using Microsoft.AspNetCore.Routing;
 using System.Collections.Generic;
 using System.Reflection;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -27,9 +28,22 @@ public interface IODataQueryFilter : IEndpointFilter
 public class ODataQueryOptions
 { }
 
-public class ODataQueryOptions<T> : ODataQueryOptions
+public class ODataQueryOptions<T> : ODataQueryOptions, IEndpointParameterMetadataProvider, IEndpointMetadataProvider
 {
+    public static void PopulateMetadata(ParameterInfo parameter, EndpointBuilder builder)
+    {
+        builder.Metadata.Add(new EdmModelMetadata(new EdmModel("abc")));
+    }
 
+    public static void PopulateMetadata(MethodInfo method, EndpointBuilder builder)
+    {
+        builder.Metadata.Add(new EdmModelMetadata(new EdmModel("abc")));
+    }
+
+    public static async ValueTask<ODataQueryOptions<T>> BindAsync(HttpContext context, ParameterInfo parameter)
+    {
+        return new ODataQueryOptions<T>();
+    }
 }
 
 
