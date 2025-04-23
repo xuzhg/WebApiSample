@@ -1,0 +1,13 @@
+﻿@MinimalApiODataTest_HostAddress = http://localhost:5202
+
+GET {{MinimalApiODataTest_HostAddress}}/odata/customers
+
+###
+
+GET {{MinimalApiODataTest_HostAddress}}/odata/customers?$expand=Orders($select=Amount)&$select=Name,HomeAddress($select=city)
+
+###
+
+GET {{MinimalApiODataTest_HostAddress}}/$odata?$format=application/json
+
+###
