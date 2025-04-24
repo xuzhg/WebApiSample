@@ -8,6 +8,6 @@ GET {{MinimalApiODataTest_HostAddress}}/odata/customers?$expand=Orders($select=A
 
 ###
 
-GET {{MinimalApiODataTest_HostAddress}}/$odata?$format=application/json
+GET {{MinimalApiODataTest_HostAddress}}/odata/$metadata?$format=application/json
 
 ###

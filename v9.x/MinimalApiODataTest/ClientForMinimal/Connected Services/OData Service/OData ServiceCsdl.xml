@@ -1,0 +1,40 @@
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="MinimalApiODataTest.Models" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Customer">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="FavoriteColor" Type="MinimalApiODataTest.Models.Color" Nullable="false" />
+        <Property Name="HomeAddress" Type="MinimalApiODataTest.Models.Address" />
+        <NavigationProperty Name="Orders" Type="Collection(MinimalApiODataTest.Models.Order)" />
+      </EntityType>
+      <EntityType Name="Order">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Amount" Type="Edm.Int32" Nullable="false" />
+      </EntityType>
+      <ComplexType Name="Address">
+        <Property Name="City" Type="Edm.String" />
+        <Property Name="Street" Type="Edm.String" />
+      </ComplexType>
+      <EnumType Name="Color">
+        <Member Name="Red" Value="0" />
+        <Member Name="Green" Value="1" />
+        <Member Name="Blue" Value="2" />
+      </EnumType>
+    </Schema>
+    <Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="Container">
+        <EntitySet Name="Customers" EntityType="MinimalApiODataTest.Models.Customer">
+          <NavigationPropertyBinding Path="Orders" Target="Orders" />
+        </EntitySet>
+        <EntitySet Name="Orders" EntityType="MinimalApiODataTest.Models.Order" />
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

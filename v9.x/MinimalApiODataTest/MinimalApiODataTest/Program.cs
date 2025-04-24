@@ -26,6 +26,6 @@ odataApp.MapGet("customers", (AppDb db, ODataQueryOptions<Customer> queryOptions
     => queryOptions.ApplyTo(db.Customers.Include(c => c.Orders)));
 
 // odataApp.MapODataMetadata("$odata", model); // this line has a bug, since WithODataResult() on the group, I will fix it in the next nightly
-app.MapODataMetadata("$odata", model);
+app.MapODataMetadata("odata/$metadata", model);
 
 app.Run();

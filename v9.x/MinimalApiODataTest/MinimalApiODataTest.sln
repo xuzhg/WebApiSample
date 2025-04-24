@@ -5,6 +5,8 @@ VisualStudioVersion = 17.13.35931.197 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalApiODataTest", "MinimalApiODataTest\MinimalApiODataTest.csproj", "{1B621331-2A12-41EA-A8B9-77C5ABA45988}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientForMinimal", "ClientForMinimal\ClientForMinimal.csproj", "{996E9F95-A024-4DF2-9AF1-43F6086CDDD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1B621331-2A12-41EA-A8B9-77C5ABA45988}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B621331-2A12-41EA-A8B9-77C5ABA45988}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B621331-2A12-41EA-A8B9-77C5ABA45988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{996E9F95-A024-4DF2-9AF1-43F6086CDDD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{996E9F95-A024-4DF2-9AF1-43F6086CDDD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{996E9F95-A024-4DF2-9AF1-43F6086CDDD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{996E9F95-A024-4DF2-9AF1-43F6086CDDD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
