@@ -1,0 +1,13 @@
+@ComputeOrderByTest_HostAddress = http://localhost:5182
+
+GET {{ComputeOrderByTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+GET {{ComputeOrderByTest_HostAddress}}/odata/customers
+
+###
+GET {{ComputeOrderByTest_HostAddress}}/odata/customers?$compute=age%20add%2010%20as%20agePlusTen&$select=id,name,agePlusTen
+
+###
+GET {{ComputeOrderByTest_HostAddress}}/odata/customers?$compute=age%20add%2010%20as%20agePlusTen&$orderby=agePlusTen%20desc&$select=id,name,agePlusTen&$filter=agePlusTen%20ge%2021
