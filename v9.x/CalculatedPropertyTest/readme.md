@@ -72,7 +72,20 @@ Here's the database query:
 
 <img width="2462" height="350" alt="image" src="https://github.com/user-attachments/assets/4b5e677a-905f-4ced-913a-1136cd705873" />
 
-**be noted**, only the last name is fetched from student table.
+**be noted**, there are two 'left join' because in the `SchoolsController`, I have the following codes:
+```C#
+return Ok(_context.Schools.Select(c => new School
+{
+    SchoolId = c.SchoolId,
+    SchoolName = c.SchoolName,
+    LastNames = string.Join(",", c.Students.Select(s => s.LastName)), // this line constructs one let join
+    MailAddress = c.MailAddress,
+    Students = c.Students // This line constructs the other left join
+}));
+```
+
+If you remove `Students = c.Students`, send the request again, you will see the updated SQL statement as:
+<img width="2467" height="296" alt="image" src="https://github.com/user-attachments/assets/6fcd2fd7-386a-472b-854d-61861ff72c99" />
 
 ## 2 using #select
 
@@ -127,3 +140,15 @@ Here's the database statement:
       ORDER BY "s"."SchoolId"
 
 **be noted**, only the last name and student id are fetched.
+
+## 3 using #$expand
+
+```cmd
+###
+GET {{CalculatedPropertyTest_HostAddress}}/odata/schools?$expand=Students
+Accept: application/json
+```
+
+In this case, the `LastNames` is `null`. In select all (no $select), OData just uses the "$it" to represent the instance. However, "$it" instance doesn't contains the "LastNames". 
+
+Please leave your comments so that I can dig more for your reference.
