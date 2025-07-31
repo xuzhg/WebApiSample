@@ -38,16 +38,30 @@ namespace ComputeOrderByTest.Controllers
             [34, 54, 10, 8, 19, 22, 43, 11];
 
         [HttpGet]
-        [EnableQuery]
-        public IEnumerable<Customer> Get()
+       // [EnableQuery]
+        public IQueryable Get(ODataQueryOptions<Customer> queryOptions)
         {
-            return Enumerable.Range(1, 5).Select(index => new Customer
+            var customers = Enumerable.Range(1, 5).Select(index => new Customer
             {
                 Id = index,
                 Name = WeatherForecastController.Summaries[index - 1],
                 Age = Ages[index - 1]
             })
-            .ToArray();
+            .AsQueryable();
+
+            // WORKS
+           // var result = queryOptions.ApplyTo(customers);
+
+            // FAILS
+            var result = queryOptions.ApplyTo(customers, new ODataQuerySettings
+            {
+                PageSize = 3,
+                TimeZone = TimeZoneInfo.Utc
+            });
+
+            return result;
+
+            
         }
     }
 }

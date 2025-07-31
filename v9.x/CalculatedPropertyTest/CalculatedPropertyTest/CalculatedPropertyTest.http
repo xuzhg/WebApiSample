@@ -1,0 +1,12 @@
+@CalculatedPropertyTest_HostAddress = http://localhost:5116
+
+GET {{CalculatedPropertyTest_HostAddress}}/odata/schools/
+Accept: application/json
+
+###
+
+
+GET {{CalculatedPropertyTest_HostAddress}}/odata/schools?$select=LastNames
+Accept: application/json
+
+###
