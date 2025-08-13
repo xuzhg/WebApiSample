@@ -1,0 +1,42 @@
+@DeepUpdateTests_HostAddress = http://localhost:5048
+
+GET {{DeepUpdateTests_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{DeepUpdateTests_HostAddress}}/weatherforecast
+
+###
+GET {{DeepUpdateTests_HostAddress}}/odata/Customers
+
+###
+# Be noted: If you remove the 'OData-Version' header or version as 4.0, the delta kinds of Orders are all 'entry/entity'
+#           If you have the 'OData-Version' header, the delta kinds of Orders are 'Entry,DeletedEntry,Entry'
+PATCH {{DeepUpdateTests_HostAddress}}/odata/Customers(1)
+Content-Type: application/json
+OData-Version: 4.01
+
+{
+    "Name": "Updated Customer",
+    "Orders@odata.delta": [
+        {
+            "Title": "Updated Order",
+            "Amount": 150
+        },
+        {
+         "@removed":{"reason":"deleted" },
+         "@id":"Orders(13)"
+        },
+        {
+          "@id":"Orders(42)",
+          "Title":"Microsoft",
+          "Amount": 300
+       }
+  ]
+}
+
+###
+
+
+###

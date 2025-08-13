@@ -10,3 +10,5 @@ GET {{CalculatedPropertyTest_HostAddress}}/odata/schools?$select=LastNames
 Accept: application/json
 
 ###
+GET {{CalculatedPropertyTest_HostAddress}}/odata/schools?$expand=Students
+Accept: application/json
