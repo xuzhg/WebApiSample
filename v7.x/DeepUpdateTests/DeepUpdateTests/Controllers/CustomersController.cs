@@ -16,7 +16,7 @@ namespace DeepUpdateTests.Controllers
                     {
                         Name = "Jonier",
                       //  Order = new Order { Title = "104m" },
-                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "abc" + e, Amount = 100 + e }).ToList()
+                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "abc" + e, Amount = 100 + e }).ToArray()
                     },
                     new Customer
                     {
@@ -28,7 +28,7 @@ namespace DeepUpdateTests.Controllers
                         //    new Address { City = "Re4d", Street = "51 NE"},
                         //},
                         //Order = new Order { Title = "Zhang" },
-                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "xyz" + e, Amount = 200 + e }).ToList()
+                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "xyz" + e, Amount = 200 + e }).ToArray()
                     },
                     new Customer
                     {
@@ -40,7 +40,7 @@ namespace DeepUpdateTests.Controllers
                         //    new Address { City = "R4d", Street = "546 AVE"},
                         //},
                         //Order = new Order { Title = "Jichan" },
-                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "ijk" + e, Amount = 300 + e }).ToList()
+                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "ijk" + e, Amount = 300 + e }).ToArray()
                     },
                 };
         }

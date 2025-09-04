@@ -28,7 +28,7 @@ namespace DeepUpdateTests.Models
 
         public string Name { get; set; }
 
-        public virtual IList<Order> Orders { get; set; }
+        public virtual Order[] Orders { get; set; }
     }
 
     public class Order
