@@ -11,6 +11,14 @@ GET {{DeepUpdateTests_HostAddress}}/weatherforecast
 GET {{DeepUpdateTests_HostAddress}}/odata/Customers
 
 ###
+GET {{DeepUpdateTests_HostAddress}}/odata/Customers(1)/orders?$expand=list
+
+###
+# We are looking to support delta on this query with expanded collection navigation property
+# Expect the response to have only changed properties for Checklist and not entire checklist collection object
+GET {{DeepUpdateTests_HostAddress}}/odata/Customers(1)/orders?$expand=list&deltaToken=abcd
+
+###
 # Be noted: If you remove the 'OData-Version' header or version as 4.0, the delta kinds of Orders are all 'entry/entity'
 #           If you have the 'OData-Version' header, the delta kinds of Orders are 'Entry,DeletedEntry,Entry'
 PATCH {{DeepUpdateTests_HostAddress}}/odata/Customers(1)

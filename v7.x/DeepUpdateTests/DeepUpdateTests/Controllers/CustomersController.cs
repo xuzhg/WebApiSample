@@ -1,5 +1,7 @@
 using DeepUpdateTests.Models;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Query;
+using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeepUpdateTests.Controllers
@@ -16,7 +18,7 @@ namespace DeepUpdateTests.Controllers
                     {
                         Name = "Jonier",
                       //  Order = new Order { Title = "104m" },
-                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "abc" + e, Amount = 100 + e }).ToArray()
+                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "abc" + e, Amount = 100 + e }).ToList()
                     },
                     new Customer
                     {
@@ -28,7 +30,7 @@ namespace DeepUpdateTests.Controllers
                         //    new Address { City = "Re4d", Street = "51 NE"},
                         //},
                         //Order = new Order { Title = "Zhang" },
-                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "xyz" + e, Amount = 200 + e }).ToArray()
+                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "xyz" + e, Amount = 200 + e, List = new List<ListItem> () {new ListItem { isComplete = true } } }).ToList()
                     },
                     new Customer
                     {
@@ -40,7 +42,7 @@ namespace DeepUpdateTests.Controllers
                         //    new Address { City = "R4d", Street = "546 AVE"},
                         //},
                         //Order = new Order { Title = "Jichan" },
-                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "ijk" + e, Amount = 300 + e }).ToArray()
+                        Orders = Enumerable.Range(0, 2).Select(e => new Order { Title = "ijk" + e, Amount = 300 + e }).ToList()
                     },
                 };
         }
@@ -100,6 +102,17 @@ namespace DeepUpdateTests.Controllers
             return Ok(changeItemsInOrders);
 
             // return Ok(_customers.FirstOrDefault(c => c.Id == key));
+        }
+
+        [HttpGet]
+        [ODataRoute("Customers({customerId})/orders")]
+        public IActionResult GetOrdersForCustomer([FromODataUri] string customerId, ODataQueryOptions<Order> options)
+        {
+            // handle read
+            var orders = _customers.SelectMany(c => c.Orders);
+            IQueryable<Order> queryOrders = orders.AsQueryable();
+            options.ApplyTo(queryOrders);
+            return Ok(queryOrders);
         }
 
         /// <summary>
