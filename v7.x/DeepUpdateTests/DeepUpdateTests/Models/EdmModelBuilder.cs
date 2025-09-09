@@ -14,6 +14,7 @@ namespace DeepUpdateTests.Models
                 var builder = new ODataConventionModelBuilder();
                 builder.EntitySet<Customer>("Customers");
                 builder.EntitySet<Order>("Orders");
+                builder.EntityType<ListItem>();
 
                 _edmModel = builder.GetEdmModel();
             }
@@ -28,7 +29,7 @@ namespace DeepUpdateTests.Models
 
         public string Name { get; set; }
 
-        public virtual Order[] Orders { get; set; }
+        public virtual IList<Order> Orders { get; set; }
     }
 
     public class Order
@@ -38,5 +39,15 @@ namespace DeepUpdateTests.Models
         public int Amount { get; set; }
 
         public string Title { get; set; }
+
+        [Contained]
+        public virtual IList<ListItem> List { get; set; }
+    }
+
+    public class ListItem
+    {
+        public int Id { get; set; }
+
+        public bool isComplete { get; set; }
     }
 }
