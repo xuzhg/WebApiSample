@@ -1,8 +1,10 @@
 using DeepUpdateTests.Models;
 using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.AspNet.OData.Routing;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OData.Edm;
 
 namespace DeepUpdateTests.Controllers
 {
@@ -108,6 +110,59 @@ namespace DeepUpdateTests.Controllers
         [ODataRoute("Customers({customerId})/orders")]
         public IActionResult GetOrdersForCustomer([FromODataUri] string customerId, ODataQueryOptions<Order> options)
         {
+            if (options != null && options.RawValues != null && options.RawValues.DeltaToken == "abcd")
+            {
+                // in the > 8.x version you can do as follows
+                var changeSetDeltaSet = new DeltaSet<Order>(new List<string> { "Id" });
+
+                var changedOrder = new Delta<Order>();
+
+                changeSetDeltaSet.Add(changedOrder);
+
+                var subListSet = new DeltaSet<ListItem>(new List<string> { "Id" });
+                subListSet.Add(new Delta<ListItem>
+                {
+
+                });
+                changedOrder.TrySetPropertyValue("Id", 121);
+                changedOrder.TrySetPropertyValue("List", subListSet);
+
+
+                // changeSetDeltaSet.Add(subListSet);
+                return Ok(changeSetDeltaSet);
+
+                //IEdmModel model = Request.GetModel();
+                //var orderType = model.SchemaElements.OfType<IEdmEntityType>().First(c => c.Name == "Order");
+
+                //var changedOrders = new EdmChangedObjectCollection(orderType);
+
+                //var changeOrder1Object = new EdmDeltaEntityObject(orderType);
+                //changeOrder1Object.TrySetPropertyValue("Id", 1);
+                //changedOrders.Add(changeOrder1Object);
+
+                //var changedOrder2Object = new EdmDeltaDeletedEntityObject(orderType);
+                //changedOrder2Object.Id = "http://tempuri.org/Orders(2)";
+                //changedOrder2Object.TrySetPropertyValue("Id", 2);
+                //changedOrders.Add(changedOrder2Object);
+
+                //var changedOrderObject = new EdmDeltaEntityObject(orderType);
+                //changedOrderObject.TrySetPropertyValue("Id", 1);
+                //changedOrderObject.TrySetPropertyValue("Amount", 8);
+
+                //// Have nested
+                //var listItemType = model.SchemaElements.OfType<IEdmEntityType>().First(c => c.Name == "ListItem");
+                //var changedLists = new EdmChangedObjectCollection(listItemType);
+                //var changeList1Object = new EdmDeltaEntityObject(listItemType);
+                //changeList1Object.TrySetPropertyValue("Id", 1);
+                //changedLists.Add(changeList1Object);
+
+                //changedOrderObject.TrySetPropertyValue("List", changedLists);
+
+                //changedOrders.Add(changedOrderObject);
+
+                //return Ok(changedOrders);
+            }
+
             // handle read
             var orders = _customers.SelectMany(c => c.Orders);
             IQueryable<Order> queryOrders = orders.AsQueryable();
