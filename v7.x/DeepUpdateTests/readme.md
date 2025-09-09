@@ -67,3 +67,37 @@ At debug side, you can
 You can see the second one is 'DeltaDeletedEntityObject'.
 
 
+# Updated at 09/09/2025
+
+Let's test the deep delta writing. It's not fully supported in 7.x, but it seems it works fine at 9.x.
+
+Go to '[DeepUpdateTests_9x](https://github.com/xuzhg/WebApiSample/tree/vasrinwork-user/vasrin/test_delta_expandedquery/v7.x/DeepUpdateTests/DeepUpdateTests_9x)', run and use .http file to test:
+
+`GET {{DeepUpdateTests_9x_HostAddress}}/odata/Customers(1)/orders?$expand=list&$deltaToken=abcd`
+
+You can get
+
+```json
+{
+  "@odata.context": "http://localhost:5136/odata/$metadata#Orders/$delta",
+  "value": [
+    {
+      "Id": 121,
+      "Items@delta": [
+        {
+          "Id": 0,
+          "Description": "ChangedDescription"
+        }
+      ]
+    },
+    {
+      "@odata.removed": {
+        "reason": "deleted"
+      },
+      "@odata.id": "http://localhost/odata/orders(3)",
+      "Id": 0
+    }
+  ]
+}
+```
+
