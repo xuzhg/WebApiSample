@@ -14,6 +14,7 @@ namespace DeepUpdateTests.Models
                 var builder = new ODataConventionModelBuilder();
                 builder.EntitySet<Customer>("Customers");
                 builder.EntitySet<Order>("Orders");
+                builder.EntityType<ListItem>();
 
                 _edmModel = builder.GetEdmModel();
             }
@@ -38,5 +39,15 @@ namespace DeepUpdateTests.Models
         public int Amount { get; set; }
 
         public string Title { get; set; }
+
+        [Contained]
+        public IList<ListItem> Items { get; set; }
+    }
+
+    public class ListItem
+    {
+        public int Id { get; set; }
+
+        public string Description { get; set; }
     }
 }

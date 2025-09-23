@@ -104,3 +104,46 @@ You can get
 }
 ```
 
+
+# Updated at 09/22/2025
+
+Update after 9/9/2025. For Web API 7.x, if you want to write the change set, you should specify the version to 4.01.
+
+
+Send the following request for 
+```cmd
+GET {{DeepUpdateTests_HostAddress}}/odata/Customers(1)/orders?$expand=list&$deltaToken=abcd
+OData-Version: 4.01
+```
+
+You can get the following payload:
+
+
+```json
+{
+  "@context": "http://localhost:5048/odata/$metadata#Orders/$delta",
+  "value": [
+    {
+      "Id": 1
+    },
+    {
+      "@removed": {
+        "reason": "deleted"
+      },
+      "@id": "http://tempuri.org/Orders(2)",
+      "Id": 2,
+      "Amount": 0
+    },
+    {
+      "Id": 1,
+      "Amount": 8,
+      "Items@delta": [
+        {
+          "Id": 1
+        }
+      ]
+    }
+  ]
+}
+```
+
