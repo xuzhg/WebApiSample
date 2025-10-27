@@ -1,0 +1,42 @@
+@CaseInsensitiveFilterSample_HostAddress = http://localhost:5259
+
+GET {{CaseInsensitiveFilterSample_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+GET {{CaseInsensitiveFilterSample_HostAddress}}/odata/customers
+Accept: application/json
+
+
+###
+# the following request should return customers with LastName 'Dog', 'dog', and 'doG'
+# it supports case insensitive filtering
+#{
+#  "@odata.context": "http://localhost:5259/odata/$metadata#Customers",
+#  "value": [
+#    {
+#      "CustomerId": 1,
+#      "FirstName": "Mercury",
+#      "LastName": "Dog",
+#      "Address": null
+#    },
+#    {
+#      "CustomerId": 4,
+#      "FirstName": "Mars",
+#      "LastName": "dog",
+#      "Address": null
+#    },
+#    {
+#      "CustomerId": 5,
+#      "FirstName": "Jupiter",
+#      "LastName": "doG",
+#      "Address": null
+#    }
+#  ]
+#}
+
+GET {{CaseInsensitiveFilterSample_HostAddress}}/odata/customers?$filter=LastName%20eq%20'dog'
+Accept: application/json
+
+###
+
