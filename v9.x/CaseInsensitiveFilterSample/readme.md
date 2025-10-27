@@ -6,7 +6,7 @@ OData supports the case insensitivity for the key words, but not for the instanc
 
 so, $filter=Name eq 'Dog' should match the 'Dog' exactly. 
 
-This sample plays the case insensitivity by customize the FilterBinder in AspNetCore.OData, which is based on SqlLite. Of course, it can apply for other DB.
+This sample plays the case insensitivity by customizing the FilterBinder in AspNetCore.OData, which is based on SqlLite. Of course, it can apply for other DBs.
 
 Run this sample, and open 'CaseInsensitiveFilterSample.http' file and click 'Send Request' for
 
@@ -39,6 +39,9 @@ You can see the following result:
   ]
 }
 ```
+
+Here's the SqlLite statement:
+<img width="1085" height="101" alt="image" src="https://github.com/user-attachments/assets/0e8c4a8b-b0d9-4fae-a3a5-7010ed8e120c" />
 
 Of course, you can try the 'NoEqual' by:
 
