@@ -52,8 +52,8 @@ Content-Type: application/json
     "@odata.id": "Manifests(51)"
   },
   "Manifest2": {
-     "Id": 41,
-     "DisplayName": "New 41 Manifest2"
+     "Id": 61,
+     "DisplayName": "New 61 Manifest2"
   }
 }
 
