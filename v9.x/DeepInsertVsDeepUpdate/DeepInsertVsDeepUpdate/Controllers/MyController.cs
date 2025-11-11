@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Deltas;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 
@@ -96,6 +97,55 @@ namespace DeepInsertVsDeepUpdate.Controllers
 
             // eturn 200
             return Ok();
+        }
+
+        // Be noted:
+        // Two patches:
+        // 1) Patch to entity set is a delta request
+        // 2) Patch to single entity
+        [HttpPatch("odata/AgentInstances")]
+        public IActionResult Patch(DeltaSet<AgentInstance> deltaSet)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            foreach (var delta in deltaSet)
+            {
+                switch (delta.Kind)
+                {
+                    case DeltaItemKind.Resource:
+                        // Add a new AgentInstance
+                        break;
+
+                    case DeltaItemKind.DeletedResource:
+                        // delete an existing AgentInstance
+                        break;
+
+                    // ...
+                }
+            }
+
+            return Ok();
+        }
+
+        [HttpPatch("odata/AgentInstances({key})")]
+        [HttpPatch("odata/AgentInstances/{key}")]
+        public IActionResult Patch(int key, Delta<AgentInstance> patch)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var existingInstance = _db.GetInstance(key);
+            if (existingInstance == null)
+            {
+                return NotFound();
+            }
+            patch.Patch(existingInstance);
+            //  _db.UpdateAgentInstance(existingInstance);
+            return Ok(existingInstance);
         }
     }
 }

@@ -8,7 +8,9 @@ namespace DeepInsertVsDeepUpdate
 
         IList<AgentCardManifest> Manifests { get; }
 
-        AgentCardManifest GetManifest(int cardId);
+        AgentInstance? GetInstance(int id);
+
+        AgentCardManifest? GetManifest(int cardId);
 
         void AddManfest(AgentCardManifest agentInstance);
 

@@ -54,7 +54,12 @@
             _manifests.Add(agent.Manifest2);
         }
 
-        public AgentCardManifest GetManifest(int cardId)
+        public AgentInstance? GetInstance(int id)
+        {
+            return _agentInstances.FirstOrDefault(i => i.Id == id);
+        }
+
+        public AgentCardManifest? GetManifest(int cardId)
         {
             return _manifests.FirstOrDefault(m => m.Id == cardId);
         }

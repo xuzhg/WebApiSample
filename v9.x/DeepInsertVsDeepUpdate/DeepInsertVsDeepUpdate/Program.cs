@@ -1,6 +1,7 @@
 using DeepInsertVsDeepUpdate;
 using Microsoft.AspNetCore.OData;
 using Microsoft.AspNetCore.OData.Formatter.Deserialization;
+using Microsoft.OData;
 using Microsoft.OData.Edm;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,7 @@ builder.Services.AddSingleton<IDataSource>(dataSource);
 
 builder.Services.AddControllers()
     .AddOData(options => options
-        .AddRouteComponents("odata", model, services => services.AddSingleton<ODataResourceDeserializer, MyODataResourceDeserializer>())
+        .AddRouteComponents("odata", model, ODataVersion.V401, services => services.AddSingleton<ODataResourceDeserializer, MyODataResourceDeserializer>())
         .Select()
         .Filter()
         .Expand()

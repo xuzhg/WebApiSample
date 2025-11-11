@@ -66,3 +66,47 @@ Content-Type: application/json
   "Manifest@odata.bind": "Manifests(2)",
   "Manifest2@odata.bind": "Manifests(1)"
 }
+
+
+###
+
+PATCH {{DeepInsertVsDeepUpdate_HostAddress}}/odata/AgentInstances
+Accept: application/json
+Content-Type: application/json
+OData-Version: 4.01
+
+{
+  "@odata.context": "http://localhost:5064/odata/$metadata#AgentInstances/$delta",
+  "value": [
+    {
+      "Id": 121,
+      "Manifest@delta":
+        {
+          "Id": 0,
+          "DisplayName": "Changed DisplayName"
+        }
+    },
+    {
+      "@odata.removed": {
+        "reason": "deleted"
+      },
+      "@odata.id": "http://localhost:5064/odata/AgentInstances(31)"
+    }
+  ]
+}
+
+###
+
+PATCH {{DeepInsertVsDeepUpdate_HostAddress}}/odata/AgentInstances/11
+Accept: application/json
+Content-Type: application/json
+OData-Version: 4.01
+
+{
+    "Name": "New Same Name",
+    "Manifest@delta":
+      {
+        "Id": 0,
+        "DisplayName": "Changed Update DisplayName"
+      }
+}

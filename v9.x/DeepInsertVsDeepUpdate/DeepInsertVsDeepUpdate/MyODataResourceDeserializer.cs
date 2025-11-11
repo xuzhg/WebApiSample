@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.OData.Formatter.Wrapper;
 using Microsoft.OData.Edm;
 using System.Reflection;
 using Microsoft.AspNetCore.OData.Edm;
+using Microsoft.AspNetCore.OData.Deltas;
 
 namespace DeepInsertVsDeepUpdate
 {
@@ -15,6 +16,13 @@ namespace DeepInsertVsDeepUpdate
         public override void ApplyNestedProperty(object resource, ODataNestedResourceInfoWrapper resourceInfoWrapper,
          IEdmStructuredTypeReference structuredType, ODataDeserializerContext readContext)
         {
+            IDelta deltaResource = resource as IDelta;
+            if (deltaResource != null)
+            {
+                base.ApplyNestedProperty(resource, resourceInfoWrapper, structuredType, readContext);
+                return;
+            }
+
             bool hasNavBinding = false;
             string odataId = null;
 
@@ -44,6 +52,10 @@ namespace DeepInsertVsDeepUpdate
                 // 2) You can log it into HttReqest.Items for later use?
                 //  readContext.Request.HttpContext.Items[resourceInfoWrapper.NestedResourceInfo.Name] = true;
                 // ...
+                //if (resource is IDelta delta)
+                //{
+                //    delta.Se
+                //}
 
                 PropertyInfo containerPropertyInfo = readContext.Model.GetTypeMapper().GetClrType(readContext.Model, structuredType).GetProperties().FirstOrDefault(x => x.PropertyType == typeof(ODataDeepUpdateMetadataCollection));
                 if (containerPropertyInfo != null)
