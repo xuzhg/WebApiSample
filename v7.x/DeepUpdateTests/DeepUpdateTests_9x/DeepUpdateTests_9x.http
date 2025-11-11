@@ -1,0 +1,13 @@
+@DeepUpdateTests_9x_HostAddress = http://localhost:5136
+
+GET {{DeepUpdateTests_9x_HostAddress}}/weatherforecast/
+Accept: application/json
+
+
+###
+GET {{DeepUpdateTests_9x_HostAddress}}/odata/customers
+
+###
+# We are looking to support delta on this query with expanded collection navigation property
+# Expect the response to have only changed properties for Checklist and not entire checklist collection object
+GET {{DeepUpdateTests_9x_HostAddress}}/odata/Customers(1)/orders?$expand=list&$deltaToken=abcd

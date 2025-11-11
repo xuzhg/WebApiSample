@@ -1,0 +1,68 @@
+@DeepInsertVsDeepUpdate_HostAddress = http://localhost:5064
+
+GET {{DeepInsertVsDeepUpdate_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+GET {{DeepInsertVsDeepUpdate_HostAddress}}/odata/AgentInstances?$expand=manifest,manifest2
+
+###
+GET {{DeepInsertVsDeepUpdate_HostAddress}}/odata/manifests
+
+###
+POST {{DeepInsertVsDeepUpdate_HostAddress}}/odata/AgentInstances
+Content-Type: application/json
+
+{
+  "Name": "New Agent Instance",
+  "Manifest": {
+    "Id": 3,
+    "DisplayName": "New Manifest"
+  },
+  "Manifest2": {
+    "Id": 31,
+    "DisplayName": "New Manifest2"
+  }
+}
+
+###
+POST {{DeepInsertVsDeepUpdate_HostAddress}}/odata/AgentInstances
+Content-Type: application/json
+
+{
+  "Name": "New Agent Instance to link the existed manifest, meanwhile create a Manifeat2 ",
+  "Manifest": {
+    "@odata.id": "Manifests(2)"
+  },
+  "Manifest2": {
+     "Id": 41,
+     "DisplayName": "New 41 Manifest2"
+  }
+}
+
+
+###
+# It will fail since '51' is not existed
+POST {{DeepInsertVsDeepUpdate_HostAddress}}/odata/AgentInstances
+Content-Type: application/json
+
+{
+  "Name": "New Agent Instance to link the existed manifest",
+  "Manifest": {
+    "@odata.id": "Manifests(51)"
+  },
+  "Manifest2": {
+     "Id": 61,
+     "DisplayName": "New 61 Manifest2"
+  }
+}
+
+###
+POST {{DeepInsertVsDeepUpdate_HostAddress}}/odata/AgentInstances
+Content-Type: application/json
+
+{
+  "Name": "New Agent Instance to using OData.bind",
+  "Manifest@odata.bind": "Manifests(2)",
+  "Manifest2@odata.bind": "Manifests(1)"
+}

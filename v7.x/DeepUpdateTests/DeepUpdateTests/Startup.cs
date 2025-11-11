@@ -2,6 +2,8 @@ using DeepUpdateTests.Models;
 using Microsoft.AspNet.OData.Batch;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Formatter.Deserialization;
+using Microsoft.AspNet.OData.Routing.Conventions;
+using Microsoft.OData;
 using Microsoft.OData.Edm;
 
 namespace DeepUpdateTests;
@@ -40,6 +42,21 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
+            //endpoints.MapODataRoute("odataPrefix", "odata", builder =>
+            //{
+            //    builder.AddService(Microsoft.OData.ServiceLifetime.Singleton, sp => model);
+
+            //    builder.AddService(Microsoft.OData.ServiceLifetime.Singleton, sp => new ODataMessageWriterSettings
+            //    {
+            //        EnableMessageStreamDisposal = false,
+            //        MessageQuotas = new ODataMessageQuotas { MaxReceivedMessageSize = Int64.MaxValue },
+            //        Version = ODataVersion.V401
+            //    });
+
+            //    builder.AddService<IEnumerable<IODataRoutingConvention>>(Microsoft.OData.ServiceLifetime.Singleton,
+            //                sp => ODataRoutingConventions.CreateDefaultWithAttributeRouting("odataPrefix", endpoints.ServiceProvider));
+            //});
+
             endpoints.MapODataRoute("odataPrefix", "odata", model);
         });
     }

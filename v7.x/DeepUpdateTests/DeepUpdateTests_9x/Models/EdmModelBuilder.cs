@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNet.OData.Builder;
-using Microsoft.OData.Edm;
+﻿using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 
-namespace DeepUpdateTests.Models
+namespace DeepUpdateTests_9x.Models
 {
     public static class EdmModelBuilder
     {
@@ -14,7 +14,6 @@ namespace DeepUpdateTests.Models
                 var builder = new ODataConventionModelBuilder();
                 builder.EntitySet<Customer>("Customers");
                 builder.EntitySet<Order>("Orders");
-                builder.EntityType<ListItem>();
 
                 _edmModel = builder.GetEdmModel();
             }
@@ -29,7 +28,7 @@ namespace DeepUpdateTests.Models
 
         public string Name { get; set; }
 
-        public virtual Order[] Orders { get; set; }
+        public virtual IList<Order> Orders { get; set; }
     }
 
     public class Order

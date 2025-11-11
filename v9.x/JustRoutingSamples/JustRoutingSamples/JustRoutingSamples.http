@@ -1,0 +1,33 @@
+@JustRoutingSamples_HostAddress = http://localhost:5190
+
+GET {{JustRoutingSamples_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{JustRoutingSamples_HostAddress}}/$odata
+Accept: application/json
+
+###
+
+
+GET {{JustRoutingSamples_HostAddress}}/odata/$metadata
+Accept: application/json
+
+###
+
+
+GET {{JustRoutingSamples_HostAddress}}/odata/me/orders
+Accept: application/json
+
+###
+
+GET {{JustRoutingSamples_HostAddress}}/odata/me/orders(4)
+Accept: application/json
+
+###
+
+GET {{JustRoutingSamples_HostAddress}}/odata/me/orders/5
+Accept: application/json
+
+###
