@@ -1,0 +1,5 @@
+﻿@Issue1547AmbiguousMatchWithValidation_HostAddress = http://localhost:5175
+
+GET {{Issue1547AmbiguousMatchWithValidation_HostAddress}}/
+
+###

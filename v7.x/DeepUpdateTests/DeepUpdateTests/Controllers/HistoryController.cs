@@ -35,6 +35,7 @@ namespace DeepUpdateTests.Controllers
         [EnableQuery]
         public IActionResult Get()
         {
+
             return Ok(_history);
         }
 
