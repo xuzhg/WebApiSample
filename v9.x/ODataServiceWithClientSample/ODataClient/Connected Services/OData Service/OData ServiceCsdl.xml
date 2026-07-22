@@ -1,0 +1,39 @@
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:DataServices>
+    <Schema Namespace="ODataService.Models" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityType Name="Customer">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Name" Type="Edm.String" />
+        <Property Name="City" Type="Edm.String" />
+        <Property Name="Category" Type="ODataService.Models.CustomerCategory" Nullable="false" />
+        <Property Name="RegisteredAt" Type="Edm.DateTimeOffset" Nullable="false" />
+        <Property Name="LastOrderDate" Type="Edm.DateTimeOffset" />
+        <NavigationProperty Name="Orders" Type="Collection(ODataService.Models.Order)" />
+      </EntityType>
+      <EntityType Name="Order">
+        <Key>
+          <PropertyRef Name="Id" />
+        </Key>
+        <Property Name="Id" Type="Edm.Int32" Nullable="false" />
+        <Property Name="Product" Type="Edm.String" />
+        <Property Name="Amount" Type="Edm.Decimal" Nullable="false" Scale="variable" />
+      </EntityType>
+      <EnumType Name="CustomerCategory">
+        <Member Name="Standard" Value="0" />
+        <Member Name="Premium" Value="1" />
+        <Member Name="Vip" Value="2" />
+      </EnumType>
+    </Schema>
+    <Schema Namespace="Default" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="Container">
+        <EntitySet Name="Customers" EntityType="ODataService.Models.Customer">
+          <NavigationPropertyBinding Path="Orders" Target="Orders" />
+        </EntitySet>
+        <EntitySet Name="Orders" EntityType="ODataService.Models.Order" />
+      </EntityContainer>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

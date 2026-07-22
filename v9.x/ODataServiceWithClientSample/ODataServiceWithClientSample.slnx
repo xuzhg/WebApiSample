@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ODataService/ODataService.csproj" />
+  <Project Path="ODataClient/ODataClient.csproj" />
+</Solution>
