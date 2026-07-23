@@ -11,6 +11,12 @@ GET {{DeepUpdateTests_HostAddress}}/weatherforecast
 GET {{DeepUpdateTests_HostAddress}}/odata/Customers
 
 ###
+GET {{DeepUpdateTests_HostAddress}}/odata/History
+OData-Version: 4.01
+Accept: application/json
+
+
+###
 GET {{DeepUpdateTests_HostAddress}}/odata/Customers(1)/orders?$expand=list&$deltaToken=abcd
 OData-Version: 4.01
 

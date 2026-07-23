@@ -13,6 +13,7 @@ namespace DeepUpdateTests.Models
             {
                 var builder = new ODataConventionModelBuilder();
                 builder.EntitySet<Customer>("Customers");
+                builder.EntitySet<History>("History");
                 builder.EntitySet<Order>("Orders");
                 builder.EntityType<ListItem>();
 
@@ -30,6 +31,13 @@ namespace DeepUpdateTests.Models
         public string Name { get; set; }
 
         public virtual Order[] Orders { get; set; }
+    }
+
+    public class History
+    {
+        public int Id { get; set; }
+
+        public string CustomerDelta { get; set; }
     }
 
     public class Order
